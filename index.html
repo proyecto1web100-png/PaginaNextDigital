@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextDigital — Tu negocio en digital</title>
+    <meta name="description" content="Creamos páginas web profesionales para emprendedores. Diseño responsivo, rápido y que convierte visitas en clientes.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+
+        :root {
+            --ink: #080D1A;
+            --surface: #0F1628;
+            --surface2: #162035;
+            --blue: #1A6BFF;
+            --blue-light: #4D8FFF;
+            --cyan: #38BDF8;
+            --muted: #8B9BB4;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--ink); color: #fff; overflow-x: hidden; }
+        h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .gradient-text {
+            background: linear-gradient(130deg, #fff 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .blue-gradient-text {
+            background: linear-gradient(130deg, var(--blue) 0%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .grid-mesh {
+            background-image:
+                linear-gradient(rgba(26,107,255,.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(26,107,255,.06) 1px, transparent 1px);
+            background-size: 56px 56px;
+        }
+
+        /* Typing cursor */
+        #typing-target::after {
+            content: '|';
+            color: var(--blue);
+            animation: blink .7s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+        /* Float */
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        .float  { animation: float 4s ease-in-out infinite; }
+        .float2 { animation: float 4s ease-in-out infinite 1.2s; }
+
+        /* WA pulse */
+        @keyframes wa-pulse {
+            0%   { box-shadow: 0 0 0 0 rgba(37,211,102,.5); }
+            70%  { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+            100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+        }
+        .wa-btn { animation: wa-pulse 2.2s infinite; }
+
+        /* Reveal */
+        .reveal { opacity:0; transform:translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+
+        /* Cards */
+        .card { transition: transform .2s ease, border-color .2s ease; }
+        .card:hover { transform: translateY(-4px); border-color: rgba(26,107,255,.35) !important; }
+
+        /* Nav blur */
+        .nav-blur { backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .float, .float2, .wa-btn, #typing-target::after { animation: none; }
+            .reveal { opacity:1; transform:none; }
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: {
+                ink:'#080D1A', surface:'#0F1628', surface2:'#162035',
+                blue:'#1A6BFF', 'blue-light':'#4D8FFF', cyan:'#38BDF8', muted:'#8B9BB4'
+            }}}
+        }
+    </script>
+</head>
+<body class="bg-ink">
+
+<!-- ─── FLOATING WHATSAPP ─────────────────────────────────────── -->
+<a href="https://wa.me/50499796129?text=Hola!%20Quiero%20una%20página%20web%20para%20mi%20negocio"
+   target="_blank" rel="noopener"
+   class="wa-btn fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white text-sm font-semibold px-4 py-3 rounded-full shadow-2xl transition-colors">
+    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Hablemos
+</a>
+
+<!-- ─── NAVBAR ────────────────────────────────────────────────── -->
+<nav class="fixed top-0 inset-x-0 z-40 nav-blur bg-ink/75 border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-surface2 border border-blue/30 flex items-center justify-center">
+                <span class="text-[11px] font-black blue-gradient-text">ND</span>
+            </div>
+            <span class="font-bold text-white text-[15px]">Next<span class="text-blue">Digital</span></span>
+        </div>
+
+        <div class="hidden md:flex items-center gap-7 text-[13px] text-muted font-medium">
+            <a href="#servicios"   class="hover:text-white transition-colors">Servicios</a>
+            <a href="#proceso"     class="hover:text-white transition-colors">Proceso</a>
+            <a href="#proyectos"   class="hover:text-white transition-colors">Proyectos</a>
+            <a href="#testimonios" class="hover:text-white transition-colors">Testimonios</a>
+        </div>
+
+        <a href="https://wa.me/50499796129" target="_blank" rel="noopener"
+           class="text-[13px] font-semibold bg-blue hover:bg-blue-light text-white px-5 py-2 rounded-full transition-colors">
+            Cotizar gratis
+        </a>
+    </div>
+</nav>
+
+<!-- ─── HERO ──────────────────────────────────────────────────── -->
+<section class="relative min-h-screen grid-mesh flex items-center pt-16">
+    <!-- Glow blob -->
+    <div class="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-blue/8 blur-[130px]"></div>
+
+    <div class="relative max-w-6xl mx-auto px-5 py-24 grid md:grid-cols-2 gap-14 items-center w-full">
+
+        <!-- Copy -->
+        <div>
+            <div class="inline-flex items-center gap-2 bg-blue/10 border border-blue/20 text-blue text-xs font-semibold px-3 py-1.5 rounded-full mb-7">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse"></span>
+                Diseño web para emprendedores
+            </div>
+
+            <h1 class="text-[3.2rem] md:text-[3.8rem] font-black leading-[1.1] mb-5">
+                La web que<br>
+                <span id="typing-target" class="blue-gradient-text"></span><br>
+                <span class="text-white">necesita</span>
+            </h1>
+
+            <p class="text-muted text-lg leading-relaxed mb-9 max-w-md">
+                Creamos páginas web profesionales, rápidas y que convierten visitas en clientes reales. Tu negocio merece estar en digital.
+            </p>
+
+            <div class="flex flex-wrap gap-4">
+                <a href="https://wa.me/50499796129?text=Hola!%20Quiero%20una%20cotización%20para%20mi%20web"
+                   target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white font-bold px-7 py-4 rounded-full transition-colors shadow-lg text-[15px]">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Cotización gratis
+                </a>
+                <a href="#proyectos"
+                   class="inline-flex items-center gap-2 border border-white/10 hover:border-blue/40 text-white font-semibold px-7 py-4 rounded-full transition-colors text-[15px]">
+                    Ver proyectos
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+
+            <!-- Stats -->
+            <div class="flex items-center gap-7 mt-11 pt-8 border-t border-white/5">
+                <div>
+                    <div class="text-2xl font-black blue-gradient-text">+50</div>
+                    <div class="text-xs text-muted mt-0.5">Proyectos entregados</div>
+                </div>
+                <div class="w-px h-8 bg-white/8"></div>
+                <div>
+                    <div class="text-2xl font-black blue-gradient-text">72h</div>
+                    <div class="text-xs text-muted mt-0.5">Tiempo de entrega</div>
+                </div>
+                <div class="w-px h-8 bg-white/8"></div>
+                <div>
+                    <div class="text-2xl font-black blue-gradient-text">100%</div>
+                    <div class="text-xs text-muted mt-0.5">Satisfacción garantizada</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Device mockups -->
+        <div class="relative hidden md:flex items-center justify-center">
+            <!-- Laptop -->
+            <div class="float w-full max-w-sm">
+                <div class="bg-surface2 rounded-2xl border border-white/8 p-3 shadow-2xl">
+                    <div class="flex items-center gap-1.5 mb-2.5 px-1">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-400/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                        <div class="flex-1 bg-white/5 rounded px-3 py-0.5 ml-2 text-[10px] text-muted">mirestaurante.hn</div>
+                    </div>
+                    <!-- Screen -->
+                    <div class="rounded-lg overflow-hidden h-52 bg-ink relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-orange-900/30 via-ink to-ink"></div>
+                        <!-- Nav mock -->
+                        <div class="relative flex items-center justify-between px-4 py-2 border-b border-white/5">
+                            <div class="text-[9px] font-bold text-white">SABORES</div>
+                            <div class="flex gap-2 text-[7px] text-muted">
+                                <span>Menú</span><span>Nosotros</span><span>Contacto</span>
+                            </div>
+                            <div class="bg-blue text-white text-[7px] px-2 py-0.5 rounded-full">Reservar</div>
+                        </div>
+                        <!-- Hero mock -->
+                        <div class="relative px-4 pt-4">
+                            <div class="text-[8px] text-orange-400 font-medium mb-1">RESTAURANTE · TEGUCIGALPA</div>
+                            <div class="text-white font-black text-sm leading-tight mb-3">Cocina que<br>te encanta</div>
+                            <div class="bg-blue text-white text-[8px] px-3 py-1 rounded-full inline-block font-semibold">Ver Menú</div>
+                        </div>
+                        <!-- Image placeholders -->
+                        <div class="absolute bottom-3 right-3 flex gap-1.5">
+                            <div class="w-10 h-10 rounded-lg bg-orange-800/30 border border-white/5"></div>
+                            <div class="w-10 h-10 rounded-lg bg-orange-700/20 border border-white/5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="float2 absolute -bottom-4 -right-2 w-24">
+                <div class="bg-surface2 rounded-[18px] border border-white/10 p-2 shadow-2xl">
+                    <div class="bg-ink rounded-[12px] overflow-hidden h-44">
+                        <div class="bg-gradient-to-b from-surface2 to-ink h-full p-2.5">
+                            <div class="text-[7px] text-blue font-bold mb-0.5">BARBERÍA</div>
+                            <div class="text-[9px] font-bold text-white leading-tight mb-2">Tu mejor<br>versión</div>
+                            <div class="bg-blue/20 border border-blue/30 rounded-lg p-2 mb-2">
+                                <div class="text-[7px] text-cyan text-center font-semibold">Reservar cita</div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between border-b border-white/5 pb-0.5">
+                                    <span class="text-[6px] text-muted">Corte</span>
+                                    <span class="text-[6px] text-white">$15</span>
+                                </div>
+                                <div class="flex justify-between border-b border-white/5 pb-0.5">
+                                    <span class="text-[6px] text-muted">Barba</span>
+                                    <span class="text-[6px] text-white">$10</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-[6px] text-muted">Combo</span>
+                                    <span class="text-[6px] text-white">$20</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Glow -->
+            <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <div class="w-56 h-56 rounded-full bg-blue/20 blur-[70px]"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── VALUE PROPS ───────────────────────────────────────────── -->
+<section class="py-16 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-5">
+                <div class="w-9 h-9 rounded-xl bg-blue/10 flex items-center justify-center mb-4">
+                    <svg class="w-4.5 h-4.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                </div>
+                <div class="font-bold text-white text-sm mb-1">Responsivo</div>
+                <div class="text-xs text-muted leading-relaxed">Se adapta perfectamente a celular, tablet y computadora.</div>
+            </div>
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-5">
+                <div class="w-9 h-9 rounded-xl bg-blue/10 flex items-center justify-center mb-4">
+                    <svg class="w-4.5 h-4.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <div class="font-bold text-white text-sm mb-1">Ultra rápida</div>
+                <div class="text-xs text-muted leading-relaxed">Optimizada para cargar en segundos y no perder visitas.</div>
+            </div>
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-5">
+                <div class="w-9 h-9 rounded-xl bg-blue/10 flex items-center justify-center mb-4">
+                    <svg class="w-4.5 h-4.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </div>
+                <div class="font-bold text-white text-sm mb-1">Más visibilidad</div>
+                <div class="text-xs text-muted leading-relaxed">Posicionada en Google para que te encuentren primero.</div>
+            </div>
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-5">
+                <div class="w-9 h-9 rounded-xl bg-blue/10 flex items-center justify-center mb-4">
+                    <svg class="w-4.5 h-4.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <div class="font-bold text-white text-sm mb-1">Segura</div>
+                <div class="text-xs text-muted leading-relaxed">Certificado SSL, backups y protección de datos incluidos.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── SERVICES ──────────────────────────────────────────────── -->
+<section id="servicios" class="py-24">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Para quién trabajamos</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-4">
+                Webs para todo tipo<br>de emprendimiento
+            </h2>
+            <p class="text-muted max-w-lg mx-auto">No importa el rubro. Si tienes un negocio, nosotros lo llevamos al mundo digital.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5">
+
+            <div class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/5 group-hover:bg-blue/10 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-4">
+                        <svg class="text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Restaurantes</h3>
+                    <p class="text-muted text-sm leading-relaxed">Menú digital, reservaciones en línea, galería y horarios siempre actualizados.</p>
+                </div>
+            </div>
+
+            <div class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/5 group-hover:bg-blue/10 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4">
+                        <svg class="text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Salones y Barberías</h3>
+                    <p class="text-muted text-sm leading-relaxed">Sistema de citas online, lista de servicios con precios y galería de trabajos.</p>
+                </div>
+            </div>
+
+            <div class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/5 group-hover:bg-blue/10 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center mb-4">
+                        <svg class="text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Tiendas en línea</h3>
+                    <p class="text-muted text-sm leading-relaxed">Catálogo, carrito de compras y pasarela de pagos integrada.</p>
+                </div>
+            </div>
+
+            <div class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/5 group-hover:bg-blue/10 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center mb-4">
+                        <svg class="text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Clínicas Médicas</h3>
+                    <p class="text-muted text-sm leading-relaxed">Información de especialistas, servicios y sistema de citas integrado.</p>
+                </div>
+            </div>
+
+            <div class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/5 group-hover:bg-blue/10 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center mb-4">
+                        <svg class="text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Portafolios</h3>
+                    <p class="text-muted text-sm leading-relaxed">Muestra tu trabajo y trayectoria de forma memorable y profesional.</p>
+                </div>
+            </div>
+
+            <div class="reveal card group bg-blue/10 border border-blue/20 rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/10 group-hover:bg-blue/15 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-blue/20 border border-blue/30 flex items-center justify-center mb-4">
+                        <svg class="text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">¿Ya tienes web?</h3>
+                    <p class="text-muted text-sm leading-relaxed">La modernizamos y actualizamos para que siempre esté a la altura de tu negocio.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── PROCESS ────────────────────────────────────────────────── -->
+<section id="proceso" class="py-24 border-y border-white/5" style="background:var(--surface)">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Cómo trabajamos</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white">
+                De tu idea a tu web<br>en 3 pasos
+            </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 relative">
+            <!-- connector -->
+            <div class="hidden md:block absolute top-9 left-[calc(16.66%+2rem)] right-[calc(16.66%+2rem)] h-px bg-gradient-to-r from-blue/40 via-blue/20 to-blue/40"></div>
+
+            <div class="reveal text-center">
+                <div class="w-[72px] h-[72px] rounded-2xl bg-blue mx-auto mb-6 flex items-center justify-center shadow-lg" style="box-shadow:0 0 30px rgba(26,107,255,.4)">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                </div>
+                <h3 class="font-black text-white text-xl mb-2">Hablamos</h3>
+                <p class="text-muted text-sm leading-relaxed max-w-xs mx-auto">Nos escribís por WhatsApp, nos contás tu negocio y entendemos exactamente qué necesitás.</p>
+            </div>
+
+            <div class="reveal text-center">
+                <div class="w-[72px] h-[72px] rounded-2xl bg-surface2 border border-blue/30 mx-auto mb-6 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <h3 class="font-black text-white text-xl mb-2">Diseñamos</h3>
+                <p class="text-muted text-sm leading-relaxed max-w-xs mx-auto">Creamos tu web a medida: diseño profesional, contenido real y adaptado a tu marca.</p>
+            </div>
+
+            <div class="reveal text-center">
+                <div class="w-[72px] h-[72px] rounded-2xl bg-surface2 border border-blue/30 mx-auto mb-6 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z"/></svg>
+                </div>
+                <h3 class="font-black text-white text-xl mb-2">Lanzamos</h3>
+                <p class="text-muted text-sm leading-relaxed max-w-xs mx-auto">Tu web queda en línea en menos de 72 horas, lista para atraer clientes desde el primer día.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PROJECTS ───────────────────────────────────────────────── -->
+<section id="proyectos" class="py-24">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Portafolio</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white">
+                Proyectos que hablan<br>por sí solos
+            </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5">
+
+            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5">
+                <div class="h-52 bg-gradient-to-br from-orange-900/50 via-red-900/20 to-ink relative flex items-end p-5">
+                    <div class="absolute inset-0 grid-mesh opacity-30"></div>
+                    <div class="relative">
+                        <div class="text-orange-400 text-[10px] font-semibold mb-1 uppercase tracking-widest">Restaurante</div>
+                        <div class="text-white font-black text-xl">Sabores</div>
+                    </div>
+                    <div class="absolute inset-0 bg-blue/0 group-hover:bg-blue/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Ver proyecto</span>
+                    </div>
+                </div>
+                <div class="bg-surface px-5 py-4">
+                    <div class="font-bold text-white text-sm">Sabores Restaurant</div>
+                    <div class="text-muted text-xs mt-0.5">Menú digital · Sistema de reservaciones</div>
+                </div>
+            </div>
+
+            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5">
+                <div class="h-52 bg-gradient-to-br from-slate-800/60 via-slate-900/40 to-ink relative flex items-end p-5">
+                    <div class="absolute inset-0 grid-mesh opacity-30"></div>
+                    <div class="relative">
+                        <div class="text-slate-400 text-[10px] font-semibold mb-1 uppercase tracking-widest">Barbería</div>
+                        <div class="text-white font-black text-xl">Elite Cuts</div>
+                    </div>
+                    <div class="absolute inset-0 bg-blue/0 group-hover:bg-blue/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Ver proyecto</span>
+                    </div>
+                </div>
+                <div class="bg-surface px-5 py-4">
+                    <div class="font-bold text-white text-sm">Elite Cuts Barbershop</div>
+                    <div class="text-muted text-xs mt-0.5">Sistema de citas · Galería de trabajos</div>
+                </div>
+            </div>
+
+            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5">
+                <div class="h-52 bg-gradient-to-br from-purple-900/40 via-blue-900/20 to-ink relative flex items-end p-5">
+                    <div class="absolute inset-0 grid-mesh opacity-30"></div>
+                    <div class="relative">
+                        <div class="text-purple-400 text-[10px] font-semibold mb-1 uppercase tracking-widest">E-commerce</div>
+                        <div class="text-white font-black text-xl">Moda Urbana</div>
+                    </div>
+                    <div class="absolute inset-0 bg-blue/0 group-hover:bg-blue/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Ver proyecto</span>
+                    </div>
+                </div>
+                <div class="bg-surface px-5 py-4">
+                    <div class="font-bold text-white text-sm">Moda Urbana Store</div>
+                    <div class="text-muted text-xs mt-0.5">Tienda online · Carrito de compras</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── TESTIMONIALS ───────────────────────────────────────────── -->
+<section id="testimonios" class="py-24 border-y border-white/5" style="background:rgba(15,22,40,.5)">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Testimonios</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white">
+                Lo que dicen<br>nuestros clientes
+            </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5">
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-6">
+                <div class="flex gap-0.5 mb-4">
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <p class="text-muted text-sm leading-relaxed mb-6">"Antes perdía clientes porque no tenía web. Ahora me contactan todos los días por WhatsApp desde el sitio. La mejor inversión que hice para mi restaurante."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-blue/20 border border-blue/30 flex items-center justify-center text-xs font-black text-blue">MR</div>
+                    <div>
+                        <div class="text-white text-sm font-semibold">María Rodríguez</div>
+                        <div class="text-muted text-xs">Restaurante Sabores</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-6">
+                <div class="flex gap-0.5 mb-4">
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <p class="text-muted text-sm leading-relaxed mb-6">"Rapidísimo y profesional. Me explicaron todo, entregaron en tiempo y el diseño quedó increíble. Mis clientes siempre me preguntan quién hizo la web."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-blue/20 border border-blue/30 flex items-center justify-center text-xs font-black text-blue">JL</div>
+                    <div>
+                        <div class="text-white text-sm font-semibold">José López</div>
+                        <div class="text-muted text-xs">Elite Cuts Barbershop</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-6">
+                <div class="flex gap-0.5 mb-4">
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                </div>
+                <p class="text-muted text-sm leading-relaxed mb-6">"NextDigital entendió exactamente lo que necesitaba. Mi tienda online ya vende sola. Recuperé la inversión en la primera semana de lanzar."</p>
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-full bg-blue/20 border border-blue/30 flex items-center justify-center text-xs font-black text-blue">AC</div>
+                    <div>
+                        <div class="text-white text-sm font-semibold">Ana Castillo</div>
+                        <div class="text-muted text-xs">Moda Urbana Store</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── FINAL CTA ──────────────────────────────────────────────── -->
+<section class="py-28">
+    <div class="max-w-2xl mx-auto px-5 reveal">
+        <div class="relative bg-surface2 border border-blue/20 rounded-3xl p-10 md:p-14 text-center overflow-hidden">
+            <div class="pointer-events-none absolute inset-0 grid-mesh opacity-50"></div>
+            <div class="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-blue/15 blur-[90px]"></div>
+
+            <div class="relative">
+                <div class="text-cyan text-sm font-semibold mb-4">¿Listo para crecer?</div>
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-5 leading-tight">
+                    Tu negocio merece<br>estar en digital
+                </h2>
+                <p class="text-muted mb-9 max-w-md mx-auto">
+                    Escribinos hoy y en menos de 24 horas te enviamos una propuesta personalizada, sin compromisos.
+                </p>
+
+                <a href="https://wa.me/50499796129?text=Hola%20NextDigital!%20Quiero%20una%20cotización%20para%20mi%20página%20web"
+                   target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20B858] text-white font-black px-9 py-5 rounded-full text-lg transition-colors shadow-xl">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Escribirnos por WhatsApp
+                </a>
+
+                <div class="flex flex-wrap items-center justify-center gap-5 mt-8 text-xs text-muted">
+                    <span class="flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Sin compromiso
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Respuesta en menos de 1 hora
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Cotización 100% gratis
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────── -->
+<footer class="border-t border-white/5 py-10">
+    <div class="max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-surface2 border border-blue/30 flex items-center justify-center">
+                <span class="text-[11px] font-black blue-gradient-text">ND</span>
+            </div>
+            <span class="font-bold text-white">Next<span class="text-blue">Digital</span></span>
+        </div>
+
+        <div class="text-muted text-xs text-center">Diseñamos el futuro de tu negocio · Honduras · 9794-6129</div>
+
+        <div class="flex items-center gap-4">
+            <a href="https://instagram.com/NextDigitalhn" target="_blank" rel="noopener" aria-label="Instagram"
+               class="text-muted hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://wa.me/50499796129" target="_blank" rel="noopener" aria-label="WhatsApp"
+               class="text-muted hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+        </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-5 mt-6 pt-6 border-t border-white/5 text-center text-muted text-xs">
+        © 2025 NextDigital. Todos los derechos reservados.
+    </div>
+</footer>
+
+<!-- ─── SCRIPTS ───────────────────────────────────────────────── -->
+<script>
+    // Typing animation
+    const words = ['tu restaurante', 'tu barbería', 'tu tienda', 'tu clínica', 'tu negocio'];
+    const el = document.getElementById('typing-target');
+    let wi = 0, ci = 0, deleting = false;
+
+    function type() {
+        const w = words[wi];
+        el.textContent = deleting ? w.slice(0, ci - 1) : w.slice(0, ci + 1);
+        deleting ? ci-- : ci++;
+
+        if (!deleting && ci === w.length) {
+            setTimeout(() => { deleting = true; type(); }, 2200);
+            return;
+        }
+        if (deleting && ci === 0) {
+            deleting = false;
+            wi = (wi + 1) % words.length;
+        }
+        setTimeout(type, deleting ? 55 : 95);
+    }
+    type();
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
