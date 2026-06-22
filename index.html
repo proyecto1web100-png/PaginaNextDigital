@@ -5,6 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NextDigital — Tu negocio en digital</title>
     <meta name="description" content="Creamos páginas web profesionales para emprendedores. Diseño responsivo, rápido y que convierte visitas en clientes.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://proyecto1web100-png.github.io/PaginaNextDigital/">
+    <meta property="og:title" content="NextDigital — Páginas web profesionales en Honduras">
+    <meta property="og:description" content="Creamos páginas web profesionales para emprendedores. Diseño responsivo, entrega en 48h y 100% satisfacción garantizada. Desde $99.">
+    <meta property="og:image" content="https://proyecto1web100-png.github.io/PaginaNextDigital/og-image.png">
+    <meta property="og:locale" content="es_HN">
+    <meta property="og:site_name" content="NextDigital">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NextDigital — Tu negocio en digital">
+    <meta name="twitter:description" content="Páginas web profesionales para emprendedores en Honduras. Entrega en 48h, desde $99.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
@@ -76,9 +86,17 @@
         /* Nav blur */
         .nav-blur { backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
 
+        /* FAQ accordion */
+        .faq-body { max-height: 0; overflow: hidden; transition: max-height .38s ease; }
+        .faq-item.open .faq-body { max-height: 320px; }
+        .faq-icon { transition: transform .3s ease; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+        .faq-toggle { background: none; border: none; cursor: pointer; }
+
         @media (prefers-reduced-motion: reduce) {
             .float, .float2, .wa-btn, #typing-target::after { animation: none; }
             .reveal { opacity:1; transform:none; }
+            .faq-body { transition: none; }
         }
     </style>
     <script>
@@ -110,11 +128,15 @@
             <span class="font-bold text-white text-[15px]">Next<span class="text-blue">Digital</span></span>
         </div>
 
-        <div class="hidden md:flex items-center gap-7 text-[13px] text-muted font-medium">
-            <a href="#servicios"   class="hover:text-white transition-colors">Servicios</a>
-            <a href="#proceso"     class="hover:text-white transition-colors">Proceso</a>
-            <a href="#proyectos"   class="hover:text-white transition-colors">Proyectos</a>
-            <a href="#testimonios" class="hover:text-white transition-colors">Testimonios</a>
+        <div class="hidden md:flex items-center gap-6 text-[13px] text-muted font-medium">
+            <a href="#servicios" class="hover:text-white transition-colors">Servicios</a>
+            <a href="#precios"   class="hover:text-white transition-colors">Precios</a>
+            <a href="#proyectos" class="hover:text-white transition-colors">Proyectos</a>
+            <a href="#faq"       class="hover:text-white transition-colors">FAQ</a>
+            <a href="tel:+50497946129" class="flex items-center gap-1.5 text-cyan hover:text-white transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                9794-6129
+            </a>
         </div>
 
         <a href="https://wa.me/50497946129" target="_blank" rel="noopener"
@@ -165,12 +187,12 @@
             <!-- Stats -->
             <div class="flex items-center gap-7 mt-11 pt-8 border-t border-white/5">
                 <div>
-                    <div class="text-2xl font-black blue-gradient-text">48h</div>
+                    <div class="text-2xl font-black blue-gradient-text" data-count="48" data-suffix="h">48h</div>
                     <div class="text-xs text-muted mt-0.5">Tiempo de entrega</div>
                 </div>
                 <div class="w-px h-8 bg-white/8"></div>
                 <div>
-                    <div class="text-2xl font-black blue-gradient-text">100%</div>
+                    <div class="text-2xl font-black blue-gradient-text" data-count="100" data-suffix="%">100%</div>
                     <div class="text-xs text-muted mt-0.5">Satisfacción garantizada</div>
                 </div>
                 <div class="w-px h-8 bg-white/8"></div>
@@ -419,7 +441,7 @@
                     <svg class="w-7 h-7 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z"/></svg>
                 </div>
                 <h3 class="font-black text-white text-xl mb-2">Lanzamos</h3>
-                <p class="text-muted text-sm leading-relaxed max-w-xs mx-auto">Tu web queda en línea en menos de 72 horas, lista para atraer clientes desde el primer día.</p>
+                <p class="text-muted text-sm leading-relaxed max-w-xs mx-auto">Tu web queda en línea en menos de 48 horas, lista para atraer clientes desde el primer día.</p>
             </div>
         </div>
     </div>
@@ -526,6 +548,169 @@
     </div>
 </section>
 
+<!-- ─── PRICING ───────────────────────────────────────────────── -->
+<section id="precios" class="py-24 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Planes y precios</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-4">
+                Inversión clara,<br>resultados reales
+            </h2>
+            <p class="text-muted max-w-lg mx-auto">Elegí el plan que mejor se adapta a tu negocio. Todos incluyen diseño personalizado y entrega rápida.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
+
+            <!-- Básico -->
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-7 flex flex-col">
+                <div class="mb-6">
+                    <div class="text-sm font-semibold text-muted mb-3">Básico</div>
+                    <div class="flex items-end gap-1.5 mb-1">
+                        <span class="text-xs text-muted">desde</span>
+                        <span class="text-4xl font-black text-white">$99</span>
+                    </div>
+                    <div class="text-xs text-muted">pago único · sin mensualidades</div>
+                </div>
+                <ul class="space-y-3 text-sm flex-1 mb-8">
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Landing page hasta 5 secciones</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Diseño responsivo (móvil + escritorio)</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Botón de WhatsApp integrado</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Entrega en 48 horas</li>
+                    <li class="flex items-start gap-2.5 text-muted"><svg class="w-4 h-4 text-muted/50 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Catálogo / citas online</li>
+                    <li class="flex items-start gap-2.5 text-muted"><svg class="w-4 h-4 text-muted/50 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Tienda online / CRM</li>
+                </ul>
+                <a href="https://wa.me/50497946129?text=Hola!%20Me%20interesa%20el%20plan%20Básico%20para%20mi%20negocio"
+                   target="_blank" rel="noopener"
+                   class="text-center text-sm font-semibold border border-blue/30 hover:border-blue text-blue hover:text-white hover:bg-blue px-5 py-3 rounded-xl transition-all">
+                    Empezar ahora
+                </a>
+            </div>
+
+            <!-- Profesional -->
+            <div class="reveal card bg-blue/5 border border-blue/30 rounded-2xl p-7 flex flex-col relative">
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                    <span class="bg-blue text-white text-[11px] font-bold px-4 py-1 rounded-full shadow-lg">Más popular</span>
+                </div>
+                <div class="mb-6 mt-2">
+                    <div class="text-sm font-semibold text-blue mb-3">Profesional</div>
+                    <div class="flex items-end gap-1.5 mb-1">
+                        <span class="text-xs text-muted">desde</span>
+                        <span class="text-4xl font-black text-white">$249</span>
+                    </div>
+                    <div class="text-xs text-muted">pago único · sin mensualidades</div>
+                </div>
+                <ul class="space-y-3 text-sm flex-1 mb-8">
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Todo lo del plan Básico</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Catálogo de productos o servicios</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Sistema de citas / reservaciones</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>SEO básico para Google</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Secciones ilimitadas</li>
+                    <li class="flex items-start gap-2.5 text-muted"><svg class="w-4 h-4 text-muted/50 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Tienda online / CRM</li>
+                </ul>
+                <a href="https://wa.me/50497946129?text=Hola!%20Me%20interesa%20el%20plan%20Profesional%20para%20mi%20negocio"
+                   target="_blank" rel="noopener"
+                   class="text-center text-sm font-bold bg-blue hover:bg-blue-light text-white px-5 py-3 rounded-xl transition-colors shadow-lg">
+                    Empezar ahora
+                </a>
+            </div>
+
+            <!-- Avanzado -->
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-7 flex flex-col">
+                <div class="mb-6">
+                    <div class="text-sm font-semibold text-muted mb-3">Avanzado</div>
+                    <div class="flex items-end gap-1.5 mb-1">
+                        <span class="text-xs text-muted">desde</span>
+                        <span class="text-4xl font-black text-white">$499</span>
+                    </div>
+                    <div class="text-xs text-muted">pago único · sin mensualidades</div>
+                </div>
+                <ul class="space-y-3 text-sm flex-1 mb-8">
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Todo lo del plan Profesional</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Tienda online con carrito de compras</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Sistema CRM de clientes</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Integración de pagos en línea</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Analíticas y reportes</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-cyan flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Soporte prioritario</li>
+                </ul>
+                <a href="https://wa.me/50497946129?text=Hola!%20Me%20interesa%20el%20plan%20Avanzado%20para%20mi%20negocio"
+                   target="_blank" rel="noopener"
+                   class="text-center text-sm font-semibold border border-blue/30 hover:border-blue text-blue hover:text-white hover:bg-blue px-5 py-3 rounded-xl transition-all">
+                    Empezar ahora
+                </a>
+            </div>
+
+        </div>
+
+        <p class="text-center text-xs text-muted mt-8">¿No sabés cuál elegir? <a href="https://wa.me/50497946129?text=Hola!%20Necesito%20ayuda%20para%20elegir%20el%20plan%20correcto" target="_blank" rel="noopener" class="text-blue hover:underline">Escríbinos y te asesoramos gratis.</a></p>
+    </div>
+</section>
+
+<!-- ─── FAQ ─────────────────────────────────────────────────────── -->
+<section id="faq" class="py-24 border-y border-white/5" style="background:var(--surface)">
+    <div class="max-w-3xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Preguntas frecuentes</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white">
+                Resolvemos<br>tus dudas
+            </h2>
+        </div>
+
+        <div class="space-y-3 reveal">
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Cuánto cuesta hacer mi página web?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">Los precios empiezan desde $99 para una landing page básica. El costo final depende de las funcionalidades que necesités. Te enviamos una cotización gratis y sin compromiso en menos de 1 hora.</p>
+                </div>
+            </div>
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Cuánto tiempo tarda en estar lista mi web?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">La mayoría de proyectos los entregamos en menos de 48 horas desde que aprobás el diseño. Proyectos más complejos como tiendas online o sistemas CRM pueden tomar entre 3 y 5 días.</p>
+                </div>
+            </div>
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Necesito comprar hosting o dominio por mi cuenta?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">No es obligatorio. Podemos gestionar el hosting y el dominio por vos, o trabajar con servicios que ya tenés. Te explicamos todo sin tecnicismos para que entiendas cada paso.</p>
+                </div>
+            </div>
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Qué necesito para empezar?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">Solo escribirnos por WhatsApp con una idea de lo que necesitás. Nosotros te hacemos las preguntas correctas y te guiamos en todo el proceso. No necesitás saber nada de tecnología.</p>
+                </div>
+            </div>
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Puedo actualizar el contenido yo mismo después?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">Sí. Te entregamos el sitio con acceso completo y te enseñamos a hacer cambios básicos. Si preferís que lo manejemos nosotros, también ofrecemos planes de mantenimiento y soporte continuo.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
 <!-- ─── FINAL CTA ──────────────────────────────────────────────── -->
 <section class="py-28">
     <div class="max-w-2xl mx-auto px-5 reveal">
@@ -625,6 +810,41 @@
         entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
     }, { threshold: 0.1 });
     document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Animated counters
+    function animateCounter(el) {
+        const target = parseInt(el.dataset.count);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1600;
+        const start = performance.now();
+        function update(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target) + suffix;
+            if (progress < 1) requestAnimationFrame(update);
+            else el.textContent = target + suffix;
+        }
+        requestAnimationFrame(update);
+    }
+    const cntObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                animateCounter(e.target);
+                cntObs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-count]').forEach(el => cntObs.observe(el));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.faq-item');
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!isOpen) item.classList.add('open');
+        });
+    });
 </script>
 </body>
 </html>
