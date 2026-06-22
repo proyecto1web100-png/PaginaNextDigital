@@ -86,17 +86,75 @@
         /* Nav blur */
         .nav-blur { backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
 
-        /* FAQ accordion */
-        .faq-body { max-height: 0; overflow: hidden; transition: max-height .38s ease; }
-        .faq-item.open .faq-body { max-height: 320px; }
-        .faq-icon { transition: transform .3s ease; }
-        .faq-item.open .faq-icon { transform: rotate(45deg); }
-        .faq-toggle { background: none; border: none; cursor: pointer; }
+        /* Cursor glow */
+        #cursor-glow {
+            pointer-events: none;
+            position: fixed;
+            width: 520px; height: 520px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(26,107,255,.11) 0%, transparent 65%);
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            will-change: transform;
+        }
+
+        /* Marquee */
+        .marquee-outer { overflow: hidden; }
+        .marquee-inner { display: flex; width: max-content; animation: marquee-run 30s linear infinite; }
+        .marquee-inner:hover { animation-play-state: paused; }
+        @keyframes marquee-run { to { transform: translateX(-50%); } }
+
+        /* Magnetic */
+        .magnetic { transition: transform .35s cubic-bezier(.23,1,.32,1); }
+
+        /* Bento grid */
+        .bento-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+        .bento-wide { grid-column: span 2; }
+        .bento-full { grid-column: span 3; }
+        @media (max-width:767px) {
+            .bento-grid { grid-template-columns: 1fr 1fr; }
+            .bento-wide { grid-column: span 2; }
+            .bento-full { grid-column: span 2; }
+        }
+
+        /* Quiz overlay */
+        .quiz-overlay {
+            position: fixed; inset: 0;
+            background: rgba(8,13,26,.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 200;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity .3s ease;
+        }
+        .quiz-overlay.open { opacity: 1; pointer-events: all; }
+        .quiz-modal {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 24px;
+            padding: 36px;
+            max-width: 460px; width: 92%;
+            max-height: 90vh; overflow-y: auto;
+            position: relative;
+        }
+        .quiz-step.hidden { display: none; }
+        .quiz-opt, .quiz-opt-budget {
+            background: var(--surface2);
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 14px; cursor: pointer;
+            transition: border-color .2s, background .2s;
+            text-align: left; width: 100%;
+        }
+        .quiz-opt:hover, .quiz-opt-budget:hover { border-color: rgba(26,107,255,.4); }
+        .quiz-opt.selected, .quiz-opt-budget.selected { border-color: var(--blue); background: rgba(26,107,255,.12); }
 
         @media (prefers-reduced-motion: reduce) {
             .float, .float2, .wa-btn, #typing-target::after { animation: none; }
             .reveal { opacity:1; transform:none; }
             .faq-body { transition: none; }
+            .marquee-inner { animation: none; }
         }
     </style>
     <script>
@@ -109,6 +167,103 @@
     </script>
 </head>
 <body class="bg-ink">
+
+<!-- Cursor glow -->
+<div id="cursor-glow"></div>
+
+<!-- ─── QUIZ MODAL ────────────────────────────────────────────── -->
+<div class="quiz-overlay" id="quiz-overlay">
+    <div class="quiz-modal">
+        <button id="quiz-close" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer" class="text-muted hover:text-white transition-colors" aria-label="Cerrar">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+
+        <!-- Progress bar -->
+        <div class="flex gap-1.5 mb-8">
+            <div class="quiz-prog h-1 flex-1 rounded-full bg-blue transition-all duration-300" data-s="1"></div>
+            <div class="quiz-prog h-1 flex-1 rounded-full bg-white/10 transition-all duration-300" data-s="2"></div>
+            <div class="quiz-prog h-1 flex-1 rounded-full bg-white/10 transition-all duration-300" data-s="3"></div>
+        </div>
+
+        <!-- Step 1: negocio -->
+        <div class="quiz-step" id="qstep-1">
+            <div class="text-blue text-xs font-semibold mb-2">Pregunta 1 de 3</div>
+            <h3 class="font-black text-white text-xl mb-6">¿Qué tipo de negocio tenés?</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Restaurante o cafetería">🍽️ Restaurante / Cafetería</button>
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Salón de belleza o barbería">✂️ Salón / Barbería</button>
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Tienda o e-commerce">🛍️ Tienda / E-commerce</button>
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Clínica o consultorio">🏥 Clínica / Consultorio</button>
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Portafolio profesional">💼 Portafolio personal</button>
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Otro tipo de negocio">✨ Otro negocio</button>
+            </div>
+        </div>
+
+        <!-- Step 2: funciones -->
+        <div class="quiz-step hidden" id="qstep-2">
+            <div class="text-blue text-xs font-semibold mb-2">Pregunta 2 de 3</div>
+            <h3 class="font-black text-white text-xl mb-6">¿Qué necesitás en tu web?</h3>
+            <div class="space-y-3">
+                <label class="flex items-center gap-3 p-4 rounded-2xl border border-white/6 bg-surface2 cursor-pointer hover:border-blue/30 transition-colors">
+                    <input type="checkbox" class="quiz-check w-4 h-4 accent-blue" value="presentación del negocio">
+                    <span class="text-sm text-white">Presentar mi negocio y servicios</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-2xl border border-white/6 bg-surface2 cursor-pointer hover:border-blue/30 transition-colors">
+                    <input type="checkbox" class="quiz-check w-4 h-4 accent-blue" value="catálogo de productos">
+                    <span class="text-sm text-white">Catálogo de productos</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-2xl border border-white/6 bg-surface2 cursor-pointer hover:border-blue/30 transition-colors">
+                    <input type="checkbox" class="quiz-check w-4 h-4 accent-blue" value="sistema de citas en línea">
+                    <span class="text-sm text-white">Sistema de citas en línea</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-2xl border border-white/6 bg-surface2 cursor-pointer hover:border-blue/30 transition-colors">
+                    <input type="checkbox" class="quiz-check w-4 h-4 accent-blue" value="tienda online con ventas">
+                    <span class="text-sm text-white">Tienda online con ventas</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-2xl border border-white/6 bg-surface2 cursor-pointer hover:border-blue/30 transition-colors">
+                    <input type="checkbox" class="quiz-check w-4 h-4 accent-blue" value="panel de administración">
+                    <span class="text-sm text-white">Panel de administración</span>
+                </label>
+            </div>
+            <button id="qnext2" class="mt-6 w-full bg-blue hover:bg-blue-light text-white font-bold py-3.5 rounded-xl transition-colors">Siguiente →</button>
+        </div>
+
+        <!-- Step 3: presupuesto -->
+        <div class="quiz-step hidden" id="qstep-3">
+            <div class="text-blue text-xs font-semibold mb-2">Pregunta 3 de 3</div>
+            <h3 class="font-black text-white text-xl mb-6">¿Cuál es tu presupuesto?</h3>
+            <div class="space-y-3">
+                <button class="quiz-opt-budget w-full p-5" data-plan="Básico" data-price="L. 2,500">
+                    <div class="font-bold text-white text-sm">L. 2,500 — Plan Básico</div>
+                    <div class="text-muted text-xs mt-0.5">Landing page de presentación</div>
+                </button>
+                <button class="quiz-opt-budget w-full p-5" data-plan="Profesional" data-price="L. 3,000">
+                    <div class="font-bold text-white text-sm">L. 3,000 — Plan Profesional</div>
+                    <div class="text-muted text-xs mt-0.5">Con bases de datos y sistemas integrados</div>
+                </button>
+                <button class="quiz-opt-budget w-full p-5" data-plan="Avanzado" data-price="L. 3,500">
+                    <div class="font-bold text-white text-sm">L. 3,500 — Plan Avanzado</div>
+                    <div class="text-muted text-xs mt-0.5">Con reportes, ventas y panel completo</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Resultado -->
+        <div class="quiz-step hidden text-center" id="qstep-result">
+            <div class="w-16 h-16 rounded-2xl bg-blue/20 border border-blue/30 flex items-center justify-center mx-auto mb-5">
+                <svg class="w-8 h-8 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="text-blue text-xs font-semibold mb-2">Tu plan ideal</div>
+            <h3 class="font-black text-white text-2xl mb-2" id="q-result-plan"></h3>
+            <p class="text-muted text-sm mb-7" id="q-result-desc"></p>
+            <a id="q-result-wa" href="#" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white font-bold px-7 py-4 rounded-xl transition-colors shadow-lg text-sm">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Hablar por WhatsApp
+            </a>
+        </div>
+    </div>
+</div>
 
 <!-- ─── FLOATING WHATSAPP ─────────────────────────────────────── -->
 <a href="https://wa.me/50497946129?text=Hola!%20Quiero%20una%20página%20web%20para%20mi%20negocio"
@@ -140,7 +295,7 @@
         </div>
 
         <a href="https://wa.me/50497946129" target="_blank" rel="noopener"
-           class="text-[13px] font-semibold bg-blue hover:bg-blue-light text-white px-5 py-2 rounded-full transition-colors">
+           class="magnetic text-[13px] font-semibold bg-blue hover:bg-blue-light text-white px-5 py-2 rounded-full transition-colors">
             Cotizar gratis
         </a>
     </div>
@@ -173,7 +328,7 @@
             <div class="flex flex-wrap gap-4">
                 <a href="https://wa.me/50497946129?text=Hola!%20Quiero%20una%20cotización%20para%20mi%20web"
                    target="_blank" rel="noopener"
-                   class="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white font-bold px-7 py-4 rounded-full transition-colors shadow-lg text-[15px]">
+                   class="magnetic inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white font-bold px-7 py-4 rounded-full transition-colors shadow-lg text-[15px]">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                     Cotización gratis
                 </a>
@@ -183,6 +338,7 @@
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
                 </a>
             </div>
+            <p class="text-xs text-muted mt-5">¿No sabés qué plan necesitás? <button id="quiz-open" style="background:none;border:none;cursor:pointer;padding:0" class="text-blue hover:underline font-semibold">Descubrilo en 30 segundos →</button></p>
 
             <!-- Stats -->
             <div class="flex items-center gap-7 mt-11 pt-8 border-t border-white/5">
@@ -283,6 +439,44 @@
     </div>
 </section>
 
+<!-- ─── LIVE COUNTER STRIP ────────────────────────────────────── -->
+<div class="border-y border-white/5 py-3.5 px-5" style="background:rgba(26,107,255,.05)">
+    <p class="text-center text-sm text-muted">
+        <span class="inline-flex items-center gap-1.5 mr-1"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block"></span></span>
+        En el último minuto, <span id="live-count" class="text-white font-bold mx-1">—</span> personas buscaron negocios como el tuyo en Google
+    </p>
+</div>
+
+<!-- ─── MARQUEE ────────────────────────────────────────────────── -->
+<div class="marquee-outer border-b border-white/5 py-4" style="background:var(--surface)">
+    <div class="marquee-inner text-[13px] font-semibold text-muted select-none">
+        <span class="flex items-center gap-8 pr-8">
+            <span>Diseño Web Profesional</span><span class="text-blue">·</span>
+            <span>48h de Entrega</span><span class="text-blue">·</span>
+            <span>Honduras</span><span class="text-blue">·</span>
+            <span>100% Responsivo</span><span class="text-blue">·</span>
+            <span>WhatsApp Integrado</span><span class="text-blue">·</span>
+            <span>SEO Optimizado</span><span class="text-blue">·</span>
+            <span>Panel de Administrador</span><span class="text-blue">·</span>
+            <span>Citas en Línea</span><span class="text-blue">·</span>
+            <span>E-commerce</span><span class="text-blue">·</span>
+            <span>50% al Iniciar · 50% al Entregar</span><span class="text-blue">·</span>
+        </span>
+        <span class="flex items-center gap-8 pr-8" aria-hidden="true">
+            <span>Diseño Web Profesional</span><span class="text-blue">·</span>
+            <span>48h de Entrega</span><span class="text-blue">·</span>
+            <span>Honduras</span><span class="text-blue">·</span>
+            <span>100% Responsivo</span><span class="text-blue">·</span>
+            <span>WhatsApp Integrado</span><span class="text-blue">·</span>
+            <span>SEO Optimizado</span><span class="text-blue">·</span>
+            <span>Panel de Administrador</span><span class="text-blue">·</span>
+            <span>Citas en Línea</span><span class="text-blue">·</span>
+            <span>E-commerce</span><span class="text-blue">·</span>
+            <span>50% al Iniciar · 50% al Entregar</span><span class="text-blue">·</span>
+        </span>
+    </div>
+</div>
+
 <!-- ─── VALUE PROPS ───────────────────────────────────────────── -->
 <section class="py-16 border-t border-white/5">
     <div class="max-w-6xl mx-auto px-5">
@@ -334,10 +528,11 @@
             <p class="text-muted max-w-lg mx-auto">No importa el rubro. Si tienes un negocio, nosotros lo llevamos al mundo digital.</p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-5">
+        <div class="bento-grid">
 
+            <!-- Restaurantes -->
             <div class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
-                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/5 group-hover:bg-blue/10 transition-colors"></div>
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-orange-500/5 group-hover:bg-orange-500/10 transition-colors"></div>
                 <div class="relative">
                     <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-4">
                         <svg class="text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
@@ -347,8 +542,9 @@
                 </div>
             </div>
 
+            <!-- Salones -->
             <div class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
-                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/5 group-hover:bg-blue/10 transition-colors"></div>
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-purple-500/5 group-hover:bg-purple-500/10 transition-colors"></div>
                 <div class="relative">
                     <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4">
                         <svg class="text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"/></svg>
@@ -358,8 +554,9 @@
                 </div>
             </div>
 
+            <!-- Tiendas -->
             <div class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
-                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/5 group-hover:bg-blue/10 transition-colors"></div>
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-cyan/5 group-hover:bg-cyan/10 transition-colors"></div>
                 <div class="relative">
                     <div class="w-10 h-10 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center mb-4">
                         <svg class="text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
@@ -369,19 +566,23 @@
                 </div>
             </div>
 
-            <div class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
-                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/5 group-hover:bg-blue/10 transition-colors"></div>
-                <div class="relative">
-                    <div class="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center mb-4">
+            <!-- Clínicas — ancho doble -->
+            <div class="reveal card group bento-wide bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-green-500/5 group-hover:bg-green-500/8 transition-colors"></div>
+                <div class="relative md:flex md:items-start md:gap-5">
+                    <div class="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center mb-4 md:mb-0 flex-shrink-0">
                         <svg class="text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
                     </div>
-                    <h3 class="font-bold text-white mb-2">Clínicas Médicas</h3>
-                    <p class="text-muted text-sm leading-relaxed">Información de especialistas, servicios y sistema de citas integrado.</p>
+                    <div>
+                        <h3 class="font-bold text-white mb-2">Clínicas Médicas</h3>
+                        <p class="text-muted text-sm leading-relaxed">Información de especialistas, servicios y sistema de citas integrado para gestionar tus pacientes de forma profesional.</p>
+                    </div>
                 </div>
             </div>
 
+            <!-- Portafolios -->
             <div class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden">
-                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/5 group-hover:bg-blue/10 transition-colors"></div>
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-yellow-500/5 group-hover:bg-yellow-500/10 transition-colors"></div>
                 <div class="relative">
                     <div class="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center mb-4">
                         <svg class="text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
@@ -391,14 +592,22 @@
                 </div>
             </div>
 
-            <div class="reveal card group bg-blue/10 border border-blue/20 rounded-2xl p-6 relative overflow-hidden">
-                <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full bg-blue/10 group-hover:bg-blue/15 transition-colors"></div>
-                <div class="relative">
-                    <div class="w-10 h-10 rounded-xl bg-blue/20 border border-blue/30 flex items-center justify-center mb-4">
-                        <svg class="text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <!-- ¿Ya tienes web? — ancho completo, layout horizontal -->
+            <div class="reveal card group bento-full bg-blue/8 border border-blue/20 rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute inset-0 grid-mesh opacity-30"></div>
+                <div class="relative flex flex-col md:flex-row md:items-center gap-5">
+                    <div class="w-12 h-12 rounded-2xl bg-blue/20 border border-blue/30 flex items-center justify-center flex-shrink-0">
+                        <svg class="text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:20px;height:20px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                     </div>
-                    <h3 class="font-bold text-white mb-2">¿Ya tienes web?</h3>
-                    <p class="text-muted text-sm leading-relaxed">La modernizamos y actualizamos para que siempre esté a la altura de tu negocio.</p>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-white mb-1">¿Ya tenés web pero necesita una actualización?</h3>
+                        <p class="text-muted text-sm">La modernizamos, la hacemos más rápida y la dejamos a la altura de tu negocio actual.</p>
+                    </div>
+                    <a href="https://wa.me/50497946129?text=Hola!%20Tengo%20una%20web%20y%20quisiera%20modernizarla"
+                       target="_blank" rel="noopener"
+                       class="flex-shrink-0 text-sm font-semibold border border-blue/40 hover:bg-blue text-blue hover:text-white px-5 py-2.5 rounded-xl transition-all whitespace-nowrap">
+                        Modernizar mi web →
+                    </a>
                 </div>
             </div>
 
@@ -803,7 +1012,94 @@
 
 <!-- ─── SCRIPTS ───────────────────────────────────────────────── -->
 <script>
-    // Typing animation
+    // ── Cursor glow ──────────────────────────────────────────────
+    const glow = document.getElementById('cursor-glow');
+    let mx = -500, my = -500, gx = -500, gy = -500;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function animGlow() {
+        gx += (mx - gx) * .09;
+        gy += (my - gy) * .09;
+        glow.style.left = gx + 'px';
+        glow.style.top  = gy + 'px';
+        requestAnimationFrame(animGlow);
+    })();
+
+    // ── Magnetic buttons ──────────────────────────────────────────
+    document.querySelectorAll('.magnetic').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+            const r = btn.getBoundingClientRect();
+            const x = (e.clientX - r.left - r.width  / 2) * .28;
+            const y = (e.clientY - r.top  - r.height / 2) * .28;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
+
+    // ── Live counter ──────────────────────────────────────────────
+    const liveEl = document.getElementById('live-count');
+    if (liveEl) {
+        let n = Math.floor(Math.random() * 35) + 52;
+        liveEl.textContent = n;
+        setInterval(() => {
+            n += Math.floor(Math.random() * 3) + 1;
+            liveEl.textContent = n;
+        }, Math.floor(Math.random() * 3500) + 2800);
+    }
+
+    // ── Quiz ──────────────────────────────────────────────────────
+    const qData = { business: '', features: [], plan: '', price: '' };
+
+    function qShowStep(id) {
+        document.querySelectorAll('.quiz-step').forEach(s => s.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+        const stepNum = parseInt(id.replace('qstep-','')) || 4;
+        document.querySelectorAll('.quiz-prog').forEach(b => {
+            b.classList.toggle('bg-blue',    parseInt(b.dataset.s) <= stepNum);
+            b.classList.toggle('bg-white/10', parseInt(b.dataset.s) >  stepNum);
+        });
+    }
+
+    const overlay = document.getElementById('quiz-overlay');
+    document.getElementById('quiz-open')?.addEventListener('click', () => {
+        overlay.classList.add('open');
+        qShowStep('qstep-1');
+    });
+    document.getElementById('quiz-close').addEventListener('click', () => overlay.classList.remove('open'));
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+
+    document.querySelectorAll('#qstep-1 .quiz-opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+            qData.business = btn.dataset.val;
+            document.querySelectorAll('#qstep-1 .quiz-opt').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            setTimeout(() => qShowStep('qstep-2'), 280);
+        });
+    });
+
+    document.getElementById('qnext2').addEventListener('click', () => {
+        qData.features = [...document.querySelectorAll('.quiz-check:checked')].map(c => c.value);
+        qShowStep('qstep-3');
+    });
+
+    document.querySelectorAll('.quiz-opt-budget').forEach(btn => {
+        btn.addEventListener('click', () => {
+            qData.plan  = btn.dataset.plan;
+            qData.price = btn.dataset.price;
+            const descs = {
+                'Básico':       'Una landing page elegante para presentar tu negocio y captar clientes directo por WhatsApp.',
+                'Profesional':  'Landing page con bases de datos, sistemas integrados y panel de administración.',
+                'Avanzado':     'Todo lo anterior más reportes de clientes, artículos y módulo completo de ventas.'
+            };
+            document.getElementById('q-result-plan').textContent = `Plan ${qData.plan} — ${qData.price}`;
+            document.getElementById('q-result-desc').textContent = descs[qData.plan] || '';
+            const feat = qData.features.length ? ` Necesito: ${qData.features.join(', ')}.` : '';
+            const msg  = encodeURIComponent(`Hola NextDigital! Tengo un(a) ${qData.business}.${feat} Me interesa el Plan ${qData.plan} (${qData.price}).`);
+            document.getElementById('q-result-wa').href = `https://wa.me/50497946129?text=${msg}`;
+            qShowStep('qstep-result');
+        });
+    });
+
+    // ── Typing animation
     const words = ['tu restaurante', 'tu barbería', 'tu tienda', 'tu clínica', 'tu negocio'];
     const el = document.getElementById('typing-target');
     let wi = 0, ci = 0, deleting = false;
