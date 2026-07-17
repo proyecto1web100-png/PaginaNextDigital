@@ -294,6 +294,53 @@
         }
         .cfg-tick { display: none; }
         .cfg-check:checked + .cfg-label .cfg-tick { display: block; }
+
+        /* ── Project result badge ─────────────────────────────── */
+        .result-badge {
+            position: absolute; top: 12px; right: 12px; z-index: 4;
+            display: inline-flex; align-items: center; gap: 5px;
+            background: rgba(16,185,129,.16); backdrop-filter: blur(8px);
+            border: 1px solid rgba(16,185,129,.35);
+            color: #34D399; font-size: 11px; font-weight: 800;
+            padding: 4px 10px; border-radius: 20px; letter-spacing: .02em;
+        }
+        .result-badge .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #34D399; box-shadow: 0 0 0 0 rgba(52,211,153,.6);
+            animation: wa-pulse 2.2s infinite;
+        }
+
+        /* ── Case-study modal ─────────────────────────────────── */
+        .case-overlay {
+            position: fixed; inset: 0;
+            background: rgba(8,13,26,.9);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            z-index: 210;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity .3s ease;
+        }
+        .case-overlay.open { opacity: 1; pointer-events: all; }
+        .case-modal {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 24px;
+            max-width: 520px; width: 92%;
+            max-height: 90vh; overflow-y: auto;
+            position: relative;
+            transform: translateY(16px) scale(.98);
+            transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+        }
+        .case-overlay.open .case-modal { transform: translateY(0) scale(1); }
+        .case-step {
+            display: flex; gap: 14px; padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+        .case-step:last-child { border-bottom: none; }
+        .case-step-icon {
+            width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; font-size: 18px;
+        }
     </style>
     <script>
         tailwind.config = {
@@ -816,6 +863,7 @@
             <h2 class="text-4xl md:text-5xl font-black text-white">
                 Proyectos que hablan<br>por sí solos
             </h2>
+            <p class="text-muted text-sm mt-4">Negocios reales, sitios en vivo. Hacé clic para visitarlos o ver el caso completo.</p>
         </div>
 
         <!-- Before / After slider -->
@@ -868,47 +916,143 @@
             </div>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-5 max-w-3xl mx-auto">
+        <div class="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
 
-            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5">
-                <div class="h-52 relative overflow-hidden">
-                    <img src="img/kenias-studio.png" alt="Kenias Studio" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent"></div>
+            <!-- Kenias Studio -->
+            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5 flex flex-col">
+                <a href="https://keniastudio.netlify.app/" target="_blank" rel="noopener" class="block h-52 relative overflow-hidden">
+                    <img src="img/kenias-studio.png" alt="Web de Kenias Studio" loading="lazy" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent"></div>
+                    <div class="result-badge"><span class="dot"></span>+40% reservas</div>
                     <div class="absolute bottom-0 left-0 p-5">
                         <div class="text-pink-400 text-[10px] font-semibold mb-1 uppercase tracking-widest">Salón de belleza</div>
                         <div class="text-white font-black text-xl">Kenias Studio</div>
                     </div>
                     <div class="absolute inset-0 bg-blue/0 group-hover:bg-blue/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Ver proyecto</span>
+                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Visitar sitio →</span>
                     </div>
-                </div>
-                <div class="bg-surface px-5 py-4">
-                    <div class="font-bold text-white text-sm">Kenias Studio</div>
-                    <div class="text-muted text-xs mt-0.5">Sistema de citas · Catálogo de productos</div>
+                </a>
+                <div class="bg-surface px-5 py-4 flex-1 flex flex-col">
+                    <div class="text-muted text-xs leading-relaxed flex-1">Citas online 24/7 · catálogo de servicios · galería de trabajos.</div>
+                    <button class="case-btn mt-3 inline-flex items-center gap-1.5 text-blue text-xs font-bold hover:gap-2.5 transition-all"
+                            data-name="Kenias Studio" data-cat="Salón de belleza" data-badge="+40% reservas online"
+                            data-url="https://keniastudio.netlify.app/"
+                            data-problem="Kenias agendaba TODAS sus citas por mensajes de WhatsApp. Perdía clientas cuando no respondía a tiempo y gastaba horas repitiendo precios y horarios."
+                            data-solution="Le creamos una web con sistema de citas online 24/7, catálogo de servicios con precios claros y una galería con fotos reales de sus trabajos."
+                            data-result="Sus clientas ahora reservan solas a cualquier hora, incluso de madrugada. +40% de reservas y muchísimo menos tiempo respondiendo lo mismo.">
+                        Ver caso de estudio
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
                 </div>
             </div>
 
-            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5">
-                <div class="h-52 relative overflow-hidden">
-                    <img src="img/gabys-fashion.png" alt="Gabys Fashion" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
-                    <div class="absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent"></div>
+            <!-- Gabys Fashion -->
+            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5 flex flex-col">
+                <a href="https://gabysfashion.netlify.app/" target="_blank" rel="noopener" class="block h-52 relative overflow-hidden">
+                    <img src="img/gabys-fashion.png" alt="Web de Gabys Fashion" loading="lazy" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent"></div>
+                    <div class="result-badge"><span class="dot"></span>Vende 24/7</div>
                     <div class="absolute bottom-0 left-0 p-5">
                         <div class="text-purple-400 text-[10px] font-semibold mb-1 uppercase tracking-widest">Moda · E-commerce</div>
                         <div class="text-white font-black text-xl">Gabys Fashion</div>
                     </div>
                     <div class="absolute inset-0 bg-blue/0 group-hover:bg-blue/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
-                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Ver proyecto</span>
+                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Visitar sitio →</span>
                     </div>
+                </a>
+                <div class="bg-surface px-5 py-4 flex-1 flex flex-col">
+                    <div class="text-muted text-xs leading-relaxed flex-1">Catálogo online · pedidos por WhatsApp · panel de inventario.</div>
+                    <button class="case-btn mt-3 inline-flex items-center gap-1.5 text-blue text-xs font-bold hover:gap-2.5 transition-all"
+                            data-name="Gabys Fashion" data-cat="Moda · E-commerce" data-badge="Vende las 24 horas"
+                            data-url="https://gabysfashion.netlify.app/"
+                            data-problem="Gaby vendía solo por Instagram. Cada venta dependía de que ella respondiera, y perdía clientes cuando estaba ocupada o dormida."
+                            data-solution="Construimos un catálogo online con carrito que ordena directo por WhatsApp, fotos profesionales de cada prenda y un panel para administrar el inventario."
+                            data-result="Su tienda ahora vende sola las 24 horas. Los clientes ven todo el catálogo, arman su pedido y lo envían por WhatsApp al instante.">
+                        Ver caso de estudio
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
                 </div>
-                <div class="bg-surface px-5 py-4">
-                    <div class="font-bold text-white text-sm">Gabys Fashion</div>
-                    <div class="text-muted text-xs mt-0.5">Catálogo online · Sistema CRM</div>
+            </div>
+
+            <!-- Legal Force -->
+            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5 flex flex-col">
+                <a href="https://legalforcehn.netlify.app/" target="_blank" rel="noopener" class="block h-52 relative overflow-hidden">
+                    <img src="img/legal-force.png" alt="Web de Legal Force Bufete Jurídico" loading="lazy" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent"></div>
+                    <div class="result-badge"><span class="dot"></span>Imagen profesional</div>
+                    <div class="absolute bottom-0 left-0 p-5">
+                        <div class="text-yellow-500 text-[10px] font-semibold mb-1 uppercase tracking-widest">Bufete jurídico</div>
+                        <div class="text-white font-black text-xl">Legal Force</div>
+                    </div>
+                    <div class="absolute inset-0 bg-blue/0 group-hover:bg-blue/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Visitar sitio →</span>
+                    </div>
+                </a>
+                <div class="bg-surface px-5 py-4 flex-1 flex flex-col">
+                    <div class="text-muted text-xs leading-relaxed flex-1">Web corporativa · áreas de práctica · contacto directo por WhatsApp.</div>
+                    <button class="case-btn mt-3 inline-flex items-center gap-1.5 text-blue text-xs font-bold hover:gap-2.5 transition-all"
+                            data-name="Legal Force" data-cat="Bufete jurídico" data-badge="Autoridad y confianza legal"
+                            data-url="https://legalforcehn.netlify.app/"
+                            data-problem="El bufete no tenía presencia digital. Los clientes potenciales no encontraban información de sus servicios ni una forma clara y profesional de contactarlos."
+                            data-solution="Diseñamos una web corporativa elegante con las áreas de práctica, el perfil del abogado, casos de éxito y contacto directo por WhatsApp — con una imagen de marca navy y dorado que transmite seriedad."
+                            data-result="El bufete hoy proyecta confianza y autoridad legal. Los clientes conocen sus servicios y contactan directo desde la web, sin intermediarios.">
+                        Ver caso de estudio
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
                 </div>
             </div>
 
         </div>
     </div>
 </section>
+
+<!-- ─── CASE STUDY MODAL ───────────────────────────────────────── -->
+<div class="case-overlay" id="case-overlay">
+    <div class="case-modal">
+        <div class="p-7">
+            <button id="case-close" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer" class="text-muted hover:text-white transition-colors" aria-label="Cerrar">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div class="text-blue text-[11px] font-semibold uppercase tracking-widest mb-1" id="case-cat">Rubro</div>
+            <h3 class="text-2xl font-black text-white mb-1" id="case-name">Proyecto</h3>
+            <div class="result-badge" style="position:static;display:inline-flex;margin-bottom:20px" id="case-badge"><span class="dot"></span>Resultado</div>
+
+            <div class="case-step">
+                <div class="case-step-icon" style="background:rgba(239,68,68,.12)">🔴</div>
+                <div>
+                    <div class="text-white font-bold text-sm mb-1">El problema</div>
+                    <div class="text-muted text-sm leading-relaxed" id="case-problem"></div>
+                </div>
+            </div>
+            <div class="case-step">
+                <div class="case-step-icon" style="background:rgba(26,107,255,.14)">💡</div>
+                <div>
+                    <div class="text-white font-bold text-sm mb-1">Lo que hicimos</div>
+                    <div class="text-muted text-sm leading-relaxed" id="case-solution"></div>
+                </div>
+            </div>
+            <div class="case-step">
+                <div class="case-step-icon" style="background:rgba(16,185,129,.14)">🚀</div>
+                <div>
+                    <div class="text-white font-bold text-sm mb-1">El resultado</div>
+                    <div class="text-muted text-sm leading-relaxed" id="case-result"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mt-6">
+                <a id="case-visit" href="#" target="_blank" rel="noopener"
+                   class="text-center bg-blue hover:bg-blue-light text-white font-bold py-3 rounded-xl transition-colors text-sm">
+                    Ver sitio en vivo →
+                </a>
+                <a id="case-wa" href="#" target="_blank" rel="noopener"
+                   class="text-center bg-[#25D366] hover:bg-[#20B858] text-white font-bold py-3 rounded-xl transition-colors text-sm">
+                    Quiero algo así
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- ─── TESTIMONIALS ───────────────────────────────────────────── -->
 <section id="testimonios" class="py-24 border-y border-white/5" style="background:rgba(15,22,40,.5)">
@@ -1731,6 +1875,36 @@
         );
         window.open(`https://wa.me/?text=${msg}`, '_blank', 'noopener');
     });
+
+    // ── Case-study modal ──────────────────────────────────────────
+    (function () {
+        const cOverlay = document.getElementById('case-overlay');
+        if (!cOverlay) return;
+        const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+        document.querySelectorAll('.case-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const d = btn.dataset;
+                set('case-cat', d.cat);
+                set('case-name', d.name);
+                document.getElementById('case-problem').textContent = d.problem;
+                document.getElementById('case-solution').textContent = d.solution;
+                document.getElementById('case-result').textContent = d.result;
+                const badge = document.getElementById('case-badge');
+                badge.innerHTML = '<span class="dot"></span>' + d.badge;
+                document.getElementById('case-visit').href = d.url;
+                document.getElementById('case-wa').href =
+                    'https://wa.me/50497946129?text=' +
+                    encodeURIComponent(`Hola NextDigital! Vi el proyecto de ${d.name} y quiero una web así para mi negocio.`);
+                cOverlay.classList.add('open');
+            });
+        });
+
+        const closeCase = () => cOverlay.classList.remove('open');
+        document.getElementById('case-close').addEventListener('click', closeCase);
+        cOverlay.addEventListener('click', e => { if (e.target === cOverlay) closeCase(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCase(); });
+    })();
 </script>
 </body>
 </html>
