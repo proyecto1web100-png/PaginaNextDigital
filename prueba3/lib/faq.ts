@@ -42,6 +42,15 @@ export const FAQS: Faq[] = [
     keywords: ["avance", "portal", "seguimiento", "estado", "proyecto", "acceso", "login", "cuenta"],
   },
   {
+    q: "¿Trabajan con negocios de mi ciudad?",
+    a: "Sí. Trabajamos con negocios de todo Honduras: Tegucigalpa, San Pedro Sula, La Ceiba, Choloma, El Progreso, Comayagua, Choluteca, Danlí, Siguatepeque, Juticalpa, Puerto Cortés, Roatán y cualquier otra ciudad. Todo el proceso se hace por WhatsApp, así que no importa dónde esté tu negocio.",
+    keywords: [
+      "ciudad", "donde", "ubicados", "ubicacion", "honduras", "tegucigalpa", "tegus", "san pedro", "sps", "ceiba",
+      "choloma", "progreso", "comayagua", "choluteca", "danli", "siguatepeque", "juticalpa", "puerto cortes",
+      "copan", "roatan", "remoto", "distancia", "departamento",
+    ],
+  },
+  {
     q: "¿Mi página se verá bien en el celular?",
     a: "Sí. Todas nuestras páginas se diseñan primero para celular y se adaptan a tablet y computadora. También quedan optimizadas para cargar rápido y aparecer en Google.",
     keywords: ["celular", "movil", "telefono", "responsive", "responsivo", "google", "seo"],
