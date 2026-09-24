@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextDigital — Tu negocio en digital</title>
+    <meta name="description" content="Creamos páginas web profesionales para emprendedores. Diseño responsivo, rápido y que convierte visitas en clientes.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://proyecto1web100-png.github.io/PaginaNextDigital/">
+    <meta property="og:title" content="NextDigital — Páginas web profesionales en Honduras">
+    <meta property="og:description" content="Creamos páginas web profesionales para emprendedores. Diseño responsivo, entrega en 48h y 100% satisfacción garantizada. Desde $99.">
+    <meta property="og:image" content="https://proyecto1web100-png.github.io/PaginaNextDigital/og-image.png">
+    <meta property="og:locale" content="es_HN">
+    <meta property="og:site_name" content="NextDigital">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="NextDigital — Tu negocio en digital">
+    <meta name="twitter:description" content="Páginas web profesionales para emprendedores en Honduras. Entrega en 48h, desde $99.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; }
+        html { overflow-x: hidden; max-width: 100%; }
+
+        :root {
+            --ink: #080D1A;
+            --surface: #0F1628;
+            --surface2: #162035;
+            --blue: #1A6BFF;
+            --blue-light: #4D8FFF;
+            --cyan: #38BDF8;
+            --muted: #8B9BB4;
+        }
+
+        body { font-family: 'Inter', sans-serif; background: var(--ink); color: #fff; overflow-x: hidden; max-width: 100%; }
+        section, footer, nav { max-width: 100%; overflow: hidden; }
+        h1, h2, h3, h4, h5 { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        .gradient-text {
+            background: linear-gradient(130deg, #fff 0%, var(--blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .blue-gradient-text {
+            background: linear-gradient(130deg, var(--blue) 0%, var(--cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .grid-mesh {
+            background-image:
+                linear-gradient(rgba(26,107,255,.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(26,107,255,.06) 1px, transparent 1px);
+            background-size: 56px 56px;
+        }
+
+        /* Typing cursor */
+        #typing-target::after {
+            content: '|';
+            color: var(--blue);
+            animation: blink .7s infinite;
+        }
+        @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+        /* Float */
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+        .float  { animation: float 4s ease-in-out infinite; }
+        .float2 { animation: float 4s ease-in-out infinite 1.2s; }
+
+        /* WA pulse */
+        @keyframes wa-pulse {
+            0%   { box-shadow: 0 0 0 0 rgba(37,211,102,.5); }
+            70%  { box-shadow: 0 0 0 14px rgba(37,211,102,0); }
+            100% { box-shadow: 0 0 0 0 rgba(37,211,102,0); }
+        }
+        .wa-btn { animation: wa-pulse 2.2s infinite; }
+
+        /* Reveal */
+        .reveal { opacity:0; transform:translateY(28px); transition: opacity .6s ease, transform .6s ease; }
+        .reveal.visible { opacity:1; transform:translateY(0); }
+
+        /* Cards */
+        .card { transition: transform .2s ease, border-color .2s ease; }
+        .card:hover { transform: translateY(-4px); border-color: rgba(26,107,255,.35) !important; }
+
+        /* Nav blur */
+        .nav-blur { backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+
+        /* Cursor glow */
+        #cursor-glow {
+            pointer-events: none;
+            position: fixed;
+            width: 520px; height: 520px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(26,107,255,.11) 0%, transparent 65%);
+            top: 0; left: 0;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            will-change: transform;
+        }
+
+        /* Marquee */
+        .marquee-outer { overflow: hidden; width: 100%; max-width: 100vw; }
+        .marquee-inner { display: flex; width: max-content; animation: marquee-run 30s linear infinite; will-change: transform; }
+        .marquee-inner:hover { animation-play-state: paused; }
+        @keyframes marquee-run { to { transform: translateX(-50%); } }
+
+        /* FAQ accordion */
+        .faq-body { max-height: 0; overflow: hidden; transition: max-height .38s ease; }
+        .faq-item.open .faq-body { max-height: 340px; }
+        .faq-icon { transition: transform .3s ease; }
+        .faq-item.open .faq-icon { transform: rotate(45deg); }
+        .faq-toggle { background: none; border: none; cursor: pointer; }
+
+        /* Magnetic */
+        .magnetic { transition: transform .35s cubic-bezier(.23,1,.32,1); }
+
+        /* Bento grid */
+        .bento-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+        .bento-wide { grid-column: span 2; }
+        .bento-full { grid-column: span 3; }
+        @media (max-width:767px) {
+            .bento-grid { grid-template-columns: 1fr 1fr; }
+            .bento-wide { grid-column: span 2; }
+            .bento-full { grid-column: span 2; }
+        }
+
+        /* Quiz overlay */
+        .quiz-overlay {
+            position: fixed; inset: 0;
+            background: rgba(8,13,26,.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 200;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity .3s ease;
+        }
+        .quiz-overlay.open { opacity: 1; pointer-events: all; }
+        .quiz-modal {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 24px;
+            padding: 36px;
+            max-width: 460px; width: 92%;
+            max-height: 90vh; overflow-y: auto;
+            position: relative;
+        }
+        .quiz-step.hidden { display: none; }
+        .quiz-opt, .quiz-opt-budget {
+            background: var(--surface2);
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 14px; cursor: pointer;
+            transition: border-color .2s, background .2s;
+            text-align: left; width: 100%;
+        }
+        .quiz-opt:hover, .quiz-opt-budget:hover { border-color: rgba(26,107,255,.4); }
+        .quiz-opt.selected, .quiz-opt-budget.selected { border-color: var(--blue); background: rgba(26,107,255,.12); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .float, .float2, .wa-btn, #typing-target::after { animation: none; }
+            .reveal { opacity:1; transform:none; }
+            .faq-body { transition: none; }
+            .marquee-inner { animation: none; }
+        }
+
+        /* ── Scroll progress bar ──────────────────────────────── */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue), var(--cyan));
+            z-index: 9999; will-change: width; pointer-events: none;
+        }
+
+        /* ── Sticky bottom CTA (mobile only) ─────────────────── */
+        #sticky-cta {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 58;
+            padding: 12px 16px;
+            padding-bottom: max(12px, env(safe-area-inset-bottom));
+            background: rgba(8,13,26,.96);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255,255,255,.08);
+            transform: translateY(100%);
+            transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+        }
+        #sticky-cta.show { transform: translateY(0); }
+        @media (min-width: 768px) { #sticky-cta { display: none !important; } }
+        @media (max-width: 767px) { .wa-btn { bottom: 80px !important; } }
+
+        /* ── Glassmorphism stats card ─────────────────────────── */
+        .glass-stat {
+            background: rgba(255,255,255,.04);
+            backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 20px;
+        }
+
+        /* ── Before / After slider ────────────────────────────── */
+        .ba-wrap {
+            position: relative; overflow: hidden; border-radius: 16px;
+            cursor: ew-resize; -webkit-user-select: none; user-select: none;
+            touch-action: pan-y;
+        }
+        .ba-after-img {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: top left;
+            will-change: clip-path;
+        }
+        .ba-line {
+            position: absolute; top: 0; bottom: 0; left: 50%;
+            width: 2px; background: rgba(255,255,255,.9);
+            transform: translateX(-50%); z-index: 5; pointer-events: none;
+            will-change: left;
+        }
+        .ba-handle {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 42px; height: 42px; border-radius: 50%;
+            background: #fff; z-index: 6; pointer-events: none;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 24px rgba(0,0,0,.4);
+        }
+        .ba-badge {
+            position: absolute; top: 10px; z-index: 4;
+            background: rgba(0,0,0,.65); backdrop-filter: blur(8px);
+            color: #fff; font-size: 10px; font-weight: 700;
+            padding: 3px 10px; border-radius: 20px;
+            text-transform: uppercase; letter-spacing: .06em; pointer-events: none;
+        }
+        .ba-badge.left { left: 10px; }
+        .ba-badge.right { right: 10px; }
+
+        /* ── Story testimonial card ───────────────────────────── */
+        .story-ring {
+            width: 56px; height: 56px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue) 0%, #a855f7 100%);
+            padding: 2.5px; flex-shrink: 0;
+        }
+        .story-ring-inner {
+            width: 100%; height: 100%; border-radius: 50%;
+            background: var(--surface2);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 16px; color: #a855f7;
+        }
+        .story-verified {
+            width: 16px; height: 16px; border-radius: 50%;
+            background: var(--blue); display: flex; align-items: center; justify-content: center;
+            position: absolute; bottom: -2px; right: -2px;
+            border: 2px solid var(--surface);
+        }
+
+        /* ── ROI Calculator slider ────────────────────────────── */
+        .roi-slider {
+            -webkit-appearance: none; appearance: none;
+            width: 100%; height: 4px;
+            background: var(--surface2); border-radius: 2px; outline: none; cursor: pointer;
+        }
+        .roi-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+            background: var(--blue); cursor: pointer;
+            border: 2px solid rgba(255,255,255,.15);
+            box-shadow: 0 2px 10px rgba(26,107,255,.5);
+        }
+        .roi-slider::-moz-range-thumb {
+            width: 22px; height: 22px; border-radius: 50%;
+            background: var(--blue); cursor: pointer; border: none;
+            box-shadow: 0 2px 10px rgba(26,107,255,.5);
+        }
+
+        /* ── Price configurator ───────────────────────────────── */
+        .cfg-check { display: none; }
+        .cfg-label {
+            display: flex; align-items: center; gap-x: 12px; gap: 12px;
+            background: var(--surface2); border: 1px solid rgba(255,255,255,.06);
+            border-radius: 14px; padding: 14px 16px; cursor: pointer;
+            transition: border-color .2s, background .2s;
+            -webkit-user-select: none; user-select: none;
+        }
+        .cfg-label:hover { border-color: rgba(26,107,255,.3); }
+        .cfg-check:checked + .cfg-label {
+            border-color: var(--blue); background: rgba(26,107,255,.1);
+        }
+        .cfg-box {
+            width: 18px; height: 18px; border-radius: 5px; flex-shrink: 0;
+            border: 2px solid rgba(255,255,255,.2);
+            display: flex; align-items: center; justify-content: center;
+            transition: background .2s, border-color .2s;
+        }
+        .cfg-check:checked + .cfg-label .cfg-box {
+            background: var(--blue); border-color: var(--blue);
+        }
+        .cfg-tick { display: none; }
+        .cfg-check:checked + .cfg-label .cfg-tick { display: block; }
+
+        /* ── Project result badge ─────────────────────────────── */
+        .result-badge {
+            position: absolute; top: 12px; right: 12px; z-index: 4;
+            display: inline-flex; align-items: center; gap: 5px;
+            background: rgba(16,185,129,.16); backdrop-filter: blur(8px);
+            border: 1px solid rgba(16,185,129,.35);
+            color: #34D399; font-size: 11px; font-weight: 800;
+            padding: 4px 10px; border-radius: 20px; letter-spacing: .02em;
+        }
+        .result-badge .dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #34D399; box-shadow: 0 0 0 0 rgba(52,211,153,.6);
+            animation: wa-pulse 2.2s infinite;
+        }
+
+        /* ── Case-study modal ─────────────────────────────────── */
+        .case-overlay {
+            position: fixed; inset: 0;
+            background: rgba(8,13,26,.9);
+            backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            z-index: 210;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity .3s ease;
+        }
+        .case-overlay.open { opacity: 1; pointer-events: all; }
+        .case-modal {
+            background: var(--surface);
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 24px;
+            max-width: 520px; width: 92%;
+            max-height: 90vh; overflow-y: auto;
+            position: relative;
+            transform: translateY(16px) scale(.98);
+            transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+        }
+        .case-overlay.open .case-modal { transform: translateY(0) scale(1); }
+        .case-step {
+            display: flex; gap: 14px; padding: 16px 0;
+            border-bottom: 1px solid rgba(255,255,255,.05);
+        }
+        .case-step:last-child { border-bottom: none; }
+        .case-step-icon {
+            width: 38px; height: 38px; border-radius: 11px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center; font-size: 18px;
+        }
+    </style>
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: {
+                ink:'#080D1A', surface:'#0F1628', surface2:'#162035',
+                blue:'#1A6BFF', 'blue-light':'#4D8FFF', cyan:'#38BDF8', muted:'#8B9BB4'
+            }}}
+        }
+    </script>
+</head>
+<body class="bg-ink">
+
+<!-- Scroll progress bar -->
+<div id="scroll-progress"></div>
+
+<!-- Cursor glow -->
+<div id="cursor-glow"></div>
+
+<!-- ─── QUIZ MODAL ────────────────────────────────────────────── -->
+<div class="quiz-overlay" id="quiz-overlay">
+    <div class="quiz-modal">
+        <button id="quiz-close" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer" class="text-muted hover:text-white transition-colors" aria-label="Cerrar">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+
+        <!-- Progress bar -->
+        <div class="flex gap-1.5 mb-8">
+            <div class="quiz-prog h-1 flex-1 rounded-full bg-blue transition-all duration-300" data-s="1"></div>
+            <div class="quiz-prog h-1 flex-1 rounded-full bg-white/10 transition-all duration-300" data-s="2"></div>
+            <div class="quiz-prog h-1 flex-1 rounded-full bg-white/10 transition-all duration-300" data-s="3"></div>
+        </div>
+
+        <!-- Step 1: negocio -->
+        <div class="quiz-step" id="qstep-1">
+            <div class="text-blue text-xs font-semibold mb-2">Pregunta 1 de 3</div>
+            <h3 class="font-black text-white text-xl mb-6">¿Qué tipo de negocio tenés?</h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Restaurante o cafetería">🍽️ Restaurante / Cafetería</button>
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Salón de belleza o barbería">✂️ Salón / Barbería</button>
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Tienda o e-commerce">🛍️ Tienda / E-commerce</button>
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Clínica o consultorio">🏥 Clínica / Consultorio</button>
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Portafolio profesional">💼 Portafolio personal</button>
+                <button class="quiz-opt p-4 text-sm font-medium text-white" data-val="Otro tipo de negocio">✨ Otro negocio</button>
+            </div>
+        </div>
+
+        <!-- Step 2: funciones -->
+        <div class="quiz-step hidden" id="qstep-2">
+            <div class="text-blue text-xs font-semibold mb-2">Pregunta 2 de 3</div>
+            <h3 class="font-black text-white text-xl mb-6">¿Qué necesitás en tu web?</h3>
+            <div class="space-y-3">
+                <label class="flex items-center gap-3 p-4 rounded-2xl border border-white/6 bg-surface2 cursor-pointer hover:border-blue/30 transition-colors">
+                    <input type="checkbox" class="quiz-check w-4 h-4 accent-blue" value="presentación del negocio">
+                    <span class="text-sm text-white">Presentar mi negocio y servicios</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-2xl border border-white/6 bg-surface2 cursor-pointer hover:border-blue/30 transition-colors">
+                    <input type="checkbox" class="quiz-check w-4 h-4 accent-blue" value="catálogo de productos">
+                    <span class="text-sm text-white">Catálogo de productos</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-2xl border border-white/6 bg-surface2 cursor-pointer hover:border-blue/30 transition-colors">
+                    <input type="checkbox" class="quiz-check w-4 h-4 accent-blue" value="sistema de citas en línea">
+                    <span class="text-sm text-white">Sistema de citas en línea</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-2xl border border-white/6 bg-surface2 cursor-pointer hover:border-blue/30 transition-colors">
+                    <input type="checkbox" class="quiz-check w-4 h-4 accent-blue" value="tienda online con ventas">
+                    <span class="text-sm text-white">Tienda online con ventas</span>
+                </label>
+                <label class="flex items-center gap-3 p-4 rounded-2xl border border-white/6 bg-surface2 cursor-pointer hover:border-blue/30 transition-colors">
+                    <input type="checkbox" class="quiz-check w-4 h-4 accent-blue" value="panel de administración">
+                    <span class="text-sm text-white">Panel de administración</span>
+                </label>
+            </div>
+            <button id="qnext2" class="mt-6 w-full bg-blue hover:bg-blue-light text-white font-bold py-3.5 rounded-xl transition-colors">Siguiente →</button>
+        </div>
+
+        <!-- Step 3: presupuesto -->
+        <div class="quiz-step hidden" id="qstep-3">
+            <div class="text-blue text-xs font-semibold mb-2">Pregunta 3 de 3</div>
+            <h3 class="font-black text-white text-xl mb-6">¿Cuál es tu presupuesto?</h3>
+            <div class="space-y-3">
+                <button class="quiz-opt-budget w-full p-5" data-plan="Básico" data-price="L. 2,500">
+                    <div class="font-bold text-white text-sm">L. 2,500 — Plan Básico</div>
+                    <div class="text-muted text-xs mt-0.5">Landing page de presentación</div>
+                </button>
+                <button class="quiz-opt-budget w-full p-5" data-plan="Profesional" data-price="L. 3,000">
+                    <div class="font-bold text-white text-sm">L. 3,000 — Plan Profesional</div>
+                    <div class="text-muted text-xs mt-0.5">Con bases de datos y sistemas integrados</div>
+                </button>
+                <button class="quiz-opt-budget w-full p-5" data-plan="Avanzado" data-price="L. 3,500">
+                    <div class="font-bold text-white text-sm">L. 3,500 — Plan Avanzado</div>
+                    <div class="text-muted text-xs mt-0.5">Con reportes, ventas y panel completo</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Resultado -->
+        <div class="quiz-step hidden text-center" id="qstep-result">
+            <div class="w-16 h-16 rounded-2xl bg-blue/20 border border-blue/30 flex items-center justify-center mx-auto mb-5">
+                <svg class="w-8 h-8 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <div class="text-blue text-xs font-semibold mb-2">Tu plan ideal</div>
+            <h3 class="font-black text-white text-2xl mb-2" id="q-result-plan"></h3>
+            <p class="text-muted text-sm mb-7" id="q-result-desc"></p>
+            <a id="q-result-wa" href="#" target="_blank" rel="noopener"
+               class="inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white font-bold px-7 py-4 rounded-xl transition-colors shadow-lg text-sm">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Hablar por WhatsApp
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- ─── FLOATING WHATSAPP ─────────────────────────────────────── -->
+<a href="https://wa.me/50497946129?text=Hola!%20Quiero%20una%20página%20web%20para%20mi%20negocio"
+   target="_blank" rel="noopener"
+   class="wa-btn fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white text-sm font-semibold px-4 py-3 rounded-full shadow-2xl transition-colors">
+    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    Hablemos
+</a>
+
+<!-- ─── NAVBAR ────────────────────────────────────────────────── -->
+<nav class="fixed top-0 inset-x-0 z-40 nav-blur bg-ink/75 border-b border-white/5">
+    <div class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-surface2 border border-blue/30 flex items-center justify-center">
+                <span class="text-[11px] font-black blue-gradient-text">ND</span>
+            </div>
+            <span class="font-bold text-white text-[15px]">Next<span class="text-blue">Digital</span></span>
+        </div>
+
+        <div class="hidden md:flex items-center gap-6 text-[13px] text-muted font-medium">
+            <a href="#servicios" class="hover:text-white transition-colors">Servicios</a>
+            <a href="#precios"   class="hover:text-white transition-colors">Precios</a>
+            <a href="#proyectos" class="hover:text-white transition-colors">Proyectos</a>
+            <a href="#faq"       class="hover:text-white transition-colors">FAQ</a>
+            <a href="tel:+50497946129" class="flex items-center gap-1.5 text-cyan hover:text-white transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                9794-6129
+            </a>
+        </div>
+
+        <a href="https://wa.me/50497946129" target="_blank" rel="noopener"
+           class="magnetic text-[13px] font-semibold bg-blue hover:bg-blue-light text-white px-5 py-2 rounded-full transition-colors">
+            Cotizar gratis
+        </a>
+    </div>
+</nav>
+
+<!-- ─── HERO ──────────────────────────────────────────────────── -->
+<section class="relative min-h-screen grid-mesh flex items-center pt-16">
+    <!-- Glow blob -->
+    <div class="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-blue/8 blur-[130px]"></div>
+
+    <div class="relative max-w-6xl mx-auto px-5 py-24 grid md:grid-cols-2 gap-14 items-center w-full">
+
+        <!-- Copy -->
+        <div>
+            <div class="inline-flex items-center gap-2 bg-blue/10 border border-blue/20 text-blue text-xs font-semibold px-3 py-1.5 rounded-full mb-7">
+                <span class="w-1.5 h-1.5 rounded-full bg-cyan animate-pulse"></span>
+                Diseño web para emprendedores
+            </div>
+
+            <h1 class="text-[3.2rem] md:text-[3.8rem] font-black leading-[1.1] mb-5">
+                La web que<br>
+                <span id="typing-target" class="blue-gradient-text"></span><br>
+                <span class="text-white">necesita</span>
+            </h1>
+
+            <p class="text-muted text-lg leading-relaxed mb-9 max-w-md">
+                Creamos páginas web profesionales, rápidas y que convierten visitas en clientes reales. Tu negocio merece estar en digital.
+            </p>
+
+            <div class="flex flex-wrap gap-4">
+                <a href="https://wa.me/50497946129?text=Hola!%20Quiero%20una%20cotización%20para%20mi%20web"
+                   target="_blank" rel="noopener"
+                   class="magnetic inline-flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white font-bold px-7 py-4 rounded-full transition-colors shadow-lg text-[15px]">
+                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Cotización gratis
+                </a>
+                <a href="#proyectos"
+                   class="inline-flex items-center gap-2 border border-white/10 hover:border-blue/40 text-white font-semibold px-7 py-4 rounded-full transition-colors text-[15px]">
+                    Ver proyectos
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+                </a>
+            </div>
+            <p class="text-xs text-muted mt-5">¿No sabés qué plan necesitás? <button id="quiz-open" style="background:none;border:none;cursor:pointer;padding:0" class="text-blue hover:underline font-semibold">Descubrilo en 30 segundos →</button></p>
+
+            <!-- Stats — glassmorphism card -->
+            <div class="glass-stat mt-9 p-5 grid grid-cols-3 gap-4">
+                <div class="text-center">
+                    <div class="text-2xl font-black blue-gradient-text" data-count="48" data-suffix="h">48h</div>
+                    <div class="text-[11px] text-muted mt-0.5 leading-tight">Entrega rápida</div>
+                </div>
+                <div class="text-center border-x border-white/6">
+                    <div class="text-2xl font-black blue-gradient-text" data-count="100" data-suffix="%">100%</div>
+                    <div class="text-[11px] text-muted mt-0.5 leading-tight">Satisfacción</div>
+                </div>
+                <div class="text-center">
+                    <div class="flex justify-center gap-px mb-0.5">
+                        <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                        <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                    </div>
+                    <div class="text-[11px] text-muted leading-tight">Garantizado</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Device mockups -->
+        <div class="relative hidden md:flex items-center justify-center">
+            <!-- Laptop -->
+            <div class="float w-full max-w-sm">
+                <div class="bg-surface2 rounded-2xl border border-white/8 p-3 shadow-2xl">
+                    <div class="flex items-center gap-1.5 mb-2.5 px-1">
+                        <div class="w-2.5 h-2.5 rounded-full bg-red-500/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-yellow-400/50"></div>
+                        <div class="w-2.5 h-2.5 rounded-full bg-green-500/50"></div>
+                        <div class="flex-1 bg-white/5 rounded px-3 py-0.5 ml-2 text-[10px] text-muted">mirestaurante.hn</div>
+                    </div>
+                    <!-- Screen -->
+                    <div class="rounded-lg overflow-hidden h-52 bg-ink relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-orange-900/30 via-ink to-ink"></div>
+                        <!-- Nav mock -->
+                        <div class="relative flex items-center justify-between px-4 py-2 border-b border-white/5">
+                            <div class="text-[9px] font-bold text-white">SABORES</div>
+                            <div class="flex gap-2 text-[7px] text-muted">
+                                <span>Menú</span><span>Nosotros</span><span>Contacto</span>
+                            </div>
+                            <div class="bg-blue text-white text-[7px] px-2 py-0.5 rounded-full">Reservar</div>
+                        </div>
+                        <!-- Hero mock -->
+                        <div class="relative px-4 pt-4">
+                            <div class="text-[8px] text-orange-400 font-medium mb-1">RESTAURANTE · TEGUCIGALPA</div>
+                            <div class="text-white font-black text-sm leading-tight mb-3">Cocina que<br>te encanta</div>
+                            <div class="bg-blue text-white text-[8px] px-3 py-1 rounded-full inline-block font-semibold">Ver Menú</div>
+                        </div>
+                        <!-- Image placeholders -->
+                        <div class="absolute bottom-3 right-3 flex gap-1.5">
+                            <div class="w-10 h-10 rounded-lg bg-orange-800/30 border border-white/5"></div>
+                            <div class="w-10 h-10 rounded-lg bg-orange-700/20 border border-white/5"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Phone -->
+            <div class="float2 absolute -bottom-4 -right-2 w-24">
+                <div class="bg-surface2 rounded-[18px] border border-white/10 p-2 shadow-2xl">
+                    <div class="bg-ink rounded-[12px] overflow-hidden h-44">
+                        <div class="bg-gradient-to-b from-surface2 to-ink h-full p-2.5">
+                            <div class="text-[7px] text-blue font-bold mb-0.5">BARBERÍA</div>
+                            <div class="text-[9px] font-bold text-white leading-tight mb-2">Tu mejor<br>versión</div>
+                            <div class="bg-blue/20 border border-blue/30 rounded-lg p-2 mb-2">
+                                <div class="text-[7px] text-cyan text-center font-semibold">Reservar cita</div>
+                            </div>
+                            <div class="space-y-1">
+                                <div class="flex justify-between border-b border-white/5 pb-0.5">
+                                    <span class="text-[6px] text-muted">Corte</span>
+                                    <span class="text-[6px] text-white">$15</span>
+                                </div>
+                                <div class="flex justify-between border-b border-white/5 pb-0.5">
+                                    <span class="text-[6px] text-muted">Barba</span>
+                                    <span class="text-[6px] text-white">$10</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-[6px] text-muted">Combo</span>
+                                    <span class="text-[6px] text-white">$20</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Glow -->
+            <div class="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <div class="w-56 h-56 rounded-full bg-blue/20 blur-[70px]"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── LIVE COUNTER STRIP ────────────────────────────────────── -->
+<div class="border-y border-white/5 py-3.5 px-5" style="background:rgba(26,107,255,.05)">
+    <p class="text-center text-sm text-muted">
+        <span class="inline-flex items-center gap-1.5 mr-1"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse inline-block"></span></span>
+        En el último minuto, <span id="live-count" class="text-white font-bold mx-1">—</span> personas buscaron negocios como el tuyo en Google
+    </p>
+</div>
+
+<!-- ─── MARQUEE ────────────────────────────────────────────────── -->
+<div class="marquee-outer border-b border-white/5 py-4" style="background:var(--surface)">
+    <div class="marquee-inner text-[13px] font-semibold text-muted select-none">
+        <span class="flex items-center gap-8 pr-8">
+            <span>Diseño Web Profesional</span><span class="text-blue">·</span>
+            <span>48h de Entrega</span><span class="text-blue">·</span>
+            <span>Honduras</span><span class="text-blue">·</span>
+            <span>100% Responsivo</span><span class="text-blue">·</span>
+            <span>WhatsApp Integrado</span><span class="text-blue">·</span>
+            <span>SEO Optimizado</span><span class="text-blue">·</span>
+            <span>Panel de Administrador</span><span class="text-blue">·</span>
+            <span>Citas en Línea</span><span class="text-blue">·</span>
+            <span>E-commerce</span><span class="text-blue">·</span>
+            <span>50% al Iniciar · 50% al Entregar</span><span class="text-blue">·</span>
+        </span>
+        <span class="flex items-center gap-8 pr-8" aria-hidden="true">
+            <span>Diseño Web Profesional</span><span class="text-blue">·</span>
+            <span>48h de Entrega</span><span class="text-blue">·</span>
+            <span>Honduras</span><span class="text-blue">·</span>
+            <span>100% Responsivo</span><span class="text-blue">·</span>
+            <span>WhatsApp Integrado</span><span class="text-blue">·</span>
+            <span>SEO Optimizado</span><span class="text-blue">·</span>
+            <span>Panel de Administrador</span><span class="text-blue">·</span>
+            <span>Citas en Línea</span><span class="text-blue">·</span>
+            <span>E-commerce</span><span class="text-blue">·</span>
+            <span>50% al Iniciar · 50% al Entregar</span><span class="text-blue">·</span>
+        </span>
+    </div>
+</div>
+
+<!-- ─── VALUE PROPS ───────────────────────────────────────────── -->
+<section class="py-16 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-5">
+                <div class="w-9 h-9 rounded-xl bg-blue/10 flex items-center justify-center mb-4">
+                    <svg class="w-4.5 h-4.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                </div>
+                <div class="font-bold text-white text-sm mb-1">Responsivo</div>
+                <div class="text-xs text-muted leading-relaxed">Se adapta perfectamente a celular, tablet y computadora.</div>
+            </div>
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-5">
+                <div class="w-9 h-9 rounded-xl bg-blue/10 flex items-center justify-center mb-4">
+                    <svg class="w-4.5 h-4.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <div class="font-bold text-white text-sm mb-1">Ultra rápida</div>
+                <div class="text-xs text-muted leading-relaxed">Optimizada para cargar en segundos y no perder visitas.</div>
+            </div>
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-5">
+                <div class="w-9 h-9 rounded-xl bg-blue/10 flex items-center justify-center mb-4">
+                    <svg class="w-4.5 h-4.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                </div>
+                <div class="font-bold text-white text-sm mb-1">Más visibilidad</div>
+                <div class="text-xs text-muted leading-relaxed">Posicionada en Google para que te encuentren primero.</div>
+            </div>
+
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-5">
+                <div class="w-9 h-9 rounded-xl bg-blue/10 flex items-center justify-center mb-4">
+                    <svg class="w-4.5 h-4.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+                </div>
+                <div class="font-bold text-white text-sm mb-1">Segura</div>
+                <div class="text-xs text-muted leading-relaxed">Certificado SSL, backups y protección de datos incluidos.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── SERVICES ──────────────────────────────────────────────── -->
+<section id="servicios" class="py-24">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Para quién trabajamos</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-4">
+                Webs para todo tipo<br>de emprendimiento
+            </h2>
+            <p class="text-muted max-w-lg mx-auto">No importa el rubro. Si tienes un negocio, nosotros lo llevamos al mundo digital.</p>
+        </div>
+
+        <div class="bento-grid">
+
+            <!-- Restaurantes -->
+            <a href="https://wa.me/50497946129?text=Hola%20NextDigital!%20Tengo%20un%20restaurante%20o%20cafetería%20y%20quiero%20una%20web%20para%20mi%20negocio."
+               target="_blank" rel="noopener"
+               class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden block">
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-orange-500/5 group-hover:bg-orange-500/10 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center mb-4">
+                        <svg class="text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Restaurantes</h3>
+                    <p class="text-muted text-sm leading-relaxed">Menú digital, reservaciones en línea, galería y horarios siempre actualizados.</p>
+                    <span class="inline-flex items-center gap-1 text-orange-400 text-xs font-semibold mt-3 opacity-0 group-hover:opacity-100 transition-opacity">Ver opciones →</span>
+                </div>
+            </a>
+
+            <!-- Salones -->
+            <a href="https://wa.me/50497946129?text=Hola%20NextDigital!%20Tengo%20un%20salón%20de%20belleza%20o%20barbería%20y%20quiero%20una%20web%20para%20mi%20negocio."
+               target="_blank" rel="noopener"
+               class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden block">
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-purple-500/5 group-hover:bg-purple-500/10 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center mb-4">
+                        <svg class="text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.121 14.121L19 19m-7-7l7-7m-7 7l-2.879 2.879M12 12L9.121 9.121m0 5.758a3 3 0 10-4.243-4.243 3 3 0 004.243 4.243z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Salones y Barberías</h3>
+                    <p class="text-muted text-sm leading-relaxed">Sistema de citas online, lista de servicios con precios y galería de trabajos.</p>
+                    <span class="inline-flex items-center gap-1 text-purple-400 text-xs font-semibold mt-3 opacity-0 group-hover:opacity-100 transition-opacity">Ver opciones →</span>
+                </div>
+            </a>
+
+            <!-- Tiendas -->
+            <a href="https://wa.me/50497946129?text=Hola%20NextDigital!%20Tengo%20una%20tienda%20online%20o%20e-commerce%20y%20quiero%20una%20web%20para%20mi%20negocio."
+               target="_blank" rel="noopener"
+               class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden block">
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-cyan/5 group-hover:bg-cyan/10 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-cyan/10 border border-cyan/20 flex items-center justify-center mb-4">
+                        <svg class="text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Tiendas en línea</h3>
+                    <p class="text-muted text-sm leading-relaxed">Catálogo, carrito de compras y pasarela de pagos integrada.</p>
+                    <span class="inline-flex items-center gap-1 text-cyan text-xs font-semibold mt-3 opacity-0 group-hover:opacity-100 transition-opacity">Ver opciones →</span>
+                </div>
+            </a>
+
+            <!-- Clínicas -->
+            <a href="https://wa.me/50497946129?text=Hola%20NextDigital!%20Tengo%20una%20clínica%20o%20consultorio%20médico%20y%20quiero%20una%20web%20para%20mi%20negocio."
+               target="_blank" rel="noopener"
+               class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden block">
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-green-500/5 group-hover:bg-green-500/10 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-green-500/10 border border-green-500/20 flex items-center justify-center mb-4">
+                        <svg class="text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Clínicas</h3>
+                    <p class="text-muted text-sm leading-relaxed">Especialistas, servicios y sistema de citas para gestionar pacientes.</p>
+                    <span class="inline-flex items-center gap-1 text-green-400 text-xs font-semibold mt-3 opacity-0 group-hover:opacity-100 transition-opacity">Ver opciones →</span>
+                </div>
+            </a>
+
+            <!-- Portafolios -->
+            <a href="https://wa.me/50497946129?text=Hola%20NextDigital!%20Soy%20un%20profesional%20y%20quiero%20crear%20mi%20portafolio%20web%20personal."
+               target="_blank" rel="noopener"
+               class="reveal card group bg-surface border border-white/5 rounded-2xl p-6 relative overflow-hidden block">
+                <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-yellow-500/5 group-hover:bg-yellow-500/10 transition-colors"></div>
+                <div class="relative">
+                    <div class="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center mb-4">
+                        <svg class="text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:18px;height:18px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                    </div>
+                    <h3 class="font-bold text-white mb-2">Portafolios</h3>
+                    <p class="text-muted text-sm leading-relaxed">Muestra tu trabajo y trayectoria de forma memorable y profesional.</p>
+                    <span class="inline-flex items-center gap-1 text-yellow-400 text-xs font-semibold mt-3 opacity-0 group-hover:opacity-100 transition-opacity">Ver opciones →</span>
+                </div>
+            </a>
+
+            <!-- ¿Ya tienes web? — ancho completo, layout horizontal -->
+            <div class="reveal card group bento-full bg-blue/8 border border-blue/20 rounded-2xl p-6 relative overflow-hidden">
+                <div class="absolute inset-0 grid-mesh opacity-30"></div>
+                <div class="relative flex flex-col md:flex-row md:items-center gap-5">
+                    <div class="w-12 h-12 rounded-2xl bg-blue/20 border border-blue/30 flex items-center justify-center flex-shrink-0">
+                        <svg class="text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="width:20px;height:20px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="font-bold text-white mb-1">¿Ya tenés web pero necesita una actualización?</h3>
+                        <p class="text-muted text-sm">La modernizamos, la hacemos más rápida y la dejamos a la altura de tu negocio actual.</p>
+                    </div>
+                    <a href="https://wa.me/50497946129?text=Hola!%20Tengo%20una%20web%20y%20quisiera%20modernizarla"
+                       target="_blank" rel="noopener"
+                       class="flex-shrink-0 text-sm font-semibold border border-blue/40 hover:bg-blue text-blue hover:text-white px-5 py-2.5 rounded-xl transition-all whitespace-nowrap">
+                        Modernizar mi web →
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── PROCESS ────────────────────────────────────────────────── -->
+<section id="proceso" class="py-24 border-y border-white/5" style="background:var(--surface)">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Cómo trabajamos</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white">
+                De tu idea a tu web<br>en 3 pasos
+            </h2>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8 relative">
+            <!-- connector -->
+            <div class="hidden md:block absolute top-9 left-[calc(16.66%+2rem)] right-[calc(16.66%+2rem)] h-px bg-gradient-to-r from-blue/40 via-blue/20 to-blue/40"></div>
+
+            <div class="reveal text-center">
+                <div class="w-[72px] h-[72px] rounded-2xl bg-blue mx-auto mb-6 flex items-center justify-center shadow-lg" style="box-shadow:0 0 30px rgba(26,107,255,.4)">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                </div>
+                <h3 class="font-black text-white text-xl mb-2">Hablamos</h3>
+                <p class="text-muted text-sm leading-relaxed max-w-xs mx-auto">Nos escribís por WhatsApp, nos contás tu negocio y entendemos exactamente qué necesitás.</p>
+            </div>
+
+            <div class="reveal text-center">
+                <div class="w-[72px] h-[72px] rounded-2xl bg-surface2 border border-blue/30 mx-auto mb-6 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </div>
+                <h3 class="font-black text-white text-xl mb-2">Diseñamos</h3>
+                <p class="text-muted text-sm leading-relaxed max-w-xs mx-auto">Creamos tu web a medida: diseño profesional, contenido real y adaptado a tu marca.</p>
+            </div>
+
+            <div class="reveal text-center">
+                <div class="w-[72px] h-[72px] rounded-2xl bg-surface2 border border-blue/30 mx-auto mb-6 flex items-center justify-center">
+                    <svg class="w-7 h-7 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z"/></svg>
+                </div>
+                <h3 class="font-black text-white text-xl mb-2">Lanzamos</h3>
+                <p class="text-muted text-sm leading-relaxed max-w-xs mx-auto">Tu web queda en línea en menos de 48 horas, lista para atraer clientes desde el primer día.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PROJECTS ───────────────────────────────────────────────── -->
+<section id="proyectos" class="py-24">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Portafolio</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white">
+                Proyectos que hablan<br>por sí solos
+            </h2>
+            <p class="text-muted text-sm mt-4">Negocios reales, sitios en vivo. Hacé clic para visitarlos o ver el caso completo.</p>
+        </div>
+
+        <!-- Before / After slider -->
+        <div class="reveal max-w-2xl mx-auto mb-10">
+            <p class="text-center text-xs text-muted mb-4 uppercase tracking-widest font-semibold">Arrastrá para comparar · Antes vs Después</p>
+            <div class="ba-wrap" id="ba-slider" style="height:260px">
+                <!-- BEFORE: generic old-style site mockup -->
+                <div class="absolute inset-0" style="background:#e8eaed; font-family:Arial,sans-serif; overflow:hidden">
+                    <div style="background:#fff; border-bottom:2px solid #ccc; padding:7px 12px; display:flex; align-items:center; justify-content:space-between">
+                        <div style="font-size:11px; font-weight:bold; color:#444; letter-spacing:.05em">SALON BELLEZA</div>
+                        <div style="display:flex; gap:10px; font-size:8px; color:#888">
+                            <span>Inicio</span><span>Servicios</span><span>Contacto</span>
+                        </div>
+                    </div>
+                    <div style="background:#d1d5db; padding:18px 14px; text-align:center">
+                        <div style="font-size:13px; font-weight:bold; color:#4b5563; margin-bottom:5px">Bienvenidos a nuestro Salón</div>
+                        <div style="font-size:9px; color:#9ca3af; margin-bottom:10px">Servicios de calidad para toda la familia desde 1995</div>
+                        <div style="background:#6b7280; color:#fff; font-size:9px; padding:5px 14px; display:inline-block; font-family:Arial">CONTÁCTENOS</div>
+                    </div>
+                    <div style="padding:10px 14px; display:grid; grid-template-columns:1fr 1fr; gap:6px">
+                        <div style="background:#c9ccd0; height:44px; border:1px solid #bbb"></div>
+                        <div style="background:#c9ccd0; height:44px; border:1px solid #bbb"></div>
+                    </div>
+                    <div style="padding:6px 14px">
+                        <div style="background:#c9ccd0; height:5px; margin-bottom:4px; border-radius:2px"></div>
+                        <div style="background:#c9ccd0; height:5px; margin-bottom:4px; width:75%; border-radius:2px"></div>
+                        <div style="background:#c9ccd0; height:5px; width:55%; border-radius:2px"></div>
+                    </div>
+                    <div style="padding:8px 14px; display:flex; gap:6px">
+                        <div style="background:#6b7280; color:#fff; font-size:8px; padding:3px 8px">SERVICIOS</div>
+                        <div style="background:#9ca3af; color:#fff; font-size:8px; padding:3px 8px">GALERÍA</div>
+                    </div>
+                </div>
+
+                <!-- AFTER: real screenshot (clipped by clip-path) -->
+                <img id="ba-after-img" class="ba-after-img" src="img/kenias-studio.png" alt="Después — Kenias Studio"
+                     style="clip-path: inset(0 0 0 50%)">
+
+                <!-- Divider line + handle -->
+                <div class="ba-line" id="ba-line"></div>
+                <div class="ba-handle" id="ba-handle">
+                    <svg fill="none" stroke="#1A6BFF" viewBox="0 0 24 24" style="width:16px;height:16px">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 9l-3 3 3 3M16 9l3 3-3 3"/>
+                    </svg>
+                </div>
+
+                <!-- Labels -->
+                <div class="ba-badge left">Antes</div>
+                <div class="ba-badge right">Después</div>
+            </div>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5 max-w-5xl mx-auto">
+
+            <!-- Kenias Studio -->
+            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5 flex flex-col">
+                <a href="https://keniastudio.netlify.app/" target="_blank" rel="noopener" class="block h-52 relative overflow-hidden">
+                    <img src="img/kenias-studio.png" alt="Web de Kenias Studio" loading="lazy" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent"></div>
+                    <div class="result-badge"><span class="dot"></span>+40% reservas</div>
+                    <div class="absolute bottom-0 left-0 p-5">
+                        <div class="text-pink-400 text-[10px] font-semibold mb-1 uppercase tracking-widest">Salón de belleza</div>
+                        <div class="text-white font-black text-xl">Kenias Studio</div>
+                    </div>
+                    <div class="absolute inset-0 bg-blue/0 group-hover:bg-blue/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Visitar sitio →</span>
+                    </div>
+                </a>
+                <div class="bg-surface px-5 py-4 flex-1 flex flex-col">
+                    <div class="text-muted text-xs leading-relaxed flex-1">Citas online 24/7 · catálogo de servicios · galería de trabajos.</div>
+                    <button class="case-btn mt-3 inline-flex items-center gap-1.5 text-blue text-xs font-bold hover:gap-2.5 transition-all"
+                            data-name="Kenias Studio" data-cat="Salón de belleza" data-badge="+40% reservas online"
+                            data-url="https://keniastudio.netlify.app/"
+                            data-problem="Kenias agendaba TODAS sus citas por mensajes de WhatsApp. Perdía clientas cuando no respondía a tiempo y gastaba horas repitiendo precios y horarios."
+                            data-solution="Le creamos una web con sistema de citas online 24/7, catálogo de servicios con precios claros y una galería con fotos reales de sus trabajos."
+                            data-result="Sus clientas ahora reservan solas a cualquier hora, incluso de madrugada. +40% de reservas y muchísimo menos tiempo respondiendo lo mismo.">
+                        Ver caso de estudio
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Gabys Fashion -->
+            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5 flex flex-col">
+                <a href="https://gabysfashion.netlify.app/" target="_blank" rel="noopener" class="block h-52 relative overflow-hidden">
+                    <img src="img/gabys-fashion.png" alt="Web de Gabys Fashion" loading="lazy" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent"></div>
+                    <div class="result-badge"><span class="dot"></span>Vende 24/7</div>
+                    <div class="absolute bottom-0 left-0 p-5">
+                        <div class="text-purple-400 text-[10px] font-semibold mb-1 uppercase tracking-widest">Moda · E-commerce</div>
+                        <div class="text-white font-black text-xl">Gabys Fashion</div>
+                    </div>
+                    <div class="absolute inset-0 bg-blue/0 group-hover:bg-blue/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Visitar sitio →</span>
+                    </div>
+                </a>
+                <div class="bg-surface px-5 py-4 flex-1 flex flex-col">
+                    <div class="text-muted text-xs leading-relaxed flex-1">Catálogo online · pedidos por WhatsApp · panel de inventario.</div>
+                    <button class="case-btn mt-3 inline-flex items-center gap-1.5 text-blue text-xs font-bold hover:gap-2.5 transition-all"
+                            data-name="Gabys Fashion" data-cat="Moda · E-commerce" data-badge="Vende las 24 horas"
+                            data-url="https://gabysfashion.netlify.app/"
+                            data-problem="Gaby vendía solo por Instagram. Cada venta dependía de que ella respondiera, y perdía clientes cuando estaba ocupada o dormida."
+                            data-solution="Construimos un catálogo online con carrito que ordena directo por WhatsApp, fotos profesionales de cada prenda y un panel para administrar el inventario."
+                            data-result="Su tienda ahora vende sola las 24 horas. Los clientes ven todo el catálogo, arman su pedido y lo envían por WhatsApp al instante.">
+                        Ver caso de estudio
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Legal Force -->
+            <div class="reveal card group rounded-2xl overflow-hidden border border-white/5 flex flex-col">
+                <a href="https://legalforcehn.netlify.app/" target="_blank" rel="noopener" class="block h-52 relative overflow-hidden">
+                    <img src="img/legal-force.webp" alt="Web de Legal Force Bufete Jurídico" loading="lazy" class="w-full h-full object-cover object-left-top group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent"></div>
+                    <div class="result-badge"><span class="dot"></span>Imagen profesional</div>
+                    <div class="absolute bottom-0 left-0 p-5">
+                        <div class="text-yellow-500 text-[10px] font-semibold mb-1 uppercase tracking-widest">Bufete jurídico</div>
+                        <div class="text-white font-black text-xl">Legal Force</div>
+                    </div>
+                    <div class="absolute inset-0 bg-blue/0 group-hover:bg-blue/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                        <span class="text-white text-sm font-semibold border border-white/30 px-4 py-2 rounded-full backdrop-blur-sm">Visitar sitio →</span>
+                    </div>
+                </a>
+                <div class="bg-surface px-5 py-4 flex-1 flex flex-col">
+                    <div class="text-muted text-xs leading-relaxed flex-1">Web corporativa · áreas de práctica · contacto directo por WhatsApp.</div>
+                    <button class="case-btn mt-3 inline-flex items-center gap-1.5 text-blue text-xs font-bold hover:gap-2.5 transition-all"
+                            data-name="Legal Force" data-cat="Bufete jurídico" data-badge="Autoridad y confianza legal"
+                            data-url="https://legalforcehn.netlify.app/"
+                            data-problem="El bufete no tenía presencia digital. Los clientes potenciales no encontraban información de sus servicios ni una forma clara y profesional de contactarlos."
+                            data-solution="Diseñamos una web corporativa elegante con las áreas de práctica, el perfil del abogado, casos de éxito y contacto directo por WhatsApp — con una imagen de marca navy y dorado que transmite seriedad."
+                            data-result="El bufete hoy proyecta confianza y autoridad legal. Los clientes conocen sus servicios y contactan directo desde la web, sin intermediarios.">
+                        Ver caso de estudio
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── CASE STUDY MODAL ───────────────────────────────────────── -->
+<div class="case-overlay" id="case-overlay">
+    <div class="case-modal">
+        <div class="p-7">
+            <button id="case-close" style="position:absolute;top:16px;right:16px;background:none;border:none;cursor:pointer" class="text-muted hover:text-white transition-colors" aria-label="Cerrar">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            </button>
+
+            <div class="text-blue text-[11px] font-semibold uppercase tracking-widest mb-1" id="case-cat">Rubro</div>
+            <h3 class="text-2xl font-black text-white mb-1" id="case-name">Proyecto</h3>
+            <div class="result-badge" style="position:static;display:inline-flex;margin-bottom:20px" id="case-badge"><span class="dot"></span>Resultado</div>
+
+            <div class="case-step">
+                <div class="case-step-icon" style="background:rgba(239,68,68,.12)">🔴</div>
+                <div>
+                    <div class="text-white font-bold text-sm mb-1">El problema</div>
+                    <div class="text-muted text-sm leading-relaxed" id="case-problem"></div>
+                </div>
+            </div>
+            <div class="case-step">
+                <div class="case-step-icon" style="background:rgba(26,107,255,.14)">💡</div>
+                <div>
+                    <div class="text-white font-bold text-sm mb-1">Lo que hicimos</div>
+                    <div class="text-muted text-sm leading-relaxed" id="case-solution"></div>
+                </div>
+            </div>
+            <div class="case-step">
+                <div class="case-step-icon" style="background:rgba(16,185,129,.14)">🚀</div>
+                <div>
+                    <div class="text-white font-bold text-sm mb-1">El resultado</div>
+                    <div class="text-muted text-sm leading-relaxed" id="case-result"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 mt-6">
+                <a id="case-visit" href="#" target="_blank" rel="noopener"
+                   class="text-center bg-blue hover:bg-blue-light text-white font-bold py-3 rounded-xl transition-colors text-sm">
+                    Ver sitio en vivo →
+                </a>
+                <a id="case-wa" href="#" target="_blank" rel="noopener"
+                   class="text-center bg-[#25D366] hover:bg-[#20B858] text-white font-bold py-3 rounded-xl transition-colors text-sm">
+                    Quiero algo así
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ─── TESTIMONIALS ───────────────────────────────────────────── -->
+<section id="testimonios" class="py-24 border-y border-white/5" style="background:rgba(15,22,40,.5)">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Testimonios</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white">
+                Lo que dicen<br>nuestros clientes
+            </h2>
+        </div>
+
+        <div class="max-w-xl mx-auto">
+
+            <div class="reveal story-card bg-surface border border-white/5 rounded-3xl overflow-hidden">
+                <!-- Accent stripe -->
+                <div class="h-1 w-full" style="background: linear-gradient(90deg, var(--blue), #a855f7, var(--cyan))"></div>
+
+                <div class="p-8">
+                    <!-- Header: avatar + name + stars -->
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="story-ring relative">
+                            <div class="story-ring-inner">GF</div>
+                            <div class="story-verified">
+                                <svg class="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-center gap-2">
+                                <span class="font-bold text-white text-sm">Gaby Flores</span>
+                                <span class="text-muted text-xs">· Gabys Fashion</span>
+                            </div>
+                            <div class="flex gap-0.5 mt-1">
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                <svg class="w-3.5 h-3.5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                            </div>
+                        </div>
+                        <div class="hidden sm:flex items-center gap-1.5 text-xs text-muted bg-surface2 px-3 py-1.5 rounded-full border border-white/5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse inline-block"></span>
+                            Cliente activo
+                        </div>
+                    </div>
+
+                    <!-- Big quote mark -->
+                    <div class="text-6xl font-black blue-gradient-text leading-none mb-3 select-none" style="line-height:.8">"</div>
+
+                    <!-- Quote text -->
+                    <p class="text-white/85 text-base md:text-lg leading-relaxed mb-6">
+                        NextDigital entendió exactamente lo que necesitaba. Mi catálogo online y el CRM nos cambiaron la operación completa. <span class="text-white font-semibold">Recuperamos la inversión en la primera semana.</span>
+                    </p>
+
+                    <!-- Result stat chips -->
+                    <div class="flex flex-wrap gap-2">
+                        <span class="text-xs font-semibold bg-green-500/10 border border-green-500/20 text-green-400 px-3 py-1 rounded-full">+300% visibilidad online</span>
+                        <span class="text-xs font-semibold bg-blue/10 border border-blue/20 text-blue px-3 py-1 rounded-full">ROI en 1 semana</span>
+                        <span class="text-xs font-semibold bg-purple-500/10 border border-purple-500/20 text-purple-400 px-3 py-1 rounded-full">Gabys Fashion</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── ROI CALCULATOR ────────────────────────────────────────── -->
+<section id="roi" class="py-24 border-y border-white/5" style="background:var(--surface)">
+    <div class="max-w-3xl mx-auto px-5">
+        <div class="text-center mb-12 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Calculadora de retorno</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-4">¿En cuánto tiempo<br>se paga tu web?</h2>
+            <p class="text-muted max-w-lg mx-auto">Mové los controles y calculá si la inversión tiene sentido para tu negocio.</p>
+        </div>
+
+        <div class="reveal glass-stat p-7 md:p-9">
+            <!-- Slider 1 -->
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-3">
+                    <label class="text-sm font-semibold text-white">Clientes nuevos que esperás traer al mes</label>
+                    <span id="roi-clients-val" class="text-blue font-black text-xl min-w-[40px] text-right">5</span>
+                </div>
+                <input type="range" id="roi-clients" class="roi-slider" min="1" max="50" value="5">
+                <div class="flex justify-between text-xs text-muted mt-1.5"><span>1 cliente</span><span>50 clientes</span></div>
+            </div>
+
+            <!-- Slider 2 -->
+            <div class="mb-9">
+                <div class="flex justify-between items-center mb-3">
+                    <label class="text-sm font-semibold text-white">Ganancia promedio por cliente (L.)</label>
+                    <span id="roi-value-val" class="text-blue font-black text-xl min-w-[70px] text-right">L. 500</span>
+                </div>
+                <input type="range" id="roi-value" class="roi-slider" min="100" max="5000" step="50" value="500">
+                <div class="flex justify-between text-xs text-muted mt-1.5"><span>L. 100</span><span>L. 5,000</span></div>
+            </div>
+
+            <!-- Results grid -->
+            <div class="grid grid-cols-3 gap-3 mb-8">
+                <div class="bg-green-500/10 border border-green-500/20 rounded-2xl p-4 text-center">
+                    <div class="text-[11px] text-muted mb-1.5 uppercase tracking-wide">Extra al mes</div>
+                    <div id="roi-monthly" class="text-lg font-black text-green-400 leading-tight">L. 2,500</div>
+                </div>
+                <div class="bg-blue/10 border border-blue/20 rounded-2xl p-4 text-center">
+                    <div class="text-[11px] text-muted mb-1.5 uppercase tracking-wide">Extra al año</div>
+                    <div id="roi-yearly" class="text-lg font-black blue-gradient-text leading-tight">L. 30,000</div>
+                </div>
+                <div class="bg-cyan/10 border border-cyan/20 rounded-2xl p-4 text-center">
+                    <div class="text-[11px] text-muted mb-1.5 uppercase tracking-wide">Se paga en</div>
+                    <div id="roi-payback" class="text-lg font-black text-cyan leading-tight">2.4 sem</div>
+                </div>
+            </div>
+
+            <a id="roi-wa-btn" href="https://wa.me/50497946129" target="_blank" rel="noopener"
+               class="flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white font-bold py-4 rounded-2xl transition-colors text-sm w-full">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                Quiero esta inversión → WhatsApp
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ─── PRICING ───────────────────────────────────────────────── -->
+<section id="precios" class="py-24 border-t border-white/5">
+    <div class="max-w-6xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Planes y precios</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-4">
+                Inversión clara,<br>resultados reales
+            </h2>
+            <p class="text-muted max-w-lg mx-auto">Elegí el plan que mejor se adapta a tu negocio. Todos incluyen diseño personalizado y entrega rápida.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-5 max-w-4xl mx-auto">
+
+            <!-- Básico -->
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-7 flex flex-col">
+                <div class="mb-6">
+                    <div class="text-sm font-semibold text-muted mb-3">Básico</div>
+                    <div class="flex items-end gap-1.5 mb-1">
+                        <span class="text-4xl font-black text-white">L. 2,500</span>
+                    </div>
+                    <div class="text-xs text-muted">50% al iniciar · 50% al entregar</div>
+                </div>
+                <ul class="space-y-3 text-sm flex-1 mb-8">
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Landing page estática</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Diseño responsivo (móvil + escritorio)</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Botones de WhatsApp y redes sociales</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Entrega en 48 horas</li>
+                    <li class="flex items-start gap-2.5 text-muted"><svg class="w-4 h-4 text-muted/50 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Bases de datos / sistemas</li>
+                    <li class="flex items-start gap-2.5 text-muted"><svg class="w-4 h-4 text-muted/50 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Panel de administrador</li>
+                </ul>
+                <a href="https://wa.me/50497946129?text=Hola!%20Me%20interesa%20el%20plan%20Básico%20para%20mi%20negocio"
+                   target="_blank" rel="noopener"
+                   class="text-center text-sm font-semibold border border-blue/30 hover:border-blue text-blue hover:text-white hover:bg-blue px-5 py-3 rounded-xl transition-all">
+                    Empezar ahora
+                </a>
+            </div>
+
+            <!-- Profesional -->
+            <div class="reveal card bg-blue/5 border border-blue/30 rounded-2xl p-7 flex flex-col relative">
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap">
+                    <span class="bg-blue text-white text-[11px] font-bold px-4 py-1 rounded-full shadow-lg">Más popular</span>
+                </div>
+                <div class="mb-6 mt-2">
+                    <div class="text-sm font-semibold text-blue mb-3">Profesional</div>
+                    <div class="flex items-end gap-1.5 mb-1">
+                        <span class="text-4xl font-black text-white">L. 3,000</span>
+                    </div>
+                    <div class="text-xs text-muted">50% al iniciar · 50% al entregar</div>
+                </div>
+                <ul class="space-y-3 text-sm flex-1 mb-8">
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Todo lo del plan Básico</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Bases de datos integradas</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Sistemas integrados (citas, catálogo…)</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Panel de administrador</li>
+                    <li class="flex items-start gap-2.5 text-muted"><svg class="w-4 h-4 text-muted/50 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Reportes de clientes / ventas</li>
+                    <li class="flex items-start gap-2.5 text-muted"><svg class="w-4 h-4 text-muted/50 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Módulo de artículos y ventas</li>
+                </ul>
+                <a href="https://wa.me/50497946129?text=Hola!%20Me%20interesa%20el%20plan%20Profesional%20para%20mi%20negocio"
+                   target="_blank" rel="noopener"
+                   class="text-center text-sm font-bold bg-blue hover:bg-blue-light text-white px-5 py-3 rounded-xl transition-colors shadow-lg">
+                    Empezar ahora
+                </a>
+            </div>
+
+            <!-- Avanzado -->
+            <div class="reveal card bg-surface border border-white/5 rounded-2xl p-7 flex flex-col">
+                <div class="mb-6">
+                    <div class="text-sm font-semibold text-muted mb-3">Avanzado</div>
+                    <div class="flex items-end gap-1.5 mb-1">
+                        <span class="text-4xl font-black text-white">L. 3,500</span>
+                    </div>
+                    <div class="text-xs text-muted">50% al iniciar · 50% al entregar</div>
+                </div>
+                <ul class="space-y-3 text-sm flex-1 mb-8">
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Todo lo del plan Profesional</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Reportes de clientes y artículos</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Módulo completo de ventas</li>
+                    <li class="flex items-start gap-2.5 text-white/80"><svg class="w-4 h-4 text-cyan flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Dashboard completo de administración</li>
+                </ul>
+                <a href="https://wa.me/50497946129?text=Hola!%20Me%20interesa%20el%20plan%20Avanzado%20para%20mi%20negocio"
+                   target="_blank" rel="noopener"
+                   class="text-center text-sm font-semibold border border-blue/30 hover:border-blue text-blue hover:text-white hover:bg-blue px-5 py-3 rounded-xl transition-all">
+                    Empezar ahora
+                </a>
+            </div>
+
+        </div>
+
+        <!-- Mensualidades -->
+        <div class="mt-10 max-w-2xl mx-auto">
+            <div class="text-center mb-5">
+                <div class="text-xs font-semibold text-muted uppercase tracking-widest">Mensualidades · aplica para todos los planes</div>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="reveal card bg-surface border border-white/5 rounded-2xl p-5 flex flex-col gap-3">
+                    <div>
+                        <div class="text-sm font-bold text-white mb-0.5">Mensualidad Básica</div>
+                        <div class="text-2xl font-black blue-gradient-text">L. 250<span class="text-sm font-semibold text-muted">/mes</span></div>
+                    </div>
+                    <ul class="space-y-2 text-xs flex-1">
+                        <li class="flex items-center gap-2 text-white/80"><svg class="w-3.5 h-3.5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Hosting incluido</li>
+                        <li class="flex items-center gap-2 text-muted"><svg class="w-3.5 h-3.5 text-muted/50 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>Sin mantenimiento</li>
+                    </ul>
+                </div>
+                <div class="reveal card bg-blue/5 border border-blue/20 rounded-2xl p-5 flex flex-col gap-3">
+                    <div>
+                        <div class="text-sm font-bold text-white mb-0.5">Mensualidad Avanzada</div>
+                        <div class="text-2xl font-black blue-gradient-text">L. 300<span class="text-sm font-semibold text-muted">/mes</span></div>
+                    </div>
+                    <ul class="space-y-2 text-xs flex-1">
+                        <li class="flex items-center gap-2 text-white/80"><svg class="w-3.5 h-3.5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Hosting incluido</li>
+                        <li class="flex items-center gap-2 text-white/80"><svg class="w-3.5 h-3.5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Mantenimiento mensual</li>
+                        <li class="flex items-center gap-2 text-white/80"><svg class="w-3.5 h-3.5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Actualizaciones incluidas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <p class="text-center text-xs text-muted mt-8">¿No sabés cuál elegir? <a href="https://wa.me/50497946129?text=Hola!%20Necesito%20ayuda%20para%20elegir%20el%20plan%20correcto" target="_blank" rel="noopener" class="text-blue hover:underline">Escríbinos y te asesoramos gratis.</a></p>
+    </div>
+</section>
+
+<!-- ─── PRICE CONFIGURATOR ────────────────────────────────────── -->
+<section id="configurador" class="py-24 border-b border-white/5">
+    <div class="max-w-4xl mx-auto px-5">
+        <div class="text-center mb-12 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Configurador de web</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white mb-4">Armá tu web ideal</h2>
+            <p class="text-muted max-w-md mx-auto">Seleccioná las funciones que necesitás y te decimos qué plan es para vos — y el precio exacto.</p>
+        </div>
+
+        <div class="reveal grid md:grid-cols-2 gap-6 items-start">
+            <!-- Options -->
+            <div class="space-y-3">
+                <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-4">¿Qué necesitás en tu web?</div>
+
+                <input type="checkbox" id="cfg-basic"  class="cfg-check" data-tier="1">
+                <label for="cfg-basic"  class="cfg-label"><div class="cfg-box"><svg class="cfg-tick w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><div><div class="text-sm font-semibold text-white">Página de presentación</div><div class="text-xs text-muted mt-0.5">Quién sos, servicios, botón WhatsApp</div></div></label>
+
+                <input type="checkbox" id="cfg-gallery" class="cfg-check" data-tier="1">
+                <label for="cfg-gallery" class="cfg-label"><div class="cfg-box"><svg class="cfg-tick w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><div><div class="text-sm font-semibold text-white">Galería / portafolio</div><div class="text-xs text-muted mt-0.5">Fotos de tus trabajos o productos</div></div></label>
+
+                <input type="checkbox" id="cfg-catalog" class="cfg-check" data-tier="2">
+                <label for="cfg-catalog" class="cfg-label"><div class="cfg-box"><svg class="cfg-tick w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><div><div class="text-sm font-semibold text-white">Catálogo de productos</div><div class="text-xs text-muted mt-0.5">Listado de productos con precios y descripción</div></div></label>
+
+                <input type="checkbox" id="cfg-appointments" class="cfg-check" data-tier="2">
+                <label for="cfg-appointments" class="cfg-label"><div class="cfg-box"><svg class="cfg-tick w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><div><div class="text-sm font-semibold text-white">Sistema de citas en línea</div><div class="text-xs text-muted mt-0.5">Clientes reservan citas directamente</div></div></label>
+
+                <input type="checkbox" id="cfg-admin" class="cfg-check" data-tier="2">
+                <label for="cfg-admin" class="cfg-label"><div class="cfg-box"><svg class="cfg-tick w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><div><div class="text-sm font-semibold text-white">Panel de administrador</div><div class="text-xs text-muted mt-0.5">Administrá contenido sin saber programar</div></div></label>
+
+                <input type="checkbox" id="cfg-reports" class="cfg-check" data-tier="3">
+                <label for="cfg-reports" class="cfg-label"><div class="cfg-box"><svg class="cfg-tick w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></div><div><div class="text-sm font-semibold text-white">Reportes y ventas</div><div class="text-xs text-muted mt-0.5">Estadísticas, inventario y módulo de ventas</div></div></label>
+            </div>
+
+            <!-- Live result -->
+            <div class="glass-stat rounded-2xl p-6 sticky top-24">
+                <div class="text-xs font-semibold text-muted uppercase tracking-widest mb-5">Tu plan recomendado</div>
+
+                <div id="cfg-plan-name" class="text-2xl font-black blue-gradient-text mb-1">Plan Básico</div>
+                <div id="cfg-plan-price" class="text-4xl font-black text-white mb-2">L. 2,500</div>
+                <div class="text-xs text-muted mb-6">50% al iniciar · 50% al entregar</div>
+
+                <div id="cfg-plan-desc" class="text-sm text-muted leading-relaxed mb-6">
+                    Landing page de presentación con botones de WhatsApp y redes sociales. Perfecta para empezar tu presencia digital.
+                </div>
+
+                <div class="border-t border-white/5 pt-5 mb-6">
+                    <div class="text-xs text-muted mb-2">Mensualidad sugerida</div>
+                    <div id="cfg-monthly" class="text-lg font-bold text-white">L. 250<span class="text-xs text-muted font-normal">/mes (hosting)</span></div>
+                </div>
+
+                <a id="cfg-wa-btn" href="https://wa.me/50497946129?text=Hola%20NextDigital!%20Estoy%20interesado%20en%20el%20Plan%20Básico%20(L.%202%2C500)."
+                   target="_blank" rel="noopener"
+                   class="flex items-center justify-center gap-2 bg-blue hover:bg-blue-light text-white font-bold py-3.5 rounded-xl transition-colors text-sm w-full">
+                    Cotizar este plan →
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FREE AUDIT ─────────────────────────────────────────────── -->
+<section class="py-20 border-b border-white/5" style="background:var(--surface)">
+    <div class="max-w-3xl mx-auto px-5">
+        <div class="reveal grid md:grid-cols-2 gap-8 items-center">
+            <div>
+                <div class="text-blue text-sm font-semibold mb-3">Gratis, sin compromiso</div>
+                <h2 class="text-3xl md:text-4xl font-black text-white mb-4">¿Ya tenés web?<br>La analizamos gratis.</h2>
+                <p class="text-muted text-sm leading-relaxed">Revisamos tu web actual y te decimos exactamente qué está fallando y cómo mejorarlo. Sin costo, sin obligación.</p>
+                <ul class="mt-5 space-y-2 text-sm text-muted">
+                    <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Velocidad de carga</li>
+                    <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Diseño y experiencia móvil</li>
+                    <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>SEO y posicionamiento en Google</li>
+                    <li class="flex items-center gap-2"><svg class="w-4 h-4 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>Conversión y llamadas a acción</li>
+                </ul>
+            </div>
+
+            <div class="glass-stat rounded-2xl p-6">
+                <div class="text-sm font-semibold text-white mb-4">Ingresá la URL de tu web</div>
+                <div class="flex flex-col gap-3">
+                    <input id="audit-url" type="url" placeholder="https://tunegocio.com"
+                           class="w-full bg-surface2 border border-white/8 rounded-xl px-4 py-3 text-sm text-white placeholder-muted outline-none focus:border-blue/50 transition-colors">
+                    <button id="audit-btn"
+                            class="w-full bg-blue hover:bg-blue-light text-white font-bold py-3.5 rounded-xl transition-colors text-sm">
+                        Analizar mi web gratis →
+                    </button>
+                </div>
+                <p class="text-xs text-muted mt-3 text-center">Te respondemos con el análisis en menos de 24 horas.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FAQ ─────────────────────────────────────────────────────── -->
+<section id="faq" class="py-24 border-y border-white/5" style="background:var(--surface)">
+    <div class="max-w-3xl mx-auto px-5">
+        <div class="text-center mb-14 reveal">
+            <div class="text-blue text-sm font-semibold mb-3">Preguntas frecuentes</div>
+            <h2 class="text-4xl md:text-5xl font-black text-white">
+                Resolvemos<br>tus dudas
+            </h2>
+        </div>
+
+        <div class="space-y-3 reveal">
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Qué es una landing page?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">Es una página web de una sola pantalla diseñada para presentar tu negocio y convertir visitantes en clientes. Tiene todo lo esencial: quién sos, qué ofrecés, tus precios o servicios, y un botón para contactarte directo por WhatsApp. No necesitás múltiples páginas ni un sitio complicado — una buena landing page bien hecha es suficiente para la mayoría de negocios.</p>
+                </div>
+            </div>
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Cuánto cuesta hacer mi página web?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">Los precios empiezan desde $99 para una landing page básica. El costo final depende de las funcionalidades que necesités. Te enviamos una cotización gratis y sin compromiso en menos de 1 hora.</p>
+                </div>
+            </div>
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Cuánto tiempo tarda en estar lista mi web?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">La mayoría de proyectos los entregamos en menos de 48 horas desde que aprobás el diseño. Proyectos más complejos como tiendas online o sistemas CRM pueden tomar entre 3 y 5 días.</p>
+                </div>
+            </div>
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Necesito comprar hosting o dominio por mi cuenta?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">No es obligatorio. Podemos gestionar el hosting y el dominio por vos, o trabajar con servicios que ya tenés. Te explicamos todo sin tecnicismos para que entiendas cada paso.</p>
+                </div>
+            </div>
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Qué necesito para empezar?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">Solo escribirnos por WhatsApp con una idea de lo que necesitás. Nosotros te hacemos las preguntas correctas y te guiamos en todo el proceso. No necesitás saber nada de tecnología.</p>
+                </div>
+            </div>
+
+            <div class="faq-item border border-white/5 rounded-2xl overflow-hidden" style="background:var(--surface2)">
+                <button class="faq-toggle w-full flex items-center justify-between p-6 text-left gap-4">
+                    <span class="font-semibold text-white text-sm">¿Puedo actualizar el contenido yo mismo después?</span>
+                    <svg class="faq-icon w-5 h-5 text-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
+                </button>
+                <div class="faq-body px-6">
+                    <p class="text-muted text-sm leading-relaxed pb-6">Sí. Te entregamos el sitio con acceso completo y te enseñamos a hacer cambios básicos. Si preferís que lo manejemos nosotros, también ofrecemos planes de mantenimiento y soporte continuo.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- ─── REFERRAL PROGRAM ──────────────────────────────────────── -->
+<section class="py-20 border-b border-white/5">
+    <div class="max-w-3xl mx-auto px-5">
+        <div class="reveal relative bg-surface2 border border-white/5 rounded-3xl p-8 md:p-10 overflow-hidden">
+            <!-- Background glow -->
+            <div class="absolute -top-20 -right-20 w-56 h-56 rounded-full bg-blue/10 blur-[60px] pointer-events-none"></div>
+            <div class="relative flex flex-col md:flex-row md:items-center gap-7">
+                <!-- Icon -->
+                <div class="w-16 h-16 rounded-2xl bg-blue/15 border border-blue/25 flex items-center justify-center flex-shrink-0 text-3xl">
+                    🤝
+                </div>
+                <!-- Copy -->
+                <div class="flex-1">
+                    <div class="text-blue text-xs font-semibold uppercase tracking-widest mb-2">Programa de referidos</div>
+                    <h3 class="text-xl md:text-2xl font-black text-white mb-2">Referí un amigo y ambos ganan L. 200</h3>
+                    <p class="text-muted text-sm leading-relaxed">¿Conocés a alguien que necesite web? Compartiles nuestro contacto. Si contratan, recibís L. 200 de descuento en tu próxima mensualidad — y ellos también.</p>
+                </div>
+                <!-- CTA -->
+                <div class="flex-shrink-0">
+                    <button id="referral-btn"
+                            class="flex items-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white font-bold px-6 py-3.5 rounded-xl transition-colors text-sm whitespace-nowrap">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        Compartir por WhatsApp
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FINAL CTA ──────────────────────────────────────────────── -->
+<section class="py-28">
+    <div class="max-w-2xl mx-auto px-5 reveal">
+        <div class="relative bg-surface2 border border-blue/20 rounded-3xl p-10 md:p-14 text-center overflow-hidden">
+            <div class="pointer-events-none absolute inset-0 grid-mesh opacity-50"></div>
+            <div class="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 rounded-full bg-blue/15 blur-[90px]"></div>
+
+            <div class="relative">
+                <div class="text-cyan text-sm font-semibold mb-4">¿Listo para crecer?</div>
+                <h2 class="text-4xl md:text-5xl font-black text-white mb-5 leading-tight">
+                    Tu negocio merece<br>estar en digital
+                </h2>
+                <p class="text-muted mb-9 max-w-md mx-auto">
+                    Escribinos hoy y en menos de 24 horas te enviamos una propuesta personalizada, sin compromisos.
+                </p>
+
+                <a href="https://wa.me/50497946129?text=Hola%20NextDigital!%20Quiero%20una%20cotización%20para%20mi%20página%20web"
+                   target="_blank" rel="noopener"
+                   class="inline-flex items-center gap-3 bg-[#25D366] hover:bg-[#20B858] text-white font-black px-9 py-5 rounded-full text-lg transition-colors shadow-xl">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    Escribirnos por WhatsApp
+                </a>
+
+                <div class="flex flex-wrap items-center justify-center gap-5 mt-8 text-xs text-muted">
+                    <span class="flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Sin compromiso
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Respuesta en menos de 1 hora
+                    </span>
+                    <span class="flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+                        Cotización 100% gratis
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ─── FOOTER ────────────────────────────────────────────────── -->
+<footer class="border-t border-white/5 py-10">
+    <div class="max-w-6xl mx-auto px-5 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 rounded-full bg-surface2 border border-blue/30 flex items-center justify-center">
+                <span class="text-[11px] font-black blue-gradient-text">ND</span>
+            </div>
+            <span class="font-bold text-white">Next<span class="text-blue">Digital</span></span>
+        </div>
+
+        <div class="text-muted text-xs text-center">Diseñamos el futuro de tu negocio · Honduras · 9794-6129</div>
+
+        <div class="flex items-center gap-4">
+            <a href="https://instagram.com/NextDigitalhn" target="_blank" rel="noopener" aria-label="Instagram"
+               class="text-muted hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://wa.me/50497946129" target="_blank" rel="noopener" aria-label="WhatsApp"
+               class="text-muted hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+        </div>
+    </div>
+    <div class="max-w-6xl mx-auto px-5 mt-6 pt-6 border-t border-white/5 text-center text-muted text-xs">
+        © 2025 NextDigital. Todos los derechos reservados.
+    </div>
+</footer>
+
+<!-- ─── STICKY MOBILE CTA ─────────────────────────────────────── -->
+<div id="sticky-cta">
+    <a href="https://wa.me/50497946129?text=Hola!%20Quiero%20una%20cotización%20para%20mi%20web"
+       target="_blank" rel="noopener"
+       class="flex items-center justify-center gap-2.5 bg-[#25D366] hover:bg-[#20B858] text-white font-bold py-3.5 rounded-2xl transition-colors text-[15px] w-full">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Cotización gratis por WhatsApp
+    </a>
+</div>
+
+<!-- ─── SCRIPTS ───────────────────────────────────────────────── -->
+<script>
+    // ── Cursor glow ──────────────────────────────────────────────
+    const glow = document.getElementById('cursor-glow');
+    let mx = -500, my = -500, gx = -500, gy = -500;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    (function animGlow() {
+        gx += (mx - gx) * .09;
+        gy += (my - gy) * .09;
+        glow.style.left = gx + 'px';
+        glow.style.top  = gy + 'px';
+        requestAnimationFrame(animGlow);
+    })();
+
+    // ── Magnetic buttons ──────────────────────────────────────────
+    document.querySelectorAll('.magnetic').forEach(btn => {
+        btn.addEventListener('mousemove', e => {
+            const r = btn.getBoundingClientRect();
+            const x = (e.clientX - r.left - r.width  / 2) * .28;
+            const y = (e.clientY - r.top  - r.height / 2) * .28;
+            btn.style.transform = `translate(${x}px, ${y}px)`;
+        });
+        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
+
+    // ── Live counter ──────────────────────────────────────────────
+    const liveEl = document.getElementById('live-count');
+    if (liveEl) {
+        let n = Math.floor(Math.random() * 35) + 52;
+        liveEl.textContent = n;
+        setInterval(() => {
+            n += Math.floor(Math.random() * 3) + 1;
+            liveEl.textContent = n;
+        }, Math.floor(Math.random() * 3500) + 2800);
+    }
+
+    // ── Quiz ──────────────────────────────────────────────────────
+    const qData = { business: '', features: [], plan: '', price: '' };
+
+    function qShowStep(id) {
+        document.querySelectorAll('.quiz-step').forEach(s => s.classList.add('hidden'));
+        document.getElementById(id).classList.remove('hidden');
+        const stepNum = parseInt(id.replace('qstep-','')) || 4;
+        document.querySelectorAll('.quiz-prog').forEach(b => {
+            b.classList.toggle('bg-blue',    parseInt(b.dataset.s) <= stepNum);
+            b.classList.toggle('bg-white/10', parseInt(b.dataset.s) >  stepNum);
+        });
+    }
+
+    const overlay = document.getElementById('quiz-overlay');
+    document.getElementById('quiz-open')?.addEventListener('click', () => {
+        overlay.classList.add('open');
+        qShowStep('qstep-1');
+    });
+    document.getElementById('quiz-close').addEventListener('click', () => overlay.classList.remove('open'));
+    overlay.addEventListener('click', e => { if (e.target === overlay) overlay.classList.remove('open'); });
+
+    document.querySelectorAll('#qstep-1 .quiz-opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+            qData.business = btn.dataset.val;
+            document.querySelectorAll('#qstep-1 .quiz-opt').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            setTimeout(() => qShowStep('qstep-2'), 280);
+        });
+    });
+
+    document.getElementById('qnext2').addEventListener('click', () => {
+        qData.features = [...document.querySelectorAll('.quiz-check:checked')].map(c => c.value);
+        qShowStep('qstep-3');
+    });
+
+    document.querySelectorAll('.quiz-opt-budget').forEach(btn => {
+        btn.addEventListener('click', () => {
+            qData.plan  = btn.dataset.plan;
+            qData.price = btn.dataset.price;
+            const descs = {
+                'Básico':       'Una landing page elegante para presentar tu negocio y captar clientes directo por WhatsApp.',
+                'Profesional':  'Landing page con bases de datos, sistemas integrados y panel de administración.',
+                'Avanzado':     'Todo lo anterior más reportes de clientes, artículos y módulo completo de ventas.'
+            };
+            document.getElementById('q-result-plan').textContent = `Plan ${qData.plan} — ${qData.price}`;
+            document.getElementById('q-result-desc').textContent = descs[qData.plan] || '';
+            const feat = qData.features.length ? ` Necesito: ${qData.features.join(', ')}.` : '';
+            const msg  = encodeURIComponent(`Hola NextDigital! Tengo un(a) ${qData.business}.${feat} Me interesa el Plan ${qData.plan} (${qData.price}).`);
+            document.getElementById('q-result-wa').href = `https://wa.me/50497946129?text=${msg}`;
+            qShowStep('qstep-result');
+        });
+    });
+
+    // ── Typing animation
+    const words = ['tu restaurante', 'tu barbería', 'tu tienda', 'tu clínica', 'tu negocio'];
+    const el = document.getElementById('typing-target');
+    let wi = 0, ci = 0, deleting = false;
+
+    function type() {
+        const w = words[wi];
+        el.textContent = deleting ? w.slice(0, ci - 1) : w.slice(0, ci + 1);
+        deleting ? ci-- : ci++;
+
+        if (!deleting && ci === w.length) {
+            setTimeout(() => { deleting = true; type(); }, 2200);
+            return;
+        }
+        if (deleting && ci === 0) {
+            deleting = false;
+            wi = (wi + 1) % words.length;
+        }
+        setTimeout(type, deleting ? 55 : 95);
+    }
+    type();
+
+    // Scroll reveal
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    // Animated counters
+    function animateCounter(el) {
+        const target = parseInt(el.dataset.count);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1600;
+        const start = performance.now();
+        function update(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.floor(eased * target) + suffix;
+            if (progress < 1) requestAnimationFrame(update);
+            else el.textContent = target + suffix;
+        }
+        requestAnimationFrame(update);
+    }
+    const cntObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                animateCounter(e.target);
+                cntObs.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('[data-count]').forEach(el => cntObs.observe(el));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-toggle').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.faq-item');
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!isOpen) item.classList.add('open');
+        });
+    });
+
+    // ── Scroll progress bar ───────────────────────────────────────
+    const progBar = document.getElementById('scroll-progress');
+    function updateProgress() {
+        const scrolled = document.documentElement.scrollTop || document.body.scrollTop;
+        const total = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        progBar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', updateProgress, { passive: true });
+
+    // ── Sticky mobile CTA ─────────────────────────────────────────
+    const stickyCTA = document.getElementById('sticky-cta');
+    let stickyShown = false;
+    window.addEventListener('scroll', () => {
+        if (!stickyShown && window.scrollY > 200) {
+            stickyShown = true;
+            stickyCTA.classList.add('show');
+        }
+    }, { passive: true });
+
+    // ── Before / After slider ─────────────────────────────────────
+    const baSlider  = document.getElementById('ba-slider');
+    const baAfterImg = document.getElementById('ba-after-img');
+    const baLine    = document.getElementById('ba-line');
+    const baHandle  = document.getElementById('ba-handle');
+
+    if (baSlider && baAfterImg) {
+        let dragging = false;
+
+        function baSetPos(clientX) {
+            const rect = baSlider.getBoundingClientRect();
+            let pos = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
+            const pct = pos * 100;
+            baAfterImg.style.clipPath = `inset(0 0 0 ${pct}%)`;
+            baLine.style.left  = pct + '%';
+            baHandle.style.left = pct + '%';
+        }
+
+        baSlider.addEventListener('mousedown',  e => { dragging = true; baSetPos(e.clientX); });
+        window.addEventListener('mousemove',    e => { if (dragging) baSetPos(e.clientX); });
+        window.addEventListener('mouseup',      () => { dragging = false; });
+
+        baSlider.addEventListener('touchstart', e => { dragging = true; baSetPos(e.touches[0].clientX); }, { passive: true });
+        window.addEventListener('touchmove',    e => { if (dragging) baSetPos(e.touches[0].clientX); }, { passive: true });
+        window.addEventListener('touchend',     () => { dragging = false; });
+    }
+
+    // ── ROI Calculator ────────────────────────────────────────────
+    const roiClients  = document.getElementById('roi-clients');
+    const roiValue    = document.getElementById('roi-value');
+    const roiClientsV = document.getElementById('roi-clients-val');
+    const roiValueV   = document.getElementById('roi-value-val');
+    const roiMonthly  = document.getElementById('roi-monthly');
+    const roiYearly   = document.getElementById('roi-yearly');
+    const roiPayback  = document.getElementById('roi-payback');
+    const roiWaBtn    = document.getElementById('roi-wa-btn');
+    const PLAN_PRICE  = 2500;
+
+    function fmtL(n) {
+        return 'L. ' + n.toLocaleString('es-HN');
+    }
+
+    function updateROI() {
+        const clients = parseInt(roiClients.value);
+        const value   = parseInt(roiValue.value);
+        roiClientsV.textContent = clients;
+        roiValueV.textContent   = fmtL(value);
+
+        const monthly = clients * value;
+        const yearly  = monthly * 12;
+        const weeks   = (PLAN_PRICE / monthly * 4).toFixed(1);
+
+        roiMonthly.textContent = fmtL(monthly);
+        roiYearly.textContent  = fmtL(yearly);
+        roiPayback.textContent = weeks < 1 ? '< 1 sem' : weeks + ' sem';
+
+        const msg = encodeURIComponent(
+            `Hola NextDigital! Calculé que con ${clients} clientes nuevos al mes a L.${value} cada uno, mi web se paga en ${weeks} semanas. Quiero cotizar.`
+        );
+        roiWaBtn.href = `https://wa.me/50497946129?text=${msg}`;
+    }
+
+    roiClients?.addEventListener('input', updateROI);
+    roiValue?.addEventListener('input', updateROI);
+
+    // ── Price Configurator ────────────────────────────────────────
+    const cfgChecks   = document.querySelectorAll('.cfg-check');
+    const cfgPlanName = document.getElementById('cfg-plan-name');
+    const cfgPlanPrice= document.getElementById('cfg-plan-price');
+    const cfgPlanDesc = document.getElementById('cfg-plan-desc');
+    const cfgMonthly  = document.getElementById('cfg-monthly');
+    const cfgWaBtn    = document.getElementById('cfg-wa-btn');
+
+    const PLANS = {
+        1: { name:'Plan Básico',      price:'L. 2,500', monthly:'L. 250<span class="text-xs text-muted font-normal">/mes (hosting)</span>',
+             desc:'Landing page de presentación con botones de WhatsApp y redes sociales. Perfecta para empezar tu presencia digital.' },
+        2: { name:'Plan Profesional', price:'L. 3,000', monthly:'L. 300<span class="text-xs text-muted font-normal">/mes (hosting + mantenimiento)</span>',
+             desc:'Todo lo básico más bases de datos, sistemas integrados y panel de administrador para gestionar tu negocio.' },
+        3: { name:'Plan Avanzado',    price:'L. 3,500', monthly:'L. 300<span class="text-xs text-muted font-normal">/mes (hosting + mantenimiento)</span>',
+             desc:'El plan completo: reportes de clientes, módulo de ventas, inventario y dashboard de administración total.' },
+    };
+
+    function updateConfigurator() {
+        let tier = 1;
+        const selected = [];
+        cfgChecks.forEach(c => {
+            if (c.checked) {
+                tier = Math.max(tier, parseInt(c.dataset.tier));
+                const label = c.nextElementSibling.querySelector('.text-sm').textContent;
+                selected.push(label);
+            }
+        });
+        const plan = PLANS[tier];
+        cfgPlanName.textContent  = plan.name;
+        cfgPlanPrice.textContent = plan.price;
+        cfgPlanDesc.textContent  = plan.desc;
+        cfgMonthly.innerHTML     = plan.monthly;
+
+        const features = selected.length ? ` Necesito: ${selected.join(', ')}.` : '';
+        const msg = encodeURIComponent(
+            `Hola NextDigital! Usé el configurador y me recomienda el ${plan.name} (${plan.price}).${features} Quiero cotizar.`
+        );
+        cfgWaBtn.href = `https://wa.me/50497946129?text=${msg}`;
+    }
+
+    cfgChecks.forEach(c => c.addEventListener('change', updateConfigurator));
+
+    // ── Free Audit ────────────────────────────────────────────────
+    document.getElementById('audit-btn')?.addEventListener('click', () => {
+        const url = document.getElementById('audit-url').value.trim();
+        const siteUrl = url || 'mi web (no la ingresé)';
+        const msg = encodeURIComponent(
+            `Hola NextDigital! Quiero que analicen mi web gratis: ${siteUrl}`
+        );
+        window.open(`https://wa.me/50497946129?text=${msg}`, '_blank', 'noopener');
+    });
+
+    document.getElementById('audit-url')?.addEventListener('keydown', e => {
+        if (e.key === 'Enter') document.getElementById('audit-btn').click();
+    });
+
+    // ── Referral ──────────────────────────────────────────────────
+    document.getElementById('referral-btn')?.addEventListener('click', () => {
+        const msg = encodeURIComponent(
+            `Hola! Te recomiendo a NextDigital para hacer tu página web. Son profesionales, entregan en 48 horas y los precios están muy buenos. Contáctalos: https://wa.me/50497946129 — si contratás, ambos ganamos L.200 de descuento 🎉`
+        );
+        window.open(`https://wa.me/?text=${msg}`, '_blank', 'noopener');
+    });
+
+    // ── Case-study modal ──────────────────────────────────────────
+    (function () {
+        const cOverlay = document.getElementById('case-overlay');
+        if (!cOverlay) return;
+        const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+
+        document.querySelectorAll('.case-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const d = btn.dataset;
+                set('case-cat', d.cat);
+                set('case-name', d.name);
+                document.getElementById('case-problem').textContent = d.problem;
+                document.getElementById('case-solution').textContent = d.solution;
+                document.getElementById('case-result').textContent = d.result;
+                const badge = document.getElementById('case-badge');
+                badge.innerHTML = '<span class="dot"></span>' + d.badge;
+                document.getElementById('case-visit').href = d.url;
+                document.getElementById('case-wa').href =
+                    'https://wa.me/50497946129?text=' +
+                    encodeURIComponent(`Hola NextDigital! Vi el proyecto de ${d.name} y quiero una web así para mi negocio.`);
+                cOverlay.classList.add('open');
+            });
+        });
+
+        const closeCase = () => cOverlay.classList.remove('open');
+        document.getElementById('case-close').addEventListener('click', closeCase);
+        cOverlay.addEventListener('click', e => { if (e.target === cOverlay) closeCase(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeCase(); });
+    })();
+</script>
+</body>
+</html>
