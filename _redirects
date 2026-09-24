@@ -1,0 +1,4 @@
+# Netlify serves this branch at the domain root, while the build targets
+# GitHub Pages (/PaginaNextDigital/). Map the GitHub Pages prefix to the
+# real files so both hosts work.
+/PaginaNextDigital/*  /:splat  200
