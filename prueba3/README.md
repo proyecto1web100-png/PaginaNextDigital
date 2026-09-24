@@ -36,9 +36,9 @@ Sin configurar, el botón muestra "El portal de clientes todavía no está conec
    En "URI de redireccionamiento autorizados" pega la *Callback URL* que muestra Supabase en
    Authentication → Providers → Google. Copia el Client ID y el Client Secret en ese mismo panel de Supabase y activa Google.
 4. **Authentication → URL Configuration**:
-   - Site URL: `https://proyecto1web100-png.github.io/PaginaNextDigital/`
-   - Redirect URLs: `https://proyecto1web100-png.github.io/PaginaNextDigital/portal/`,
-     `https://proyecto1web100-png.github.io/PaginaNextDigital/prueba3/portal/` y `http://localhost:3000/portal/`
-5. Copia `.env.example` a `.env.local` con la URL y la anon key (Project Settings → API) y vuelve a construir.
+   - Site URL: `https://nextdigitalhn.netlify.app/`
+   - Redirect URLs: `https://nextdigitalhn.netlify.app/**`, `https://proyecto1web100-png.github.io/PaginaNextDigital/**`
+     y `http://localhost:3000/**`
+5. La URL y la anon key del proyecto ya están en `.env.production` (son públicas; RLS protege los datos).
 6. Hazte administrador: entra una vez a `/portal/` con tu Google y ejecuta las dos líneas del final de `schema.sql`
    con tu correo.

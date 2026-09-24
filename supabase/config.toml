@@ -160,10 +160,9 @@ site_url = "https://nextdigitalhn.netlify.app/"
 # external_url = ""
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
 additional_redirect_urls = [
-  "https://nextdigitalhn.netlify.app/portal/",
-  "https://proyecto1web100-png.github.io/PaginaNextDigital/portal/",
-  "https://proyecto1web100-png.github.io/PaginaNextDigital/prueba3/portal/",
-  "http://localhost:3000/portal/",
+  "https://nextdigitalhn.netlify.app/**",
+  "https://proyecto1web100-png.github.io/PaginaNextDigital/**",
+  "http://localhost:3000/**",
 ]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 (1 week).
 jwt_expiry = 3600
