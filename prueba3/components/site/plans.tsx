@@ -41,10 +41,8 @@ const PLANS: Plan[] = [
   },
 ]
 
-const MONTHLY = [
-  { name: "Básica", price: "250", items: [{ t: "Hosting incluido", ok: true }, { t: "Sin mantenimiento", ok: false }] },
-  { name: "Avanzada", price: "300", items: [{ t: "Hosting incluido", ok: true }, { t: "Mantenimiento mensual", ok: true }, { t: "Actualizaciones", ok: true }] },
-]
+/** Single monthly fee for every plan. */
+const MONTHLY = { price: "300", items: ["Hosting incluido", "Mantenimiento mensual", "Actualizaciones de contenido"] }
 
 export function Plans() {
   return (
@@ -112,27 +110,24 @@ export function Plans() {
         ))}
       </motion.div>
 
-      <motion.div {...inView} className="mt-4 grid gap-4 md:grid-cols-[auto_1fr_1fr] md:items-stretch">
-        <p className="self-center pr-3 text-sm font-semibold text-muted-foreground">
-          Mensualidad
-          <br className="hidden md:block" /> (todos los planes)
-        </p>
-        {MONTHLY.map((m) => (
-          <div key={m.name} className="flex flex-wrap items-center justify-between gap-x-5 gap-y-2 rounded-2xl border border-border bg-card px-5 py-4">
-            <span className="font-semibold">{m.name}</span>
-            <span className="font-display text-2xl font-extrabold tracking-[-0.03em]">
-              L. {m.price} <span className="font-sans text-sm font-medium tracking-normal text-muted-foreground">/mes</span>
-            </span>
-            <ul className="flex w-full flex-wrap gap-x-4 gap-y-1 text-sm text-ink-2">
-              {m.items.map((it) => (
-                <li key={it.t} className={cn("inline-flex items-center gap-1.5", !it.ok && "text-muted-foreground")}>
-                  {it.ok ? <Check className="size-4 text-brand" aria-hidden /> : <X className="size-4" aria-hidden />}
-                  {it.t}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
+      <motion.div
+        {...inView}
+        className="mt-4 flex flex-col gap-4 rounded-3xl border border-border bg-card px-6 py-5 md:flex-row md:items-center md:justify-between md:px-7"
+      >
+        <div>
+          <p className="text-sm font-semibold text-muted-foreground">Mensualidad · todos los planes</p>
+          <p className="mt-1 font-display text-3xl font-extrabold tracking-[-0.03em]">
+            L. {MONTHLY.price} <span className="font-sans text-sm font-medium tracking-normal text-muted-foreground">/mes</span>
+          </p>
+        </div>
+        <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[15px] text-ink-2">
+          {MONTHLY.items.map((t) => (
+            <li key={t} className="inline-flex items-center gap-2">
+              <Check className="size-4 text-brand" aria-hidden />
+              {t}
+            </li>
+          ))}
+        </ul>
       </motion.div>
     </section>
   )
