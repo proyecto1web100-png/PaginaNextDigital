@@ -1,39 +1,20 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# NextDigital — prueba 3 (página principal)
 
-## Getting Started
-
-First, run the development server:
+Diseño de prueba1 (tema claro) con las funciones de prueba2. Next.js (App Router, static export) + Tailwind v4 +
+shadcn/ui + framer-motion.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev     # http://localhost:3000
+npm run build   # genera out/ (sitio estático)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Es la página principal publicada. Para GitHub Pages se construye con
+`NEXT_PUBLIC_BASE_PATH=/PaginaNextDigital npm run build` y el contenido de `out/` va a la raíz de la rama `gh-pages`
+(la versión anterior de la página quedó en `/anterior/`).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Componentes de terceros (VengeanceUI) en `components/ui/`: `cylinder-carousel` y `notch-navbar` (adaptados),
+`glass-dock` y `agent-bento-grid`. Secciones en `components/site/`; datos de proyectos y contacto en `lib/site.ts`.
 
 ## Portal de clientes (login con Google)
 
@@ -55,8 +36,9 @@ Sin configurar, el botón muestra "El portal de clientes todavía no está conec
    En "URI de redireccionamiento autorizados" pega la *Callback URL* que muestra Supabase en
    Authentication → Providers → Google. Copia el Client ID y el Client Secret en ese mismo panel de Supabase y activa Google.
 4. **Authentication → URL Configuration**:
-   - Site URL: `https://proyecto1web100-png.github.io/PaginaNextDigital/prueba3/`
-   - Redirect URLs: `https://proyecto1web100-png.github.io/PaginaNextDigital/prueba3/portal/` y `http://localhost:3000/portal/`
+   - Site URL: `https://proyecto1web100-png.github.io/PaginaNextDigital/`
+   - Redirect URLs: `https://proyecto1web100-png.github.io/PaginaNextDigital/portal/`,
+     `https://proyecto1web100-png.github.io/PaginaNextDigital/prueba3/portal/` y `http://localhost:3000/portal/`
 5. Copia `.env.example` a `.env.local` con la URL y la anon key (Project Settings → API) y vuelve a construir.
 6. Hazte administrador: entra una vez a `/portal/` con tu Google y ejecuta las dos líneas del final de `schema.sql`
    con tu correo.
