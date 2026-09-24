@@ -60,7 +60,7 @@ export function SignIn() {
       <motion.div {...inView} className="max-w-md">
         <p className="flex items-center gap-2.5 text-[13px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
           <span aria-hidden className="h-[2px] w-7 rounded-full bg-orange" />
-          04 · Portal de clientes
+          07 · Portal de clientes
         </p>
         <h2 id="signin-title" className="mt-4 text-[clamp(2.3rem,5.4vw,4.4rem)] font-bold leading-[1.02]">
           Tu proyecto, en un solo lugar.

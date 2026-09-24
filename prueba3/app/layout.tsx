@@ -2,20 +2,46 @@ import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "@fontsource-variable/bricolage-grotesque";
+import { Analytics } from "@/components/site/analytics";
 import { MotionProvider } from "@/components/site/motion-provider";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "NextDigital — La página que necesitas",
+  metadataBase: new URL(`${SITE_URL}/`),
+  title: {
+    default: "NextDigital — Páginas web profesionales en Honduras",
+    template: "%s — NextDigital",
+  },
   description:
-    "Estudio de diseño web en Honduras. Páginas web profesionales para restaurantes, barberías, tiendas y clínicas, conectadas a tu WhatsApp.",
+    "Diseñamos páginas web profesionales para negocios en Honduras: restaurantes, salones, tiendas, clínicas y más. En línea en 48 horas, conectadas a tu WhatsApp. Desde L. 2,500.",
+  keywords: [
+    "páginas web Honduras",
+    "diseño web Honduras",
+    "crear página web para negocio",
+    "página web con WhatsApp",
+    "tienda en línea Honduras",
+    "landing page Honduras",
+  ],
+  applicationName: "NextDigital",
+  alternates: { canonical: "/" },
   openGraph: {
     title: "NextDigital — La página que necesitas, a tu alcance",
-    description: "Páginas web profesionales para emprendedores en Honduras.",
+    description: "Páginas web profesionales para negocios en Honduras. En línea en 48 horas, desde L. 2,500.",
+    url: "/",
     locale: "es_HN",
     siteName: "NextDigital",
     type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "NextDigital: La página que necesitas, a tu alcance" }],
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "NextDigital — La página que necesitas, a tu alcance",
+    description: "Páginas web profesionales para negocios en Honduras. En línea en 48 horas.",
+    images: ["/og.png"],
+  },
+  robots: { index: true, follow: true },
+  formatDetection: { telephone: false },
 };
 
 export const viewport: Viewport = {
@@ -38,6 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       </head>
       <body className="min-h-dvh bg-background text-foreground">
         <MotionProvider>{children}</MotionProvider>
+        <Analytics />
       </body>
     </html>
   );
