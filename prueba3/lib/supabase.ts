@@ -73,10 +73,16 @@ export type AccessRequest = {
   user_id: string
   email: string
   full_name: string | null
+  business_name: string | null
   avatar_url: string | null
   status: AccessStatus
   created_at: string
+  /** Set when the client completed the request form (name, business). */
+  submitted_at: string | null
 }
+
+/** The signed-in client's own request, as shown in their portal. */
+export type OwnRequest = Pick<AccessRequest, "status" | "full_name" | "business_name" | "submitted_at">
 
 export const PLANS = ["Básico", "Intermedio", "Avanzado"] as const
 export const STAGES: ProjectStatus[] = ["diseño", "desarrollo", "revisión", "publicado"]
