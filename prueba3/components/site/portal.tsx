@@ -15,6 +15,7 @@ import { wa } from "@/lib/site"
 import { STAGES, STAGE_LABEL, redirectError, supabase, type AccessStatus, type ClientProject, type OwnRequest } from "@/lib/supabase"
 import { cn } from "@/lib/utils"
 import { AdminPanel } from "./admin"
+import { FilesPanel } from "./files"
 import { LogoN } from "./logo"
 import { gentle } from "./motion"
 
@@ -306,6 +307,11 @@ function Projects({ session, name: savedName }: { session: Session; name?: strin
             </motion.li>
           ))}
         </ul>
+      )}
+      {projects && (
+        <div className="mt-10">
+          <FilesPanel userId={session.user.id} canUpload />
+        </div>
       )}
     </>
   )

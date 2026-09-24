@@ -3,6 +3,9 @@ export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 /** Prefix a /public asset with the base path (needed for static export on a sub-path). */
 export const asset = (path: string) => `${BASE_PATH}${path}`;
 
+/** Canonical public URL (Netlify, or the custom domain once connected). Used for SEO metadata. */
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://nextdigitalhn.netlify.app").replace(/\/$/, "");
+
 export const PHONE = "50497946129";
 export const PHONE_DISPLAY = "+504 9794-6129";
 export const INSTAGRAM = "https://instagram.com/NextDigitalhn";

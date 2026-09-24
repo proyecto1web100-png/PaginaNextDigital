@@ -10,6 +10,8 @@ import { Label } from "@/components/ui/label"
 import { Pill } from "@/components/ui/pill"
 import { PLANS, STAGES, STAGE_LABEL, supabase, type AccessRequest, type ClientProject } from "@/lib/supabase"
 import { cn } from "@/lib/utils"
+import { LeadsTab, StatsTab } from "./admin-tabs"
+import { FilesPanel } from "./files"
 import { ProjectCard } from "./portal"
 import { gentle, spring } from "./motion"
 
@@ -27,7 +29,47 @@ async function fetchAll() {
   return { requests: r.data as AccessRequest[], projects: p.data as ProjectRow[] }
 }
 
+type AdminTab = "clientes" | "cotizaciones" | "estadisticas"
+
+const TABS: { id: AdminTab; label: string }[] = [
+  { id: "clientes", label: "Clientes" },
+  { id: "cotizaciones", label: "Cotizaciones" },
+  { id: "estadisticas", label: "Estadísticas" },
+]
+
 export function AdminPanel({ selfId }: { selfId: string }) {
+  const [tab, setTab] = useState<AdminTab>("clientes")
+  return (
+    <div>
+      <div role="tablist" aria-label="Secciones del panel" className="mb-10 flex flex-wrap gap-2 border-b border-border pb-4">
+        {TABS.map((t) => (
+          <button
+            key={t.id}
+            id={`tab-${t.id}`}
+            type="button"
+            role="tab"
+            aria-selected={tab === t.id}
+            aria-controls={`panel-${t.id}`}
+            onClick={() => setTab(t.id)}
+            className={cn(
+              "press h-10 rounded-full px-5 text-sm font-semibold transition-colors",
+              tab === t.id ? "bg-foreground text-background" : "text-muted-foreground hover:bg-paper-2 hover:text-foreground"
+            )}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <div role="tabpanel" id={`panel-${tab}`} aria-labelledby={`tab-${tab}`}>
+        {tab === "clientes" && <ClientsTab selfId={selfId} />}
+        {tab === "cotizaciones" && <LeadsTab />}
+        {tab === "estadisticas" && <StatsTab />}
+      </div>
+    </div>
+  )
+}
+
+function ClientsTab({ selfId }: { selfId: string }) {
   const [requests, setRequests] = useState<AccessRequest[] | null>(null)
   const [projects, setProjects] = useState<ProjectRow[]>([])
   const [error, setError] = useState("")
@@ -117,6 +159,14 @@ export function AdminPanel({ selfId }: { selfId: string }) {
                       </ProjectCard>
                     ))}
                     <AddProject userId={r.user_id} onAdded={load} hasProjects={own.length > 0} />
+                    <details className="group rounded-2xl border border-border bg-card px-5 py-4">
+                      <summary className="cursor-pointer list-none text-sm font-semibold [&::-webkit-details-marker]:hidden">
+                        Archivos que subió <span className="text-muted-foreground group-open:hidden">· ver</span>
+                      </summary>
+                      <div className="mt-3">
+                        <FilesPanel userId={r.user_id} canUpload={false} compact />
+                      </div>
+                    </details>
                   </div>
                 </div>
               )

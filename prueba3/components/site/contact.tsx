@@ -4,13 +4,21 @@ import { motion } from "framer-motion"
 import { Phone } from "lucide-react"
 import { FaInstagram, FaWhatsapp } from "react-icons/fa"
 import { GlassDock } from "@/components/ui/glass-dock"
-import { INSTAGRAM, PHONE, PHONE_DISPLAY, wa } from "@/lib/site"
-import { LogoN } from "./logo"
+import { INSTAGRAM, PHONE, wa } from "@/lib/site"
+import { track } from "@/lib/track"
 import { inView } from "./motion"
 
 const SOCIAL = [
   { title: "Instagram", icon: FaInstagram, href: INSTAGRAM },
-  { title: "WhatsApp", icon: FaWhatsapp, href: wa("Hola NextDigital! Quiero una página web para mi negocio.") },
+  {
+    title: "WhatsApp",
+    icon: FaWhatsapp,
+    // The dock opens links with window.open, so count the tap here.
+    onClick: () => {
+      track("whatsapp")
+      window.open(wa("Hola NextDigital! Quiero una página web para mi negocio."), "_blank", "noopener,noreferrer")
+    },
+  },
   { title: "Llamar", icon: Phone, href: `tel:+${PHONE}` },
 ]
 
@@ -25,7 +33,7 @@ export function SocialDock() {
 
 export function Contact() {
   return (
-    <section id="contacto" aria-labelledby="contact-title" className="mx-auto w-full max-w-[1180px] px-4 pb-36 pt-4 md:px-8">
+    <section id="contacto" aria-labelledby="contact-title" className="mx-auto w-full max-w-[1180px] px-4 pb-16 pt-4 md:px-8">
       <motion.div
         {...inView}
         className="relative overflow-hidden rounded-[32px] bg-foreground px-6 py-14 text-background md:px-20 md:py-24"
@@ -56,13 +64,6 @@ export function Contact() {
         </div>
       </motion.div>
 
-      <footer className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 text-sm text-muted-foreground md:flex-row">
-        <span className="flex items-center gap-2">
-          <LogoN className="text-2xl" />
-          © {new Date().getFullYear()} NextDigital · Honduras
-        </span>
-        <a href={`tel:+${PHONE}`} className="hover:text-foreground">{PHONE_DISPLAY}</a>
-      </footer>
     </section>
   )
 }

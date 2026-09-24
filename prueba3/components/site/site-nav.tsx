@@ -1,28 +1,30 @@
 "use client"
 
-import { BarChart3, CreditCard, Home, LayoutGrid, LogIn, MessageCircle } from "lucide-react"
+import { BarChart3, CircleHelp, CreditCard, LayoutGrid, LogIn, Newspaper } from "lucide-react"
 import { FaWhatsapp } from "react-icons/fa"
 import { NotchNavbar } from "@/components/ui/notch-navbar"
+import { home, page } from "@/lib/links"
 import { wa } from "@/lib/site"
 import { LogoN } from "./logo"
 
 const QUOTE = wa("Hola NextDigital! Quiero una cotización para mi página web.")
 
-export function SiteNav() {
+/** `depth`: how many folders below the home page this nav is rendered (see lib/links). */
+export function SiteNav({ depth = 0 }: { depth?: number }) {
   return (
     <NotchNavbar
       left={[
-        { label: "Inicio", href: "#inicio", icon: Home },
-        { label: "Portafolio", href: "#portafolio", icon: LayoutGrid },
-        { label: "Resultados", href: "#resultados", icon: BarChart3 },
+        { label: "Portafolio", href: home(depth, "portafolio"), icon: LayoutGrid },
+        { label: "Resultados", href: home(depth, "resultados"), icon: BarChart3 },
+        { label: "Planes", href: home(depth, "planes"), icon: CreditCard },
       ]}
       right={[
-        { label: "Planes", href: "#planes", icon: CreditCard },
-        { label: "Acceso", href: "#acceso", icon: LogIn },
-        { label: "Contacto", href: "#contacto", icon: MessageCircle },
+        { label: "Preguntas", href: home(depth, "preguntas"), icon: CircleHelp },
+        { label: "Blog", href: page(depth, "blog"), icon: Newspaper },
+        { label: "Acceso", href: home(depth, "acceso"), icon: LogIn },
       ]}
       logo={
-        <a href="#inicio" aria-label="NextDigital, ir al inicio" className="press grid h-9 place-items-center px-1.5">
+        <a href={home(depth, depth === 0 ? "inicio" : undefined)} aria-label="NextDigital, ir al inicio" className="press grid h-9 place-items-center px-1.5">
           <LogoN className="-translate-y-[3px] text-[30px]" />
         </a>
       }
