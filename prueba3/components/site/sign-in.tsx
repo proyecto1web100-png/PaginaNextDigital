@@ -8,7 +8,7 @@ import { FaGoogle } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Pill } from "@/components/ui/pill"
 import { wa } from "@/lib/site"
-import { authErrorMessage, isAuthConfigured, portalUrl, supabase } from "@/lib/supabase"
+import { authErrorMessage, isAuthConfigured, isGoogleEnabled, portalUrl, supabase } from "@/lib/supabase"
 import { inView } from "./motion"
 
 const NOT_CONFIGURED = "El portal de clientes todavía no está conectado. Mientras tanto, escríbenos por WhatsApp."
@@ -39,6 +39,11 @@ export function SignIn() {
     }
     setBusy(true)
     setError("")
+    if ((await isGoogleEnabled()) === false) {
+      setBusy(false)
+      setError("El acceso con Google todavía no está activado. Escríbenos por WhatsApp mientras tanto.")
+      return
+    }
     // Leaves the page for Google; Supabase brings the user back to /portal/ signed in.
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
