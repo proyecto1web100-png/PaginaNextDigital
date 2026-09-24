@@ -98,7 +98,7 @@ export function Portal() {
             <Loader2 className="size-4 animate-spin" aria-hidden /> Cargando tu portal…
           </p>
         )}
-        {session && role === "admin" && <AdminPanel />}
+        {session && role === "admin" && <AdminPanel selfId={session.user.id} />}
         {session && role === "pending" && <Pending session={session} />}
         {session && role === "rejected" && <Rejected />}
         {session && role === "error" && (

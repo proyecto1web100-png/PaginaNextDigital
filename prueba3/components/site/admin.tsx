@@ -27,7 +27,7 @@ async function fetchAll() {
   return { requests: r.data as AccessRequest[], projects: p.data as ProjectRow[] }
 }
 
-export function AdminPanel() {
+export function AdminPanel({ selfId }: { selfId: string }) {
   const [requests, setRequests] = useState<AccessRequest[] | null>(null)
   const [projects, setProjects] = useState<ProjectRow[]>([])
   const [error, setError] = useState("")
@@ -62,7 +62,8 @@ export function AdminPanel() {
     )
 
   const pending = requests.filter((r) => r.status === "pending")
-  const approved = requests.filter((r) => r.status === "approved")
+  // The admin's own (approved) request is not a client.
+  const approved = requests.filter((r) => r.status === "approved" && r.user_id !== selfId)
   const rejected = requests.filter((r) => r.status === "rejected")
 
   return (
