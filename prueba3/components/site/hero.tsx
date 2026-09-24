@@ -21,14 +21,13 @@ const CARDS: CarouselImage[] = Array.from({ length: ROUNDS }).flatMap((_, round)
 
 export function Hero() {
   const reduce = useReducedMotion()
-  const enter = (delay: number) =>
-    reduce
-      ? {}
-      : {
-          initial: { opacity: 0, y: 16, filter: "blur(8px)" },
-          animate: { opacity: 1, y: 0, filter: "blur(0px)" },
-          transition: { ...gentle, delay },
-        }
+  // Always keep initial/animate so the server-rendered hidden state resolves to visible.
+  // With "reduce motion" the transition is instant instead of being skipped.
+  const enter = (delay: number) => ({
+    initial: { opacity: 0, y: 16, filter: "blur(8px)" },
+    animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+    transition: reduce ? { duration: 0 } : { ...gentle, delay },
+  })
 
   return (
     <section id="inicio" aria-labelledby="hero-title" className="relative overflow-hidden pt-24 md:pt-28">
@@ -50,13 +49,9 @@ export function Hero() {
 
       <motion.div
         className="relative mt-2 md:mt-0"
-        {...(reduce
-          ? {}
-          : {
-              initial: { opacity: 0, y: 24 },
-              animate: { opacity: 1, y: 0 },
-              transition: { ...gentle, delay: 0.28 },
-            })}
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={reduce ? { duration: 0 } : { ...gentle, delay: 0.28 }}
       >
         <CylinderCarousel
           images={CARDS}

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "@fontsource-variable/bricolage-grotesque";
+import { MotionProvider } from "@/components/site/motion-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -28,7 +29,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}
     >
-      <body className="min-h-dvh bg-background text-foreground">{children}</body>
+      <body className="min-h-dvh bg-background text-foreground">
+        <MotionProvider>{children}</MotionProvider>
+      </body>
     </html>
   );
 }
