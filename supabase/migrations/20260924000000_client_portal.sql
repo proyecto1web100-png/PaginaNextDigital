@@ -60,6 +60,15 @@ drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created after insert on auth.users
   for each row execute function public.handle_new_user();
 
+-- Anyone who signed in before this script ran also gets a pending request.
+insert into public.access_requests (user_id, email, full_name, avatar_url)
+select id, email,
+       coalesce(raw_user_meta_data ->> 'full_name', raw_user_meta_data ->> 'name'),
+       raw_user_meta_data ->> 'avatar_url'
+from auth.users
+where email is not null
+on conflict (user_id) do nothing;
+
 -- ── Projects ────────────────────────────────────────────────
 create table if not exists public.projects (
   id          uuid primary key default gen_random_uuid(),
