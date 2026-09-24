@@ -29,6 +29,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="es"
       className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}
     >
+      <head>
+        {/* Without JavaScript (blocked or disabled) the entrance animations never run:
+            reveal the server-rendered hidden states so the content is still visible. */}
+        <noscript>
+          <style>{`[style*="opacity:0"]{opacity:1!important;transform:none!important;filter:none!important}`}</style>
+        </noscript>
+      </head>
       <body className="min-h-dvh bg-background text-foreground">
         <MotionProvider>{children}</MotionProvider>
       </body>
