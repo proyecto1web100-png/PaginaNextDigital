@@ -35,18 +35,28 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
-## Portal de clientes (login)
+## Portal de clientes (login con Google)
 
-El formulario de acceso usa [Supabase](https://supabase.com) (plan gratuito): correo y contraseña, Google, Apple
-y recuperación de contraseña. Al iniciar sesión el cliente entra a `/portal/`, donde ve el avance de sus proyectos.
-Sin configurar, el formulario muestra "El portal todavía no está conectado".
+El acceso usa [Supabase](https://supabase.com) (plan gratuito) con **solo Google**:
+
+1. Un cliente toca "Continuar con Google". La primera vez queda **pendiente** y ve "Acceso en revisión".
+2. Tú (administrador) entras a `/portal/` con tu Google y ves sus solicitudes: **Aprobar y vincular** (nombre del
+   proyecto, plan y URL de su página) o **Rechazar**.
+3. Desde el mismo panel actualizas la etapa, el avance y el siguiente paso; el cliente lo ve en su portal.
+
+Cada cliente solo puede leer sus propios proyectos, y solo después de ser aprobado (Row Level Security).
+Sin configurar, el botón muestra "El portal de clientes todavía no está conectado".
+
+### Configuración (una sola vez)
 
 1. Crea un proyecto en Supabase.
-2. En **SQL Editor**, ejecuta `supabase/schema.sql` (tabla `projects` con Row Level Security: cada cliente solo ve lo suyo).
-3. En **Authentication → URL Configuration**:
+2. **SQL Editor** → ejecuta `supabase/schema.sql`.
+3. **Google Cloud Console** → APIs y servicios → Credenciales → *Crear ID de cliente OAuth* (aplicación web).
+   En "URI de redireccionamiento autorizados" pega la *Callback URL* que muestra Supabase en
+   Authentication → Providers → Google. Copia el Client ID y el Client Secret en ese mismo panel de Supabase y activa Google.
+4. **Authentication → URL Configuration**:
    - Site URL: `https://proyecto1web100-png.github.io/PaginaNextDigital/prueba3/`
    - Redirect URLs: `https://proyecto1web100-png.github.io/PaginaNextDigital/prueba3/portal/` y `http://localhost:3000/portal/`
-4. (Opcional) En **Authentication → Providers** activa Google y Apple con sus credenciales.
-5. Crea a cada cliente en **Authentication → Users → Add user** y agrega su proyecto en la tabla `projects`
-   (hay un ejemplo al final de `schema.sql`). Desactiva "Allow new users to sign up" si solo tú creas cuentas.
-6. Copia `.env.example` a `.env.local` con la URL y la anon key (Project Settings → API) y vuelve a construir.
+5. Copia `.env.example` a `.env.local` con la URL y la anon key (Project Settings → API) y vuelve a construir.
+6. Hazte administrador: entra una vez a `/portal/` con tu Google y ejecuta las dos líneas del final de `schema.sql`
+   con tu correo.

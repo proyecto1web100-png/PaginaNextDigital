@@ -31,16 +31,32 @@ export type ClientProject = {
   updated_at: string
 }
 
-/** Maps Supabase auth errors to short Spanish messages. */
+export type AccessStatus = "pending" | "approved" | "rejected"
+
+export type AccessRequest = {
+  user_id: string
+  email: string
+  full_name: string | null
+  avatar_url: string | null
+  status: AccessStatus
+  created_at: string
+}
+
+export const PLANS = ["Básico", "Intermedio", "Avanzado"] as const
+export const STAGES: ProjectStatus[] = ["diseño", "desarrollo", "revisión", "publicado"]
+export const STAGE_LABEL: Record<ProjectStatus, string> = {
+  diseño: "Diseño",
+  desarrollo: "Desarrollo",
+  revisión: "Revisión",
+  publicado: "Publicado",
+}
+
+/** Maps Supabase errors to short Spanish messages. */
 export function authErrorMessage(error: { message?: string; code?: string; status?: number } | null): string {
   if (!error) return ""
-  const code = error.code ?? ""
   const msg = (error.message ?? "").toLowerCase()
-  if (code === "invalid_credentials" || msg.includes("invalid login credentials")) return "Correo o contraseña incorrectos."
-  if (code === "email_not_confirmed" || msg.includes("email not confirmed")) return "Tu correo aún no está confirmado. Revisa tu bandeja de entrada."
-  if (code === "over_request_rate_limit" || code === "over_email_send_rate_limit" || error.status === 429)
-    return "Demasiados intentos. Espera un momento y vuelve a intentarlo."
-  if (code === "weak_password") return "La contraseña es muy débil. Usa al menos 8 caracteres."
+  if (error.code === "over_request_rate_limit" || error.status === 429) return "Demasiados intentos. Espera un momento y vuelve a intentarlo."
+  if (msg.includes("provider is not enabled")) return "El acceso con Google todavía no está activado."
   if (msg.includes("fetch") || msg.includes("network")) return "No pudimos conectar con el servidor. Revisa tu conexión."
-  return "No pudimos iniciar sesión. Inténtalo de nuevo."
+  return "Algo salió mal. Inténtalo de nuevo."
 }
