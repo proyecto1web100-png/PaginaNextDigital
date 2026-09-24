@@ -1,0 +1,154 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Prueba 1 palette: warm paper, ink type, cobalt + tangerine accents. */
+:root {
+  --radius: 1rem;
+  --background: #f5f2ec;
+  --foreground: #121212;
+  --card: #ffffff;
+  --card-foreground: #121212;
+  --popover: #ffffff;
+  --popover-foreground: #121212;
+  --primary: #121212;
+  --primary-foreground: #f5f2ec;
+  --secondary: #ece7dd;
+  --secondary-foreground: #121212;
+  --muted: #ece7dd;
+  --muted-foreground: #66615a;
+  --accent: #ece7dd;
+  --accent-foreground: #121212;
+  --destructive: #d92d20;
+  --border: #dcd5c9;
+  --input: #dcd5c9;
+  --ring: #2340ff;
+  --brand: #2340ff;
+  --orange: #ff6a2b;
+  --paper-2: #ece7dd;
+  --ink-2: #3a3733;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-brand: var(--brand);
+  --color-orange: var(--orange);
+  --color-paper-2: var(--paper-2);
+  --color-ink-2: var(--ink-2);
+  --font-display: "Bricolage Grotesque Variable", var(--font-geist-sans), sans-serif;
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-geist-sans), system-ui, sans-serif;
+  }
+  ::selection {
+    background: var(--foreground);
+    color: var(--background);
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+/* Tactile press feedback */
+.press {
+  transition: transform 0.1s cubic-bezier(0.2, 0, 0, 1);
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* ── Glass Dock (from VengeanceUI globals) ─────────────────── */
+.glass-dock {
+  --tab-bar-home-scale: 0.7;
+  --tab-bar-home-opacity: 1;
+  --tab-bar-blog-scale: 0.7;
+  --tab-bar-blog-opacity: 1;
+  --tab-bar-marker-scale: 0.7;
+  --tab-bar-marker-opacity: 1;
+  --tab-bar-email-scale: 0.7;
+  --tab-bar-email-opacity: 1;
+  --tab-bar-linkedin-scale: 0.7;
+  --tab-bar-linkedin-opacity: 1;
+  --tab-bar-x-scale: 0.7;
+  --tab-bar-x-opacity: 1;
+  --tab-bar-github-scale: 0.7;
+  --tab-bar-github-opacity: 1;
+}
+.glass-dock button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #66615a;
+  transition: color 0.1s;
+}
+.glass-dock button.active,
+.glass-dock button:hover {
+  color: #121212;
+}
+.glass-dock button svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.glass-border {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+.dark .glass-border {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
