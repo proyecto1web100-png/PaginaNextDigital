@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useState, useSyncExternalStore } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import type { Session } from "@supabase/supabase-js"
@@ -10,18 +10,25 @@ import { Button } from "@/components/ui/button"
 import { Pill } from "@/components/ui/pill"
 import { Tag } from "@/components/ui/tag"
 import { wa } from "@/lib/site"
-import { STAGES, STAGE_LABEL, supabase, type AccessStatus, type ClientProject } from "@/lib/supabase"
+import { STAGES, STAGE_LABEL, redirectError, supabase, type AccessStatus, type ClientProject } from "@/lib/supabase"
 import { cn } from "@/lib/utils"
 import { AdminPanel } from "./admin"
 import { LogoN } from "./logo"
 import { gentle } from "./motion"
 
-type Role = "loading" | "admin" | AccessStatus
+type Role = "loading" | "admin" | "error" | AccessStatus
+
+// Captured when the module loads, before Supabase tidies the URL after the Google return.
+const INITIAL_RETURN_ERROR = typeof window === "undefined" ? null : redirectError()
+const noopSubscribe = () => () => {}
 
 export function Portal() {
   const router = useRouter()
   const [session, setSession] = useState<Session | null | undefined>(undefined)
   const [role, setRole] = useState<Role>("loading")
+  // Shown only after hydration so the static HTML and the first client render match.
+  const hydrated = useSyncExternalStore(noopSubscribe, () => true, () => false)
+  const returnError = hydrated ? INITIAL_RETURN_ERROR : null
 
   useEffect(() => {
     if (!supabase) {
@@ -35,16 +42,21 @@ export function Portal() {
   }, [router])
 
   useEffect(() => {
-    if (session === null) router.replace("/#acceso")
+    if (session === null && !returnError) router.replace("/#acceso")
     if (!session || !supabase) return
     const uid = session.user.id
     ;(async () => {
-      const { data: admin } = await supabase.from("admins").select("user_id").eq("user_id", uid).maybeSingle()
+      const { data: admin, error: adminError } = await supabase.from("admins").select("user_id").eq("user_id", uid).maybeSingle()
       if (admin) return setRole("admin")
-      const { data: req } = await supabase.from("access_requests").select("status").eq("user_id", uid).maybeSingle()
+      const { data: req, error: reqError } = await supabase.from("access_requests").select("status").eq("user_id", uid).maybeSingle()
+      // A database/permission error must not look like "pending approval".
+      if (adminError || reqError) {
+        console.error("Portal role lookup failed", adminError ?? reqError)
+        return setRole("error")
+      }
       setRole((req?.status as AccessStatus | undefined) ?? "pending")
     })()
-  }, [session, router])
+  }, [session, router, returnError])
 
   async function signOut() {
     await supabase?.auth.signOut()
@@ -73,7 +85,15 @@ export function Portal() {
       </header>
 
       <main className="mx-auto w-full max-w-[1180px] px-4 py-12 md:px-8 md:py-16">
-        {(!session || role === "loading") && (
+        {returnError && !session && (
+          <div className="max-w-xl rounded-3xl border border-border bg-card p-6 md:p-8" role="alert">
+            <p className="text-lg font-semibold">{returnError}</p>
+            <a href="../#acceso" className="press mt-6 inline-flex h-11 items-center rounded-full bg-foreground px-5 text-sm font-semibold text-background hover:bg-brand">
+              Volver a intentar
+            </a>
+          </div>
+        )}
+        {!returnError && (!session || role === "loading") && (
           <p className="flex items-center gap-2 text-muted-foreground" role="status">
             <Loader2 className="size-4 animate-spin" aria-hidden /> Cargando tu portal…
           </p>
@@ -81,6 +101,13 @@ export function Portal() {
         {session && role === "admin" && <AdminPanel />}
         {session && role === "pending" && <Pending session={session} />}
         {session && role === "rejected" && <Rejected />}
+        {session && role === "error" && (
+          <div className="max-w-xl rounded-3xl border border-border bg-card p-6 md:p-8" role="alert">
+            <p className="text-lg font-semibold">No pudimos cargar tu acceso.</p>
+            <p className="mt-2 text-ink-2">Recarga la página en un momento. Si sigue igual, escríbenos.</p>
+            <WhatsAppButton text={`Hola NextDigital! No puedo entrar al portal con ${session.user.email}.`} />
+          </div>
+        )}
         {session && role === "approved" && <Projects session={session} />}
       </main>
     </div>

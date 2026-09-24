@@ -15,6 +15,35 @@ export const supabase: SupabaseClient | null =
 
 export const isAuthConfigured = supabase !== null
 
+/**
+ * Asks Supabase whether the Google provider is enabled, so we can show a clear message
+ * instead of Supabase's raw JSON error page. Returns null if the check itself fails.
+ */
+export async function isGoogleEnabled(): Promise<boolean | null> {
+  if (!url || !anonKey) return false
+  try {
+    const res = await fetch(`${url}/auth/v1/settings`, { headers: { apikey: anonKey } })
+    if (!res.ok) return null
+    const settings = (await res.json()) as { external?: Record<string, boolean> }
+    return Boolean(settings.external?.google)
+  } catch {
+    return null
+  }
+}
+
+/** Error returned by Supabase/Google in the redirect URL (?error_description=… or #error_description=…). */
+export function redirectError(): string | null {
+  if (typeof window === "undefined") return null
+  const params = new URLSearchParams(window.location.search)
+  const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""))
+  const desc = params.get("error_description") ?? hash.get("error_description")
+  const code = params.get("error") ?? hash.get("error")
+  if (!desc && !code) return null
+  if (code === "access_denied") return "Cancelaste el inicio de sesión con Google."
+  if (desc?.toLowerCase().includes("database error")) return "No pudimos registrar tu cuenta. Escríbenos y lo revisamos."
+  return "No pudimos completar el inicio de sesión con Google. Inténtalo de nuevo."
+}
+
 /** Absolute URL of the client portal, used as the OAuth / reset-password return address. */
 export const portalUrl = () => `${window.location.origin}${BASE_PATH}/portal/`
 
