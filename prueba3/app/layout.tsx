@@ -42,6 +42,8 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   formatDetection: { telephone: false },
+  // Google Search Console ownership (property https://nextdigitalhn.netlify.app/).
+  verification: { google: "C6DyDNiH0iesbEj_NVzaG-4_IPVN6-Iweup2GcFxf0U" },
 };
 
 export const viewport: Viewport = {
