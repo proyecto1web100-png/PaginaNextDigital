@@ -14,18 +14,20 @@ import { gentle, inView } from "./motion"
 
 function BookingsVisual() {
   const reduce = useReducedMotion()
+  // Fixed pixel scale so the bars really differ (percent heights collapse inside the flex card).
+  const MAX = 120
   const bars = [
-    { label: "Antes", value: 100, tone: "bg-paper-2", note: "Base" },
-    { label: "Con la web", value: 140, tone: "bg-brand", note: "+40%" },
+    { label: "Antes", value: 100, tone: "bg-foreground/15", note: "Base", noteTone: "text-muted-foreground" },
+    { label: "Con la web", value: 140, tone: "bg-orange", note: "+40%", noteTone: "text-foreground" },
   ]
   return (
-    <div className="flex h-full items-end justify-center gap-6 px-6 pb-5 pt-8">
+    <div className="flex h-full items-end justify-center gap-8 px-6 pb-4 pt-6">
       {bars.map((b) => (
-        <div key={b.label} className="flex h-full w-16 flex-col items-center justify-end gap-2">
-          <span className="font-display text-sm font-bold">{b.note}</span>
+        <div key={b.label} className="flex w-16 flex-col items-center gap-2">
+          <span className={cn("font-display text-sm font-bold", b.noteTone)}>{b.note}</span>
           <motion.div
             className={cn("w-full origin-bottom rounded-lg", b.tone)}
-            style={{ height: `${(b.value / 140) * 100}%` }}
+            style={{ height: Math.round((b.value / 140) * MAX) }}
             initial={reduce ? false : { scaleY: 0.2, opacity: 0 }}
             whileInView={{ scaleY: 1, opacity: 1 }}
             viewport={{ once: true }}
@@ -124,19 +126,23 @@ function TestimonialVisual() {
 function DevicesVisual() {
   const kenias = PROJECTS[0]
   return (
-    <div className="relative flex h-full items-center justify-center overflow-hidden bg-paper-2">
-      <div className="absolute left-4 right-14 top-5 overflow-hidden rounded-lg border border-border bg-card shadow-xl">
+    <div className="relative h-full overflow-hidden bg-paper-2">
+      <div className="absolute left-4 right-16 top-5 overflow-hidden rounded-lg border border-border bg-card shadow-xl">
         <div className="flex h-4 items-center gap-1 border-b border-border bg-paper-2 px-2" aria-hidden>
           <i className="size-1.5 rounded-full bg-black/15" />
           <i className="size-1.5 rounded-full bg-black/15" />
-          <i className="size-1.5 rounded-full bg-black/15" />
+          <i className="size-1.5 rounded-full bg-orange" />
         </div>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={asset(kenias.card)} alt="" loading="lazy" className="aspect-[16/10] w-full object-cover object-left-top" />
       </div>
-      <div className="absolute bottom-3 right-4 w-[72px] overflow-hidden rounded-xl border-2 border-foreground bg-card shadow-xl">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={asset(kenias.card)} alt="" loading="lazy" className="aspect-[9/17] w-full object-cover object-left-top" />
+      {/* Phone: real mobile layout of the site, not a crop of the desktop capture. */}
+      <div className="absolute -bottom-6 right-4 w-[92px] rounded-[18px] bg-foreground p-[3px] shadow-2xl">
+        <div className="overflow-hidden rounded-[15px] bg-card">
+          <div className="mx-auto mt-1 h-1 w-6 rounded-full bg-foreground/80" aria-hidden />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={asset(kenias.mobile ?? kenias.card)} alt="" loading="lazy" className="mt-1 aspect-[390/634] w-full object-cover object-top" />
+        </div>
       </div>
     </div>
   )

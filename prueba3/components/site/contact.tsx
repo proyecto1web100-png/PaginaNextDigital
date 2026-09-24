@@ -5,6 +5,7 @@ import { Phone } from "lucide-react"
 import { FaInstagram, FaWhatsapp } from "react-icons/fa"
 import { GlassDock } from "@/components/ui/glass-dock"
 import { INSTAGRAM, PHONE, PHONE_DISPLAY, wa } from "@/lib/site"
+import { LogoN } from "./logo"
 import { inView } from "./motion"
 
 const SOCIAL = [
@@ -32,7 +33,7 @@ export function Contact() {
         <span aria-hidden className="absolute -right-24 -top-28 size-56 rounded-full bg-orange md:-bottom-64 md:-right-40 md:top-auto md:size-[520px]" />
         <div className="relative">
           <p className="flex items-center gap-2.5 text-[13px] font-semibold uppercase tracking-[0.08em] text-background/55">
-            <span aria-hidden className="h-px w-7 bg-current" />
+            <span aria-hidden className="h-[2px] w-7 rounded-full bg-orange" />
             ¿Listo para crecer?
           </p>
           <h2 id="contact-title" className="mt-5 max-w-[12ch] text-[clamp(2.6rem,7vw,5.8rem)] font-bold leading-[0.95] tracking-[-0.045em]">
@@ -57,7 +58,7 @@ export function Contact() {
 
       <footer className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 text-sm text-muted-foreground md:flex-row">
         <span className="flex items-center gap-2">
-          <span className="grid size-7 place-items-center rounded-lg bg-foreground font-display text-xs font-extrabold text-background">nd</span>
+          <LogoN className="text-2xl" />
           © {new Date().getFullYear()} NextDigital · Honduras
         </span>
         <a href={`tel:+${PHONE}`} className="hover:text-foreground">{PHONE_DISPLAY}</a>

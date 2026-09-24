@@ -1,5 +1,6 @@
 import { Contact, SocialDock } from "@/components/site/contact"
 import { Hero } from "@/components/site/hero"
+import { Plans } from "@/components/site/plans"
 import { Portfolio } from "@/components/site/portfolio"
 import { Results } from "@/components/site/results"
 import { SignIn } from "@/components/site/sign-in"
@@ -13,6 +14,7 @@ export default function Home() {
         <Hero />
         <Portfolio />
         <Results />
+        <Plans />
         <SignIn />
         <Contact />
       </main>

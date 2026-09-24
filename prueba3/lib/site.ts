@@ -18,6 +18,8 @@ export type Project = {
   url: string;
   host: string;
   card: string;
+  /** Mobile-layout capture (only where available). */
+  mobile?: string;
   shot: string;
   result: string;
   summary: string;
@@ -32,6 +34,7 @@ export const PROJECTS: Project[] = [
     url: "https://keniastudio.netlify.app/",
     host: "keniastudio.netlify.app",
     card: "/portfolio/kenias-studio-card.webp",
+    mobile: "/portfolio/kenias-studio-mobile.webp",
     shot: "/portfolio/kenias-studio.webp",
     result: "+40% reservas",
     summary: "Citas online 24/7, catálogo de servicios con precios y galería de trabajos.",

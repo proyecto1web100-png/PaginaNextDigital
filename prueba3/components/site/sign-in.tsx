@@ -24,8 +24,8 @@ export function SignIn() {
     <section id="acceso" aria-labelledby="signin-title" className="mx-auto grid w-full max-w-[1180px] gap-12 px-4 py-20 md:grid-cols-2 md:items-center md:px-8 md:py-28">
       <motion.div {...inView} className="max-w-md">
         <p className="flex items-center gap-2.5 text-[13px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
-          <span aria-hidden className="h-px w-7 bg-current" />
-          03 · Portal de clientes
+          <span aria-hidden className="h-[2px] w-7 rounded-full bg-orange" />
+          04 · Portal de clientes
         </p>
         <h2 id="signin-title" className="mt-4 text-[clamp(2.3rem,5.4vw,4.4rem)] font-bold leading-[1.02]">
           Tu proyecto, en un solo lugar.

@@ -34,10 +34,14 @@ export function Hero() {
     <section id="inicio" aria-labelledby="hero-title" className="relative overflow-hidden pt-24 md:pt-28">
       <h1
         id="hero-title"
-        className="relative px-4 text-center text-[clamp(2.8rem,8.4vw,7.2rem)] font-bold leading-[0.92] tracking-[-0.045em]"
+        className="relative isolate px-4 text-center text-[clamp(2.8rem,8.4vw,7.2rem)] font-bold leading-[0.92] tracking-[-0.045em]"
       >
         <motion.span className="block text-foreground" {...enter(0)}>
-          La página que necesitas
+          La página que{" "}
+          <span className="relative inline-block">
+            necesitas
+            <span aria-hidden className="absolute -inset-x-[1%] bottom-[0.08em] -z-10 h-[0.16em] rounded-sm bg-orange" />
+          </span>
         </motion.span>
         <motion.span className="block text-foreground/25" {...enter(0.12)}>
           a tu alcance

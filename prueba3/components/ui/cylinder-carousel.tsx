@@ -76,8 +76,8 @@ export const CylinderCarousel = React.forwardRef<HTMLDivElement, CylinderCarouse
           {`
             @keyframes cyl-ry { to { transform: rotateY(1turn); } }
             .cyl-spin { animation: cyl-ry var(--anim-dur) linear infinite; }
-            .cyl-root:hover .cyl-spin,
-            .cyl-root:focus-within .cyl-spin { animation-play-state: paused; }
+            /* Keeps spinning on hover/scroll; pauses only while a card has keyboard focus. */
+            .cyl-root:has(:focus-visible) .cyl-spin { animation-play-state: paused; }
             @media (prefers-reduced-motion: reduce) { .cyl-spin { animation: none; } }
           `}
         </style>
