@@ -1,0 +1,6 @@
+User-Agent: *
+Allow: /
+Disallow: /portal/
+
+Host: https://nextdigitalhn.netlify.app
+Sitemap: https://nextdigitalhn.netlify.app/sitemap.xml
