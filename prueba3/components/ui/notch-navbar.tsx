@@ -83,7 +83,8 @@ export function NotchNavbar({ className, left, right, logo, actions, mobileActio
                 {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
 
-              <div className="flex justify-center shrink-0 mx-2 md:mx-4 mt-1">{logo}</div>
+              {/* Same 20px row as the links so the mark shares their optical center. */}
+              <div className="flex h-5 self-end mb-1 items-center justify-center shrink-0 mx-2 md:mx-4">{logo}</div>
 
               <div className="hidden md:flex gap-6 items-center shrink-0 -mb-0.5">
                 <nav aria-label="Más secciones" className="flex gap-6">

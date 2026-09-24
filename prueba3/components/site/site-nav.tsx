@@ -22,8 +22,8 @@ export function SiteNav() {
         { label: "Contacto", href: "#contacto", icon: MessageCircle },
       ]}
       logo={
-        <a href="#inicio" aria-label="NextDigital, ir al inicio" className="press grid h-9 place-items-center px-1">
-          <LogoN className="text-[34px]" />
+        <a href="#inicio" aria-label="NextDigital, ir al inicio" className="press grid h-9 place-items-center px-1.5">
+          <LogoN className="-translate-y-[3px] text-[30px]" />
         </a>
       }
       actions={
