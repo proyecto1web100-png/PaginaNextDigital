@@ -44,8 +44,15 @@ export function redirectError(): string | null {
   return "No pudimos completar el inicio de sesión con Google. Inténtalo de nuevo."
 }
 
-/** Absolute URL of the client portal, used as the OAuth / reset-password return address. */
-export const portalUrl = () => `${window.location.origin}${BASE_PATH}/portal/`
+/**
+ * Absolute URL of the client portal, used as the OAuth return address.
+ * Uses the base path only when the page is actually served under it: on Netlify the site
+ * lives at the domain root, so the return URL is simply https://<domain>/portal/.
+ */
+export const portalUrl = () => {
+  const prefix = BASE_PATH && window.location.pathname.startsWith(BASE_PATH) ? BASE_PATH : ""
+  return `${window.location.origin}${prefix}/portal/`
+}
 
 export type ProjectStatus = "diseño" | "desarrollo" | "revisión" | "publicado"
 
@@ -66,10 +73,16 @@ export type AccessRequest = {
   user_id: string
   email: string
   full_name: string | null
+  business_name: string | null
   avatar_url: string | null
   status: AccessStatus
   created_at: string
+  /** Set when the client completed the request form (name, business). */
+  submitted_at: string | null
 }
+
+/** The signed-in client's own request, as shown in their portal. */
+export type OwnRequest = Pick<AccessRequest, "status" | "full_name" | "business_name" | "submitted_at">
 
 export const PLANS = ["Básico", "Intermedio", "Avanzado"] as const
 export const STAGES: ProjectStatus[] = ["diseño", "desarrollo", "revisión", "publicado"]

@@ -1,16 +1,18 @@
 "use client"
 
-import { useEffect, useState, useSyncExternalStore } from "react"
+import { useEffect, useId, useState, useSyncExternalStore } from "react"
 import { useRouter } from "next/navigation"
 import { motion } from "framer-motion"
 import type { Session } from "@supabase/supabase-js"
-import { ArrowUpRight, Clock, Loader2, LogOut } from "lucide-react"
+import { ArrowUpRight, Clock, Loader2, LogOut, Send } from "lucide-react"
 import { FaWhatsapp } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Pill } from "@/components/ui/pill"
 import { Tag } from "@/components/ui/tag"
 import { wa } from "@/lib/site"
-import { STAGES, STAGE_LABEL, redirectError, supabase, type AccessStatus, type ClientProject } from "@/lib/supabase"
+import { STAGES, STAGE_LABEL, redirectError, supabase, type AccessStatus, type ClientProject, type OwnRequest } from "@/lib/supabase"
 import { cn } from "@/lib/utils"
 import { AdminPanel } from "./admin"
 import { LogoN } from "./logo"
@@ -26,6 +28,7 @@ export function Portal() {
   const router = useRouter()
   const [session, setSession] = useState<Session | null | undefined>(undefined)
   const [role, setRole] = useState<Role>("loading")
+  const [request, setRequest] = useState<OwnRequest | null>(null)
   // Shown only after hydration so the static HTML and the first client render match.
   const hydrated = useSyncExternalStore(noopSubscribe, () => true, () => false)
   const returnError = hydrated ? INITIAL_RETURN_ERROR : null
@@ -48,12 +51,17 @@ export function Portal() {
     ;(async () => {
       const { data: admin, error: adminError } = await supabase.from("admins").select("user_id").eq("user_id", uid).maybeSingle()
       if (admin) return setRole("admin")
-      const { data: req, error: reqError } = await supabase.from("access_requests").select("status").eq("user_id", uid).maybeSingle()
+      const { data: req, error: reqError } = await supabase
+        .from("access_requests")
+        .select("status, full_name, business_name, submitted_at")
+        .eq("user_id", uid)
+        .maybeSingle()
       // A database/permission error must not look like "pending approval".
       if (adminError || reqError) {
         console.error("Portal role lookup failed", adminError ?? reqError)
         return setRole("error")
       }
+      setRequest((req as OwnRequest | null) ?? null)
       setRole((req?.status as AccessStatus | undefined) ?? "pending")
     })()
   }, [session, router, returnError])
@@ -98,8 +106,13 @@ export function Portal() {
             <Loader2 className="size-4 animate-spin" aria-hidden /> Cargando tu portal…
           </p>
         )}
-        {session && role === "admin" && <AdminPanel />}
-        {session && role === "pending" && <Pending session={session} />}
+        {session && role === "admin" && <AdminPanel selfId={session.user.id} />}
+        {session && role === "pending" &&
+          (request?.submitted_at ? (
+            <Pending session={session} request={request} />
+          ) : (
+            <RequestForm session={session} initialName={request?.full_name ?? fullName(session)} onSubmitted={setRequest} />
+          ))}
         {session && role === "rejected" && <Rejected />}
         {session && role === "error" && (
           <div className="max-w-xl rounded-3xl border border-border bg-card p-6 md:p-8" role="alert">
@@ -108,14 +121,14 @@ export function Portal() {
             <WhatsAppButton text={`Hola NextDigital! No puedo entrar al portal con ${session.user.email}.`} />
           </div>
         )}
-        {session && role === "approved" && <Projects session={session} />}
+        {session && role === "approved" && <Projects session={session} name={request?.full_name} />}
       </main>
     </div>
   )
 }
 
-const firstName = (s: Session) =>
-  ((s.user.user_metadata?.full_name ?? s.user.user_metadata?.name) as string | undefined)?.split(" ")[0]
+const fullName = (s: Session) => ((s.user.user_metadata?.full_name ?? s.user.user_metadata?.name) as string | undefined) ?? ""
+const firstOf = (name?: string | null) => name?.trim().split(/\s+/)[0] ?? ""
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -128,8 +141,85 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 /* ── Pending / rejected ───────────────────────────────────── */
 
-function Pending({ session }: { session: Session }) {
-  const name = firstName(session)
+/* ── Request form (first visit) ───────────────────────────── */
+
+function RequestForm({
+  session,
+  initialName,
+  onSubmitted,
+}: {
+  session: Session
+  initialName: string
+  onSubmitted: (r: OwnRequest) => void
+}) {
+  const id = useId()
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState("")
+
+  async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const f = new FormData(e.currentTarget)
+    const full_name = String(f.get("full_name")).trim()
+    const business_name = String(f.get("business_name")).trim()
+    setBusy(true)
+    setError("")
+    const { error } = await supabase!.rpc("submit_access_request", { p_full_name: full_name, p_business_name: business_name || null })
+    setBusy(false)
+    if (error) {
+      setError("No pudimos enviar tu solicitud. Revisa tu nombre e inténtalo de nuevo.")
+      return
+    }
+    onSubmitted({ status: "pending", full_name, business_name: business_name || null, submitted_at: new Date().toISOString() })
+  }
+
+  return (
+    <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={gentle} className="max-w-xl">
+      <Eyebrow>Solicitud de acceso</Eyebrow>
+      <h1 className="mt-4 text-[clamp(2.3rem,5vw,4rem)] font-bold leading-[1.02]">Completa tu solicitud.</h1>
+      <p className="mt-4 text-[17px] leading-relaxed text-ink-2">
+        Así NextDigital sabe quién eres y a qué página vincular tu acceso con{" "}
+        <span className="font-semibold text-foreground">{session.user.email}</span>.
+      </p>
+      <form onSubmit={onSubmit} className="mt-8 grid gap-5 rounded-3xl border border-border bg-card p-6 md:p-8">
+        <div className="grid gap-2">
+          <Label htmlFor={`${id}-name`}>Tu nombre</Label>
+          <Input
+            id={`${id}-name`}
+            name="full_name"
+            required
+            maxLength={120}
+            autoComplete="name"
+            defaultValue={initialName}
+            placeholder="Nombre y apellido"
+            className="h-12 rounded-xl bg-background/60"
+          />
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor={`${id}-business`}>
+            Nombre de tu negocio <span className="font-normal text-muted-foreground">(opcional)</span>
+          </Label>
+          <Input
+            id={`${id}-business`}
+            name="business_name"
+            maxLength={120}
+            autoComplete="organization"
+            placeholder="Ej. Kenias Studio"
+            className="h-12 rounded-xl bg-background/60"
+          />
+        </div>
+        <Button type="submit" size="lg" disabled={busy} className="press h-12 rounded-full text-base font-semibold hover:bg-brand">
+          {busy ? <Loader2 className="animate-spin" aria-hidden /> : <Send aria-hidden />} Enviar solicitud
+        </Button>
+        <p role="alert" className="min-h-5 text-sm text-destructive">{error}</p>
+      </form>
+    </motion.div>
+  )
+}
+
+/* ── Submitted, waiting for approval ──────────────────────── */
+
+function Pending({ session, request }: { session: Session; request: OwnRequest }) {
+  const name = firstOf(request.full_name)
   return (
     <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={gentle} className="max-w-xl">
       <Eyebrow>Acceso en revisión</Eyebrow>
@@ -140,7 +230,22 @@ function Pending({ session }: { session: Session }) {
           Recibimos tu solicitud con <span className="font-semibold text-foreground">{session.user.email}</span>. En cuanto
           NextDigital la apruebe y la vincule a tu página web, verás aquí el avance de tu proyecto.
         </p>
-        <WhatsAppButton text={`Hola NextDigital! Acabo de solicitar acceso al portal con ${session.user.email}.`} label="Avisar por WhatsApp" />
+        <dl className="mt-5 grid gap-3 rounded-2xl bg-paper-2 p-4 text-sm sm:grid-cols-2">
+          <div>
+            <dt className="text-muted-foreground">Nombre</dt>
+            <dd className="font-semibold">{request.full_name}</dd>
+          </div>
+          {request.business_name && (
+            <div>
+              <dt className="text-muted-foreground">Negocio</dt>
+              <dd className="font-semibold">{request.business_name}</dd>
+            </div>
+          )}
+        </dl>
+        <WhatsAppButton
+          text={`Hola NextDigital! Soy ${request.full_name}${request.business_name ? ` de ${request.business_name}` : ""} y acabo de solicitar acceso al portal con ${session.user.email}.`}
+          label="Avisar por WhatsApp"
+        />
       </div>
     </motion.div>
   )
@@ -159,10 +264,10 @@ function Rejected() {
 
 /* ── Approved client ──────────────────────────────────────── */
 
-function Projects({ session }: { session: Session }) {
+function Projects({ session, name: savedName }: { session: Session; name?: string | null }) {
   const [projects, setProjects] = useState<ClientProject[] | null>(null)
   const [error, setError] = useState("")
-  const name = firstName(session)
+  const name = firstOf(savedName) || firstOf(fullName(session))
 
   useEffect(() => {
     // RLS only returns this client's rows, and only once their access is approved.

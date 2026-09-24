@@ -20,14 +20,14 @@ const selectClass = "h-11 w-full rounded-xl border border-input bg-background/60
 
 async function fetchAll() {
   const [r, p] = await Promise.all([
-    supabase!.from("access_requests").select("user_id, email, full_name, avatar_url, status, created_at").order("created_at", { ascending: false }),
+    supabase!.from("access_requests").select("user_id, email, full_name, business_name, avatar_url, status, created_at, submitted_at").order("created_at", { ascending: false }),
     supabase!.from("projects").select("id, client_id, name, plan, status, progress, next_step, site_url, updated_at").order("updated_at", { ascending: false }),
   ])
   if (r.error || p.error) return null
   return { requests: r.data as AccessRequest[], projects: p.data as ProjectRow[] }
 }
 
-export function AdminPanel() {
+export function AdminPanel({ selfId }: { selfId: string }) {
   const [requests, setRequests] = useState<AccessRequest[] | null>(null)
   const [projects, setProjects] = useState<ProjectRow[]>([])
   const [error, setError] = useState("")
@@ -61,8 +61,11 @@ export function AdminPanel() {
       </p>
     )
 
-  const pending = requests.filter((r) => r.status === "pending")
-  const approved = requests.filter((r) => r.status === "approved")
+  // Only requests the client completed (name/business) reach the admin; the rest are counted.
+  const pending = requests.filter((r) => r.status === "pending" && r.submitted_at)
+  const incomplete = requests.filter((r) => r.status === "pending" && !r.submitted_at).length
+  // The admin's own (approved) request is not a client.
+  const approved = requests.filter((r) => r.status === "approved" && r.user_id !== selfId)
   const rejected = requests.filter((r) => r.status === "rejected")
 
   return (
@@ -76,7 +79,12 @@ export function AdminPanel() {
             </Badge>
           )}
         </div>
-        <p className="mt-3 text-ink-2">Personas que iniciaron sesión con Google y esperan acceso a su página.</p>
+        <p className="mt-3 text-ink-2">Clientes que enviaron su nombre y esperan acceso a su página.</p>
+        {incomplete > 0 && (
+          <p className="mt-2 text-sm text-muted-foreground">
+            {incomplete === 1 ? "1 persona inició sesión" : `${incomplete} personas iniciaron sesión`} pero aún no completó su solicitud.
+          </p>
+        )}
         {pending.length === 0 ? (
           <p className="mt-6 rounded-2xl border border-dashed border-border p-6 text-muted-foreground">No hay solicitudes pendientes.</p>
         ) : (
@@ -143,7 +151,10 @@ function Person({ request: r }: { request: AccessRequest }) {
         </span>
       )}
       <div className="min-w-0">
-        <p className="truncate font-semibold">{r.full_name ?? r.email}</p>
+        <p className="truncate font-semibold">
+          {r.full_name ?? r.email}
+          {r.business_name && <span className="font-normal text-muted-foreground"> · {r.business_name}</span>}
+        </p>
         <p className="truncate text-sm text-muted-foreground">{r.email}</p>
       </div>
     </div>
@@ -218,7 +229,7 @@ function RequestCard({ request: r, onChanged }: { request: AccessRequest; onChan
             exit={{ opacity: 0, height: 0, transition: { duration: 0.12, ease: "easeIn" } }}
             className="overflow-hidden"
           >
-            <ApproveFields />
+            <ApproveFields defaultName={r.business_name ?? ""} />
             <div className="mt-5 flex flex-wrap gap-2">
               <Button type="submit" disabled={busy !== null} className="press rounded-full font-semibold hover:bg-brand">
                 {busy === "approve" && <Loader2 className="animate-spin" aria-hidden />} Aprobar acceso
@@ -233,13 +244,13 @@ function RequestCard({ request: r, onChanged }: { request: AccessRequest; onChan
   )
 }
 
-function ApproveFields() {
+function ApproveFields({ defaultName = "" }: { defaultName?: string }) {
   const id = useId()
   return (
     <div className="mt-5 grid gap-4 border-t border-border pt-5 md:grid-cols-3">
       <div className="grid gap-2">
         <Label htmlFor={`${id}-name`}>Nombre del proyecto</Label>
-        <Input id={`${id}-name`} name="name" required placeholder="Ej. Kenias Studio" className={fieldClass} />
+        <Input id={`${id}-name`} name="name" required defaultValue={defaultName} placeholder="Ej. Kenias Studio" className={fieldClass} />
       </div>
       <div className="grid gap-2">
         <Label htmlFor={`${id}-plan`}>Plan</Label>
