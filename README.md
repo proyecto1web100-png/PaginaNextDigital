@@ -1,6 +1,6 @@
 # NextDigital
 
-Landing page de NextDigital, estudio de diseño web en Honduras. El repositorio tiene dos versiones de prueba:
+Landing page de NextDigital, estudio de diseño web en Honduras. El repositorio tiene tres versiones de prueba:
 
 | Carpeta | Qué es | Cómo verla |
 |---|---|---|
