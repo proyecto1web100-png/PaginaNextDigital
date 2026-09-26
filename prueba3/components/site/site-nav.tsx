@@ -1,16 +1,14 @@
 "use client"
 
-import { BarChart3, CircleHelp, CreditCard, LayoutGrid, LogIn, Newspaper } from "lucide-react"
-import { FaWhatsapp } from "react-icons/fa"
+import { BarChart3, CircleHelp, ClipboardList, CreditCard, LayoutGrid, LogIn, Newspaper } from "lucide-react"
 import { NotchNavbar } from "@/components/ui/notch-navbar"
 import { home, page } from "@/lib/links"
-import { wa } from "@/lib/site"
 import { LogoN } from "./logo"
-
-const QUOTE = wa("Hola NextDigital! Quiero una cotización para mi página web.")
 
 /** `depth`: how many folders below the home page this nav is rendered (see lib/links). */
 export function SiteNav({ depth = 0 }: { depth?: number }) {
+  // Quote form: the section on the home page, its own page (/cotizar/) everywhere else.
+  const quote = depth === 0 ? home(0, "cotizar") : page(depth, "cotizar")
   return (
     <NotchNavbar
       left={[
@@ -29,13 +27,13 @@ export function SiteNav({ depth = 0 }: { depth?: number }) {
         </a>
       }
       actions={
-        <a href={QUOTE} target="_blank" rel="noopener noreferrer" className="press inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-4 py-1.5 text-sm font-semibold text-background transition-colors hover:bg-orange hover:text-foreground">
-          <FaWhatsapp aria-hidden /> Cotizar
+        <a href={quote} className="press inline-flex items-center justify-center gap-2 rounded-full bg-foreground px-4 py-1.5 text-sm font-semibold text-background transition-colors hover:bg-orange hover:text-foreground">
+          <ClipboardList aria-hidden className="size-4" /> Cotizar
         </a>
       }
       mobileAction={
-        <a href={QUOTE} target="_blank" rel="noopener noreferrer" aria-label="Cotizar por WhatsApp" className="grid size-9 place-items-center rounded-full text-foreground hover:bg-paper-2">
-          <FaWhatsapp className="size-5" aria-hidden />
+        <a href={quote} aria-label="Cotizar" className="grid size-9 place-items-center rounded-full text-foreground hover:bg-paper-2">
+          <ClipboardList className="size-5" aria-hidden />
         </a>
       }
     />
