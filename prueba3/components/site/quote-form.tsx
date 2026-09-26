@@ -1,21 +1,22 @@
 "use client"
 
-import { useId, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 import { motion } from "framer-motion"
-import { CheckCircle2, Loader2, Send } from "lucide-react"
+import { Check, CheckCircle2, Link2, Loader2, Send } from "lucide-react"
 import { FaWhatsapp } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { normalize } from "@/lib/faq"
 import { page } from "@/lib/links"
-import { wa } from "@/lib/site"
+import { SITE_URL, wa } from "@/lib/site"
 import { supabase } from "@/lib/supabase"
 import { track } from "@/lib/track"
 import { SectionHead } from "./section-head"
 import { inView } from "./motion"
 
 const BUSINESS_TYPES = ["Restaurante o cafetería", "Salón o barbería", "Tienda", "Clínica o consultorio", "Servicios profesionales", "Otro"]
-const PLANS = ["No sé", "Básico", "Intermedio", "Avanzado"] as const
+const PLANS = ["No sé", "Básico", "Intermedio", "Avanzado", "Negocios"] as const
 
 type Lead = { name: string; phone: string; business_name: string; business_type: string; plan: string; message: string }
 
@@ -33,11 +34,59 @@ const field = "h-12 rounded-xl bg-background/60"
 const select =
   "h-12 w-full rounded-xl border border-input bg-background/60 px-3 text-[15px] outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50"
 
-export function QuoteForm() {
+/** Shareable direct link to the quote form (its own page). */
+export const QUOTE_URL = `${SITE_URL}/cotizar/`
+
+/** Copies the direct link (or opens the native share sheet on phones). */
+function ShareLink() {
+  const [copied, setCopied] = useState(false)
+  async function share() {
+    const data = { title: "Cotiza tu página web · NextDigital", url: QUOTE_URL }
+    if (navigator.share && window.matchMedia("(pointer: coarse)").matches) {
+      await navigator.share(data).catch(() => {})
+      return
+    }
+    try {
+      await navigator.clipboard.writeText(QUOTE_URL)
+    } catch {
+      window.prompt("Copia este link:", QUOTE_URL)
+      return
+    }
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+  return (
+    <button
+      type="button"
+      onClick={share}
+      className="press inline-flex h-10 w-fit items-center gap-2 rounded-full border-[1.5px] border-border bg-card px-4 text-sm font-semibold transition-colors hover:border-foreground"
+    >
+      {copied ? <Check className="size-4 text-[#10653a]" aria-hidden /> : <Link2 className="size-4" aria-hidden />}
+      <span aria-live="polite">{copied ? "¡Link copiado!" : "Copiar link directo"}</span>
+    </button>
+  )
+}
+
+/**
+ * Quote form. On the home page it is section 04; on /cotizar/ (`standalone`) it is the whole page.
+ * `?plan=Negocios` (or any plan name) preselects the plan, so links can be shared per plan.
+ */
+export function QuoteForm({ standalone = false, depth = 0 }: { standalone?: boolean; depth?: number }) {
   const id = useId()
+  const formRef = useRef<HTMLFormElement>(null)
   const [busy, setBusy] = useState(false)
   const [sent, setSent] = useState<Lead | null>(null)
   const [error, setError] = useState<{ text: string; lead: Lead } | null>(null)
+
+  useEffect(() => {
+    const wanted = new URLSearchParams(window.location.search).get("plan")
+    if (!wanted) return
+    formRef.current
+      ?.querySelectorAll<HTMLInputElement>('input[name="plan"]')
+      .forEach((r) => {
+        if (normalize(r.value) === normalize(wanted)) r.checked = true
+      })
+  }, [])
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -76,15 +125,18 @@ export function QuoteForm() {
   }
 
   return (
-    <section id="cotizar" aria-labelledby="quote-title" className="bg-paper-2">
+    <section id="cotizar" aria-labelledby="quote-title" className={standalone ? "min-h-svh bg-paper-2 pt-16" : "bg-paper-2"}>
       <div className="mx-auto grid w-full max-w-[1180px] gap-12 px-4 py-20 md:grid-cols-[1fr_1.1fr] md:px-8 md:py-28">
-        <SectionHead
-          id="quote-title"
-          eyebrow="04 · Cotizar"
-          title={<>Cuéntanos de<br />tu negocio.</>}
-          lead="Déjanos tus datos y te enviamos una propuesta en menos de 24 horas, sin compromiso."
-          className="md:grid-cols-1 md:items-start md:gap-6"
-        />
+        <div className="grid content-start gap-6">
+          <SectionHead
+            id="quote-title"
+            eyebrow={standalone ? "Cotizar" : "04 · Cotizar"}
+            title={<>Cuéntanos de<br />tu negocio.</>}
+            lead="Déjanos tus datos y te enviamos una propuesta en menos de 24 horas, sin compromiso."
+            className="md:grid-cols-1 md:items-start md:gap-6"
+          />
+          <ShareLink />
+        </div>
 
         <motion.div {...inView} className="rounded-[28px] border border-border bg-card p-6 shadow-[0_30px_60px_-30px_rgba(18,18,18,0.3)] md:p-8">
           {sent ? (
@@ -102,7 +154,7 @@ export function QuoteForm() {
               </a>
             </div>
           ) : (
-            <form onSubmit={onSubmit} className="grid gap-5">
+            <form ref={formRef} onSubmit={onSubmit} className="grid gap-5">
               <div className="grid gap-5 sm:grid-cols-2">
                 <div className="grid gap-2">
                   <Label htmlFor={`${id}-name`}>Tu nombre</Label>
@@ -178,7 +230,7 @@ export function QuoteForm() {
                 <input type="checkbox" required className="mt-0.5 size-4 shrink-0 accent-orange" />
                 <span>
                   Acepto que NextDigital use estos datos para responder mi cotización, según la{" "}
-                  <a href={page(0, "privacidad")} className="font-semibold text-foreground underline underline-offset-4">política de privacidad</a>.
+                  <a href={page(depth, "privacidad")} className="font-semibold text-foreground underline underline-offset-4">política de privacidad</a>.
                 </span>
               </label>
               <Button type="submit" size="lg" disabled={busy} className="press h-12 rounded-full text-base font-semibold hover:bg-brand">

@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s — NextDigital",
   },
   description:
-    "Diseñamos páginas web profesionales para negocios en Honduras: restaurantes, salones, tiendas, clínicas y más. En línea en 48 horas, conectadas a tu WhatsApp. Desde L. 2,500.",
+    "Diseñamos páginas web profesionales para negocios en todo Honduras: Tegucigalpa, San Pedro Sula, La Ceiba y más. Restaurantes, salones, tiendas y clínicas, en línea en 48 horas y conectadas a tu WhatsApp. Desde L. 2,500.",
   keywords: [
     "páginas web Honduras",
     "diseño web Honduras",
@@ -22,12 +22,17 @@ export const metadata: Metadata = {
     "página web con WhatsApp",
     "tienda en línea Honduras",
     "landing page Honduras",
+    "páginas web Tegucigalpa",
+    "páginas web San Pedro Sula",
+    "diseño web La Ceiba",
+    "diseño web Comayagua",
+    "diseño web Choluteca",
   ],
   applicationName: "NextDigital",
   alternates: { canonical: "/" },
   openGraph: {
     title: "NextDigital — La página que necesitas, a tu alcance",
-    description: "Páginas web profesionales para negocios en Honduras. En línea en 48 horas, desde L. 2,500.",
+    description: "Páginas web profesionales para negocios en todo Honduras. En línea en 48 horas, desde L. 2,500.",
     url: "/",
     locale: "es_HN",
     siteName: "NextDigital",
@@ -37,11 +42,13 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "NextDigital — La página que necesitas, a tu alcance",
-    description: "Páginas web profesionales para negocios en Honduras. En línea en 48 horas.",
+    description: "Páginas web profesionales para negocios en todo Honduras. En línea en 48 horas.",
     images: ["/og.png"],
   },
   robots: { index: true, follow: true },
   formatDetection: { telephone: false },
+  // Google Search Console ownership (property https://nextdigitalhn.netlify.app/).
+  verification: { google: "C6DyDNiH0iesbEj_NVzaG-4_IPVN6-Iweup2GcFxf0U" },
 };
 
 export const viewport: Viewport = {

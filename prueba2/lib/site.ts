@@ -3,8 +3,8 @@ export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 /** Prefix a /public asset with the base path (needed for static export on a sub-path). */
 export const asset = (path: string) => `${BASE_PATH}${path}`;
 
-export const PHONE = "50497946129";
-export const PHONE_DISPLAY = "+504 9794-6129";
+export const PHONE = "50492271300";
+export const PHONE_DISPLAY = "+504 9227-1300";
 export const INSTAGRAM = "https://instagram.com/NextDigitalhn";
 
 export const wa = (text?: string) =>

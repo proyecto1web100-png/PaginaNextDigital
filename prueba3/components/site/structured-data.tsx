@@ -1,5 +1,5 @@
 import { FAQS } from "@/lib/faq"
-import { INSTAGRAM, PHONE, SITE_URL } from "@/lib/site"
+import { CITIES, INSTAGRAM, PHONE, SITE_URL } from "@/lib/site"
 
 /** Business + FAQ structured data (schema.org) for Google rich results. */
 export function StructuredData() {
@@ -8,18 +8,22 @@ export function StructuredData() {
     "@type": "ProfessionalService",
     "@id": `${SITE_URL}/#negocio`,
     name: "NextDigital",
-    description: "Diseño de páginas web profesionales para negocios en Honduras, conectadas a WhatsApp.",
+    description: "Diseño de páginas web profesionales para negocios en todo Honduras, conectadas a WhatsApp.",
     url: `${SITE_URL}/`,
     image: `${SITE_URL}/og.png`,
     telephone: `+${PHONE}`,
-    areaServed: { "@type": "Country", name: "Honduras" },
+    areaServed: [
+      { "@type": "Country", name: "Honduras" },
+      ...CITIES.map((name) => ({ "@type": "City", name, containedInPlace: { "@type": "Country", name: "Honduras" } })),
+    ],
     address: { "@type": "PostalAddress", addressCountry: "HN" },
-    priceRange: "L 2,500 - L 4,250",
+    priceRange: "L 2,500 - L 5,000+",
     sameAs: [INSTAGRAM],
     makesOffer: [
       { name: "Plan Básico", price: "2500" },
-      { name: "Plan Intermedio", price: "3500" },
-      { name: "Plan Avanzado", price: "4250" },
+      { name: "Plan Intermedio", price: "4000" },
+      { name: "Plan Avanzado", price: "5000" },
+      { name: "Plan Negocios", price: "5000" },
     ].map((o) => ({
       "@type": "Offer",
       name: o.name,

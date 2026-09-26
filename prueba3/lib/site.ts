@@ -6,8 +6,25 @@ export const asset = (path: string) => `${BASE_PATH}${path}`;
 /** Canonical public URL (Netlify, or the custom domain once connected). Used for SEO metadata. */
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://nextdigitalhn.netlify.app").replace(/\/$/, "");
 
-export const PHONE = "50497946129";
-export const PHONE_DISPLAY = "+504 9794-6129";
+/** Main cities we serve (the whole country, remotely). Used for SEO and the FAQ. */
+export const CITIES = [
+  "Tegucigalpa",
+  "San Pedro Sula",
+  "La Ceiba",
+  "Choloma",
+  "El Progreso",
+  "Comayagua",
+  "Choluteca",
+  "Danlí",
+  "Siguatepeque",
+  "Juticalpa",
+  "Puerto Cortés",
+  "Santa Rosa de Copán",
+  "Roatán",
+];
+
+export const PHONE = "50492271300";
+export const PHONE_DISPLAY = "+504 9227-1300";
 export const INSTAGRAM = "https://instagram.com/NextDigitalhn";
 
 export const wa = (text?: string) =>

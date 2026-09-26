@@ -84,7 +84,7 @@ export type AccessRequest = {
 /** The signed-in client's own request, as shown in their portal. */
 export type OwnRequest = Pick<AccessRequest, "status" | "full_name" | "business_name" | "submitted_at">
 
-export const PLANS = ["Básico", "Intermedio", "Avanzado"] as const
+export const PLANS = ["Básico", "Intermedio", "Avanzado", "Negocios"] as const
 export const STAGES: ProjectStatus[] = ["diseño", "desarrollo", "revisión", "publicado"]
 export const STAGE_LABEL: Record<ProjectStatus, string> = {
   diseño: "Diseño",

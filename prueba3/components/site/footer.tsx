@@ -15,11 +15,11 @@ export function SiteFooter({ depth = 0 }: { depth?: number }) {
             <LogoN className="text-2xl" />
             <span className="font-display text-lg font-bold tracking-tight">NextDigital</span>
           </a>
-          <p className="mt-3 max-w-[32ch]">Páginas web profesionales para negocios en Honduras.</p>
+          <p className="mt-3 max-w-[32ch]">Páginas web profesionales para negocios en todo Honduras.</p>
         </div>
         <nav aria-label="Enlaces" className="grid content-start gap-2">
           <a className={link} href={home(depth, "planes")}>Planes</a>
-          <a className={link} href={home(depth, "cotizar")}>Cotizar</a>
+          <a className={link} href={page(depth, "cotizar")}>Cotizar</a>
           <a className={link} href={home(depth, "preguntas")}>Preguntas frecuentes</a>
           <a className={link} href={page(depth, "blog")}>Blog</a>
         </nav>
