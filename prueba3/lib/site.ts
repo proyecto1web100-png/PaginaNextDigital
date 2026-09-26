@@ -23,8 +23,8 @@ export const CITIES = [
   "Roatán",
 ];
 
-export const PHONE = "50497946129";
-export const PHONE_DISPLAY = "+504 9794-6129";
+export const PHONE = "50492271300";
+export const PHONE_DISPLAY = "+504 9227-1300";
 export const INSTAGRAM = "https://instagram.com/NextDigitalhn";
 
 export const wa = (text?: string) =>

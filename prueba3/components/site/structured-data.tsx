@@ -17,12 +17,13 @@ export function StructuredData() {
       ...CITIES.map((name) => ({ "@type": "City", name, containedInPlace: { "@type": "Country", name: "Honduras" } })),
     ],
     address: { "@type": "PostalAddress", addressCountry: "HN" },
-    priceRange: "L 2,500 - L 4,250",
+    priceRange: "L 2,500 - L 5,000+",
     sameAs: [INSTAGRAM],
     makesOffer: [
       { name: "Plan Básico", price: "2500" },
-      { name: "Plan Intermedio", price: "3500" },
-      { name: "Plan Avanzado", price: "4250" },
+      { name: "Plan Intermedio", price: "4000" },
+      { name: "Plan Avanzado", price: "5000" },
+      { name: "Plan Negocios", price: "5000" },
     ].map((o) => ({
       "@type": "Offer",
       name: o.name,

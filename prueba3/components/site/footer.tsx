@@ -19,7 +19,7 @@ export function SiteFooter({ depth = 0 }: { depth?: number }) {
         </div>
         <nav aria-label="Enlaces" className="grid content-start gap-2">
           <a className={link} href={home(depth, "planes")}>Planes</a>
-          <a className={link} href={home(depth, "cotizar")}>Cotizar</a>
+          <a className={link} href={page(depth, "cotizar")}>Cotizar</a>
           <a className={link} href={home(depth, "preguntas")}>Preguntas frecuentes</a>
           <a className={link} href={page(depth, "blog")}>Blog</a>
         </nav>
