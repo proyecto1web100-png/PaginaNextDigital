@@ -32,7 +32,7 @@ const PLANS: Plan[] = [
   },
   {
     name: "Intermedio",
-    price: "4,000",
+    price: "5,000",
     desc: "Tu web con sistemas integrados para gestionar citas, catálogo y contenido.",
     includes: ["Todo lo del plan Básico", "Bases de datos integradas", "Sistemas integrados (citas, catálogo…)", "Panel de administrador"],
     excludes: ["Reportes de clientes y ventas", "Módulo de artículos y ventas"],
@@ -40,18 +40,18 @@ const PLANS: Plan[] = [
   },
   {
     name: "Avanzado",
-    price: "5,000",
+    price: "7,500",
     desc: "El sistema completo: ventas, reportes, inventario y dashboard de administración.",
     includes: ["Todo lo del plan Intermedio", "Reportes de clientes y artículos", "Módulo completo de ventas", "Dashboard completo de administración"],
   },
   {
     name: "Negocios",
-    price: "5,000",
+    price: "10,000",
     from: true,
     tag: "Empresas",
     desc: "Para empresas más grandes que necesitan sistemas a la medida y una asesoría más cercana.",
     includes: ["Todo lo del plan Avanzado", "Asesoría personalizada", "Sistemas a la medida de tu empresa", "Soporte prioritario"],
-    note: "Según el proyecto · 50% / 50%",
+    note: "Precio desde · según el proyecto",
     cta: "Hablar con un asesor",
   },
 ]
@@ -92,7 +92,6 @@ export function Plans() {
               {p.name}
             </h3>
             <p className="mt-3 font-display text-[clamp(2.6rem,4vw,3.2rem)] font-extrabold leading-none tracking-[-0.04em]">
-              {p.from && <span className="mr-2 align-[0.9em] text-[0.3em] font-semibold tracking-normal text-muted-foreground">Desde</span>}
               <span className="mr-1 align-[0.6em] text-[0.45em] font-semibold tracking-normal">L.</span>
               {p.price}
             </p>
