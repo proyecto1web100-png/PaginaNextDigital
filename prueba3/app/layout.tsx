@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     template: "%s — NextDigital",
   },
   description:
-    "Diseñamos páginas web profesionales para negocios en todo Honduras: Tegucigalpa, San Pedro Sula, La Ceiba y más. Restaurantes, salones, tiendas y clínicas, en línea en 48 horas y conectadas a tu WhatsApp. Desde L. 2,500.",
+    "Diseñamos páginas web profesionales para negocios en todo Honduras: Tegucigalpa, San Pedro Sula, La Ceiba y más. Restaurantes, salones, tiendas y clínicas, en línea en 48 horas y conectadas a tu WhatsApp. Desde L. 3,500.",
   keywords: [
     "páginas web Honduras",
     "diseño web Honduras",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
   openGraph: {
     title: "NextDigital — La página que necesitas, a tu alcance",
-    description: "Páginas web profesionales para negocios en todo Honduras. En línea en 48 horas, desde L. 2,500.",
+    description: "Páginas web profesionales para negocios en todo Honduras. En línea en 48 horas, desde L. 3,500.",
     url: "/",
     locale: "es_HN",
     siteName: "NextDigital",
