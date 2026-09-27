@@ -25,7 +25,7 @@ type Plan = {
 const PLANS: Plan[] = [
   {
     name: "Básico",
-    price: "3,500",
+    price: "2,500",
     desc: "Una landing page elegante para presentar tu negocio y recibir clientes por WhatsApp.",
     includes: ["Landing page de presentación", "Diseño responsivo (móvil y escritorio)", "Botones de WhatsApp y redes sociales", "Entrega en 48 horas"],
     excludes: ["Bases de datos y sistemas", "Panel de administrador"],

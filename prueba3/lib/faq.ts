@@ -8,7 +8,7 @@ export type Faq = {
 export const FAQS: Faq[] = [
   {
     q: "¿Cuánto cuesta mi página web?",
-    a: "Tenemos cuatro planes: Básico L. 3,500, Intermedio L. 5,000, Avanzado L. 7,500 y Negocios desde L. 10,000 (para empresas que necesitan sistemas a la medida y asesoría personalizada). Pagas 50% al iniciar y 50% al entregar. El mantenimiento mensual es opcional y cuesta L. 500.",
+    a: "Tenemos cuatro planes: Básico L. 2,500, Intermedio L. 5,000, Avanzado L. 7,500 y Negocios desde L. 10,000 (para empresas que necesitan sistemas a la medida y asesoría personalizada). Pagas 50% al iniciar y 50% al entregar. El mantenimiento mensual es opcional y cuesta L. 500.",
     keywords: ["precio", "precios", "cuesta", "costo", "cuanto cuesta", "cuanto vale", "cuanto sale", "plan", "planes", "negocios", "empresa", "empresas", "pagar", "pago", "lempiras", "mensualidad", "cobran"],
   },
   {

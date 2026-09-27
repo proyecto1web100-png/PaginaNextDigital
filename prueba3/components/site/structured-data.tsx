@@ -17,10 +17,10 @@ export function StructuredData() {
       ...CITIES.map((name) => ({ "@type": "City", name, containedInPlace: { "@type": "Country", name: "Honduras" } })),
     ],
     address: { "@type": "PostalAddress", addressCountry: "HN" },
-    priceRange: "L 3,500 - L 10,000+",
+    priceRange: "L 2,500 - L 10,000+",
     sameAs: [INSTAGRAM],
     makesOffer: [
-      { name: "Plan Básico", price: "3500" },
+      { name: "Plan Básico", price: "2500" },
       { name: "Plan Intermedio", price: "5000" },
       { name: "Plan Avanzado", price: "7500" },
       { name: "Plan Negocios", price: "10000" },
