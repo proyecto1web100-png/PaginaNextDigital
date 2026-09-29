@@ -15,8 +15,8 @@ export default function CookiesPage() {
       <LegalHeader eyebrow="Legal" title="Política de cookies" />
       <LegalBody>
         <p>
-          Este sitio no usa cookies de publicidad ni de redes sociales. Usamos el almacenamiento de tu navegador
-          (localStorage) solo para lo siguiente:
+          Usamos el almacenamiento de tu navegador (localStorage) y, solo si lo aceptas, cookies de Google Ads para lo
+          siguiente:
         </p>
 
         <h2>Necesarias (siempre activas)</h2>
@@ -30,6 +30,14 @@ export default function CookiesPage() {
           Si las aceptas, registramos la página visitada, el sitio desde el que llegaste, el tipo de dispositivo y los
           toques en botones de WhatsApp. No guardamos tu IP ni un identificador tuyo, y no seguimos tu actividad en otros
           sitios. Nos sirve para saber qué partes de la página funcionan mejor.
+        </p>
+
+        <h2>Publicidad: Google Ads (opcional)</h2>
+        <p>
+          Si aceptas las estadísticas, Google Ads puede guardar cookies para medir si nuestros anuncios funcionan (por
+          ejemplo, si llegaste desde un anuncio y luego nos escribiste por WhatsApp o pediste una cotización). Si no
+          aceptas, la etiqueta de Google funciona sin cookies y sin identificarte. Google procesa estos datos según su
+          política de privacidad.
         </p>
 
         <h2>Servicios externos</h2>

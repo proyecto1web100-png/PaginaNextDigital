@@ -4,6 +4,7 @@ import { GeistMono } from "geist/font/mono";
 import "@fontsource-variable/bricolage-grotesque";
 import { Analytics } from "@/components/site/analytics";
 import { MotionProvider } from "@/components/site/motion-provider";
+import { ADS_ID, GTAG_BOOTSTRAP } from "@/lib/gtag";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -63,6 +64,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}
     >
       <head>
+        {/* Google Ads tag (gtag.js) with Consent Mode v2: no Google cookies until the visitor accepts. */}
+        <script dangerouslySetInnerHTML={{ __html: GTAG_BOOTSTRAP }} />
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ADS_ID}`} />
         {/* Without JavaScript (blocked or disabled) the entrance animations never run:
             reveal the server-rendered hidden states so the content is still visible. */}
         <noscript>
