@@ -32,6 +32,7 @@ export default function PrivacyPage() {
           <li><strong>Portal de clientes (inicio de sesión con Google):</strong> tu nombre, correo electrónico y foto de perfil de Google, y el nombre y negocio que indiques en tu solicitud.</li>
           <li><strong>Archivos del proyecto:</strong> el logo, fotos, textos u otros archivos que subas en el portal para hacer tu página.</li>
           <li><strong>Estadísticas de visitas (solo si las aceptas):</strong> la página visitada, el sitio desde el que llegaste, el tipo de dispositivo (celular o computadora) y si tocaste un botón de WhatsApp. No guardamos tu dirección IP ni datos que te identifiquen.</li>
+          <li><strong>Medición de anuncios (Google Ads):</strong> la etiqueta de Google registra si llegaste desde uno de nuestros anuncios y si luego nos contactaste. Solo usa cookies si aceptas las estadísticas en el aviso de cookies.</li>
           <li><strong>Conversaciones por WhatsApp:</strong> si nos escribes, WhatsApp procesa esos mensajes según sus propias políticas.</li>
         </ul>
         <p>El asistente de preguntas funciona dentro de tu navegador: lo que escribes ahí no se envía ni se guarda.</p>
@@ -49,7 +50,7 @@ export default function PrivacyPage() {
         <p>Usamos proveedores que almacenan o procesan datos por nuestra cuenta:</p>
         <ul>
           <li><strong>Supabase:</strong> base de datos, inicio de sesión y almacenamiento de archivos.</li>
-          <li><strong>Google:</strong> inicio de sesión con tu cuenta de Google.</li>
+          <li><strong>Google:</strong> inicio de sesión con tu cuenta de Google y medición de anuncios (Google Ads).</li>
           <li><strong>Netlify y GitHub Pages:</strong> alojamiento del sitio web.</li>
         </ul>
         <p>Estos proveedores pueden tener servidores fuera de Honduras. Solo compartimos lo necesario para prestar el servicio.</p>

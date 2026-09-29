@@ -1,4 +1,5 @@
 import { readConsent } from "./consent"
+import { gtagEvent } from "./gtag"
 import { BASE_PATH } from "./site"
 import { supabase } from "./supabase"
 
@@ -27,6 +28,9 @@ const referrerHost = () => {
  * No IP, cookie or identifier is stored — just kind, path, referrer host and device type.
  */
 export function track(kind: EventKind) {
+  // Google Ads events (Consent Mode decides whether Google may use cookies for them).
+  if (kind === "whatsapp") gtagEvent("contact", { method: "whatsapp" })
+  if (kind === "quote") gtagEvent("generate_lead", { method: "quote_form" })
   if (!supabase || !readConsent()?.analytics) return
   void supabase
     .from("site_events")

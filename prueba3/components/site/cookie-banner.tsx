@@ -59,7 +59,7 @@ export function CookieBanner({ depth = 0 }: { depth?: number }) {
           </p>
           <p id={`${id}-desc`} className="mt-2 text-sm leading-relaxed text-ink-2">
             Usamos almacenamiento necesario para que funcione el portal de clientes y, si lo aceptas, estadísticas
-            anónimas de visitas para mejorar la página. No usamos publicidad ni vendemos tus datos.{" "}
+            de visitas y cookies de Google Ads para medir nuestros anuncios. No vendemos tus datos.{" "}
             <a href={page(depth, "cookies")} className="font-semibold text-foreground underline underline-offset-4">
               Más información
             </a>
@@ -76,8 +76,8 @@ export function CookieBanner({ depth = 0 }: { depth?: number }) {
               </div>
               <label className="flex cursor-pointer items-start justify-between gap-4">
                 <span>
-                  <span className="block font-semibold">Estadísticas</span>
-                  <span className="block text-muted-foreground">Páginas visitadas y de dónde llegas, sin identificarte.</span>
+                  <span className="block font-semibold">Estadísticas y publicidad</span>
+                  <span className="block text-muted-foreground">Páginas visitadas, de dónde llegas y medición de anuncios de Google.</span>
                 </span>
                 <input
                   type="checkbox"

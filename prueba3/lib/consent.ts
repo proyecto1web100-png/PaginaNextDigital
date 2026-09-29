@@ -2,6 +2,8 @@
  * Cookie/storage consent. Only optional categories need consent; the Supabase login session
  * (stored in localStorage) is strictly necessary for the client portal and is always allowed.
  */
+import { updateGtagConsent } from "./gtag"
+
 export type Consent = { analytics: boolean; version: 1; date: string }
 
 const KEY = "nd-consent"
@@ -27,6 +29,7 @@ export function saveConsent(analytics: boolean) {
   } catch {
     /* private mode: the choice lasts for this page view only */
   }
+  updateGtagConsent(analytics)
   window.dispatchEvent(new CustomEvent<Consent>(EVENT, { detail: c }))
 }
 
