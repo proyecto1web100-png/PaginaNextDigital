@@ -1,5 +1,5 @@
 import { readConsent } from "./consent"
-import { gtagEvent } from "./gtag"
+import { WHATSAPP_CONVERSION, gtagEvent } from "./gtag"
 import { BASE_PATH } from "./site"
 import { supabase } from "./supabase"
 
@@ -29,7 +29,7 @@ const referrerHost = () => {
  */
 export function track(kind: EventKind) {
   // Google Ads events (Consent Mode decides whether Google may use cookies for them).
-  if (kind === "whatsapp") gtagEvent("contact", { method: "whatsapp" })
+  if (kind === "whatsapp") gtagEvent("conversion", { send_to: WHATSAPP_CONVERSION, value: 1.0, currency: "USD" })
   if (kind === "quote") gtagEvent("generate_lead", { method: "quote_form" })
   if (!supabase || !readConsent()?.analytics) return
   void supabase
