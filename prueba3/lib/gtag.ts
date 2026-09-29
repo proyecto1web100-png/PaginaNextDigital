@@ -1,8 +1,8 @@
 /** Google Ads tag (gtag.js). Loaded on every page from the root layout with Consent Mode v2. */
 export const ADS_ID = "AW-18468947615"
 
-/** Google Ads conversion action "Contacto (1)": a tap on any WhatsApp link. */
-export const WHATSAPP_CONVERSION = `${ADS_ID}/jRDcCOiD_oodEJ-N1-ZE`
+/** Google Ads conversion action "Contacto (2)": a tap on any WhatsApp link. */
+export const WHATSAPP_CONVERSION = `${ADS_ID}/u9Q3CKTXhosdEJ-N1-ZE`
 
 type Gtag = (...args: unknown[]) => void
 const gtag: Gtag = (...args) => (window as unknown as { gtag?: Gtag }).gtag?.(...args)
