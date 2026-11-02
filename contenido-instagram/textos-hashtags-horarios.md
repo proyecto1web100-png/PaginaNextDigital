@@ -56,21 +56,23 @@ Guárdalo para revisarlo con calma y compártelo con ese amigo emprendedor que t
 
 ---
 
-## Post 3 · Reel animado de 22 segundos (objetivo: conseguir clientes)
+## Post 3 · Reel "Sal del loop" (26 segundos, objetivo: conseguir clientes)
 
-**Archivos:** `post-3-reel-noviembre-2-0.mp4` y la portada `post-3-reel-portada.jpg`
+**Archivos:** `post-3-reel-sal-del-loop.mp4` y la portada `post-3-reel-portada.jpg`
 
-**Audio:** el video no trae música. Agrégale en Instagram un audio en tendencia, instrumental y con ritmo; sube el volumen del audio y listo. Los cambios de escena ocurren cerca de los segundos 3, 8, 14 y 19, así que sincroniza el audio con el beat si puedes.
+**Concepto:** una línea atrapada en un círculo repite "anotar, copiar, pegar, repetir" mientras pasan los días. La línea toma impulso, rompe el círculo y sale disparada hacia arriba con la flecha del logo de Next Digital. Desde ahí, esa misma línea dibuja cada servicio: la ventana de una página web, las piezas del catálogo que se ensamblan, la factura que se imprime, las barras de analítica y el diente de Dentico. Después pasa a la regla de "a tu medida", la flecha saca de cuadro al "1.0" y cae el "2.0". El círculo del inicio regresa convertido en el 20%, y al final se transforma en el ícono del logo.
+
+**Audio:** el video ya incluye diseño sonoro original (tics del loop, golpes, clics y un pulso suave), sincronizado con cada movimiento. Si prefieres un audio en tendencia de Instagram, bájale el volumen al sonido original al 30% para no perder los acentos.
 
 **Caption:**
 
-¿Tu negocio sigue en versión 1.0? 👀
+Lunes: anotar. Martes: copiar. Miércoles: pegar. Jueves: repetir. 🔁
 
-Cuadernos de ventas, citas a mano, las mismas preguntas en WhatsApp y una página web que nunca llegó. Si te sentiste identificado, toca actualizar.
+Si tu semana se parece a esto, tu negocio está atrapado en un loop. Las tareas repetitivas le tocan a la tecnología, y tu tiempo es para hacer crecer lo que construiste.
 
-Creamos páginas web, catálogos online, sistemas de facturación, Dentico para clínicas y tableros de analítica. Todo a la medida de tu negocio y con precios pensados para emprendedores.
+Creamos páginas web, catálogos online, sistemas de facturación, tableros de analítica y Dentico para clínicas dentales. Todo a la medida de tu negocio.
 
-Durante Noviembre 2.0 tienes 20% de descuento en todos nuestros servicios. Escríbenos al 9227-1300 por WhatsApp o visita nextdigitalhn.com.
+Durante Noviembre 2.0 tienes 20% de descuento en todos nuestros servicios. Escríbenos por WhatsApp al 9227-1300 o visita nextdigitalhn.com.
 
 ---
 
@@ -85,7 +87,7 @@ Copia un bloque por publicación (Instagram permite hasta 30; aquí van 15 por p
 #NextDigitalHN #Noviembre20 #EmprendedoresHonduras #PymesHonduras #TipsParaEmprendedores #DigitalizaTuNegocio #Productividad #SistemaDeFacturacion #AnaliticaDeDatos #Dentico #ClinicaDental #Odontologia #Honduras #NegociosHonduras #Emprendimiento
 
 **Post 3 · Reel**
-#NextDigitalHN #Noviembre20 #Honduras #EmprendedoresHonduras #Startups #PymesHonduras #DesarrolloDeSoftware #PaginasWeb #TransformacionDigital #Tecnologia #Automatizacion #ReelsHonduras #NegociosDigitales #SoftwareAMedida #Tegucigalpa
+#NextDigitalHN #Noviembre20 #Honduras #EmprendedoresHonduras #Startups #PymesHonduras #DesarrolloDeSoftware #PaginasWeb #TransformacionDigital #Tecnologia #Automatizacion #SalDelLoop #NegociosDigitales #SoftwareAMedida #Tegucigalpa
 
 ---
 
