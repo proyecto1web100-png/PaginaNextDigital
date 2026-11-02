@@ -56,7 +56,7 @@ Guárdalo para revisarlo con calma y compártelo con ese amigo emprendedor que t
 
 ---
 
-## Post 3 · Reel "Sal del loop" (26 segundos, objetivo: conseguir clientes)
+## Post 3 · Reel "Sal del loop" (40 segundos, objetivo: conseguir clientes)
 
 **Archivos:** `post-3-reel-sal-del-loop.mp4` y la portada `post-3-reel-portada.jpg`
 
