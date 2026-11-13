@@ -44,7 +44,7 @@ export function Dentico() {
       <SectionHead
         id="dentico-title"
         eyebrow="Software propio · Dentico"
-        title={<>Tu clínica dental,<br />todo en Dentico.</>}
+        title={<>Tu clínica dental,<br />todo en{" "}<span className="whitespace-nowrap"><img src={asset("/dentico/logo.png")} alt="" width={256} height={256} className="mx-[0.12em] inline-block size-[0.82em] -translate-y-[0.06em] rounded-[22%] align-middle shadow-[0_8px_24px_-8px_rgba(20,160,190,0.6)]" />Dentico.</span></>}
         lead="Además de páginas web, desarrollamos Dentico: un sistema para clínicas odontológicas que funciona en Windows y Linux."
       />
 
@@ -76,7 +76,8 @@ export function Dentico() {
             key={v.name}
             className={cn("flex flex-col rounded-3xl border p-7", v.featured ? "border-foreground bg-foreground text-background" : "border-border bg-card")}
           >
-            <h3 className={cn("font-sans text-[15px] font-semibold tracking-normal", v.featured ? "text-background/60" : "text-muted-foreground")}>
+            <h3 className={cn("flex items-center gap-2.5 font-sans text-[15px] font-semibold tracking-normal", v.featured ? "text-background/60" : "text-muted-foreground")}>
+              <img src={asset("/dentico/logo.png")} alt="" width={256} height={256} className="size-7 rounded-[22%]" />
               Dentico {v.name}
             </h3>
             <p className="mt-3 font-display text-[clamp(2.6rem,4vw,3.2rem)] font-extrabold leading-none tracking-[-0.04em]">
