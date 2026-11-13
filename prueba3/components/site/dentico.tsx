@@ -42,7 +42,7 @@ const TERMS = [
 export function Dentico() {
   const [active, setActive] = useState(1)
   return (
-    <section id="dentico" aria-labelledby="dentico-title" className="mx-auto w-full max-w-[1180px] px-4 py-20 md:px-8 md:py-28">
+    <section id="dentico" aria-labelledby="dentico-title" className="mx-auto w-full max-w-[1180px] px-4 py-14 md:px-8 md:py-28">
       <SectionHead
         id="dentico-title"
         eyebrow="Software propio · Dentico"

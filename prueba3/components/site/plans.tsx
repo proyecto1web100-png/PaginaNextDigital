@@ -62,7 +62,7 @@ const MAINTENANCE = { price: "500", items: ["Actualizaciones de contenido", "Sop
 
 export function Plans() {
   return (
-    <section id="planes" aria-labelledby="plans-title" className="mx-auto w-full max-w-[1180px] px-4 py-20 md:px-8 md:py-28">
+    <section id="planes" aria-labelledby="plans-title" className="mx-auto w-full max-w-[1180px] px-4 py-14 md:px-8 md:py-28">
       <SectionHead
         id="plans-title"
         eyebrow="03 · Planes"

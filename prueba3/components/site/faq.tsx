@@ -9,7 +9,7 @@ import { inView } from "./motion"
 
 export function FaqSection() {
   return (
-    <section id="preguntas" aria-labelledby="faq-title" className="mx-auto w-full max-w-[1180px] px-4 py-20 md:px-8 md:py-28">
+    <section id="preguntas" aria-labelledby="faq-title" className="mx-auto w-full max-w-[1180px] px-4 py-14 md:px-8 md:py-28">
       <SectionHead
         id="faq-title"
         eyebrow="05 · Preguntas"
@@ -32,7 +32,7 @@ export function FaqSection() {
       <motion.div {...inView} className="mt-10 border-t border-border">
         {FAQS.map((f) => (
           <details key={f.q} className="group border-b border-border">
-            <summary className="flex cursor-pointer list-none items-center justify-between gap-6 py-6 font-display text-[clamp(1.1rem,2vw,1.4rem)] font-semibold leading-snug tracking-tight transition-colors hover:text-brand [&::-webkit-details-marker]:hidden">
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 font-display md:gap-6 md:py-6 text-[clamp(1.1rem,2vw,1.4rem)] font-semibold leading-snug tracking-tight transition-colors hover:text-brand [&::-webkit-details-marker]:hidden">
               {f.q}
               <span
                 aria-hidden
@@ -41,7 +41,7 @@ export function FaqSection() {
                 <Plus className="size-4" />
               </span>
             </summary>
-            <p className="max-w-[70ch] pb-6 pr-12 text-[17px] leading-relaxed text-ink-2">{f.a}</p>
+            <p className="max-w-[70ch] pb-5 pr-4 text-[16px] md:pb-6 md:pr-12 md:text-[17px] leading-relaxed text-ink-2">{f.a}</p>
           </details>
         ))}
       </motion.div>

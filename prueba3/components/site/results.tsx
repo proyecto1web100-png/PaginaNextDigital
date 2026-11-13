@@ -161,7 +161,7 @@ const CARDS = [
 export function Results() {
   return (
     <section id="resultados" aria-labelledby="results-title" className="bg-paper-2">
-      <div className="mx-auto w-full max-w-[1180px] px-4 py-20 md:px-8 md:py-28">
+      <div className="mx-auto w-full max-w-[1180px] px-4 py-14 md:px-8 md:py-28">
         <SectionHead
           id="results-title"
           eyebrow="02 · Resultados"
@@ -169,13 +169,14 @@ export function Results() {
           lead="Lo que cambia cuando tus clientes te encuentran, reservan y compran sin tener que esperar a que respondas."
         />
 
-        <motion.div {...inView} className="mt-12 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+        <p className="mt-6 text-sm text-muted-foreground md:hidden">Desliza para ver más →</p>
+        <motion.div {...inView} className="mt-3 -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0 md:pb-0 md:snap-none md:mt-12 md:grid md:grid-cols-2 md:gap-3 lg:grid-cols-3">
           {CARDS.map((c) => (
             <FeatCard
               key={c.title}
               title={c.title}
               description={c.description}
-              className={cn("min-h-[280px] rounded-3xl border border-border shadow-none lg:h-[290px]", c.className)}
+              className={cn("w-[84%] shrink-0 snap-center md:w-auto min-h-[280px] rounded-3xl border border-border shadow-none lg:h-[290px]", c.className)}
             >
               {c.visual}
             </FeatCard>

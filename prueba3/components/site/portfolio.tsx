@@ -18,7 +18,7 @@ export function Portfolio() {
   const visible = filter ? PROJECTS.filter((p) => p.filter === filter) : PROJECTS
 
   return (
-    <section id="portafolio" aria-labelledby="portfolio-title" className="mx-auto w-full max-w-[1180px] px-4 pb-20 pt-10 md:px-8 md:pb-28 md:pt-12">
+    <section id="portafolio" aria-labelledby="portfolio-title" className="mx-auto w-full max-w-[1180px] px-4 pb-14 pt-10 md:px-8 md:pb-28 md:pt-12">
       <SectionHead
         id="portfolio-title"
         eyebrow="01 · Portafolio"
@@ -63,12 +63,14 @@ export function Portfolio() {
         </div>
       </motion.div>
 
-      <motion.ul layout className="mt-8 grid gap-6 md:grid-cols-3" transition={spring}>
+      <p className="mt-6 text-sm text-muted-foreground md:hidden">Desliza para ver más proyectos →</p>
+      <motion.ul layout className="mt-3 -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0 md:pb-0 md:snap-none md:mt-8 md:grid md:grid-cols-3 md:gap-6" transition={spring}>
         <AnimatePresence initial={false} mode="popLayout">
           {visible.map((p) => (
             <motion.li
               key={p.slug}
               layout
+              className="w-[84%] shrink-0 snap-center md:w-auto"
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1, transition: spring }}
               exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.12, ease: "easeIn" } }}
