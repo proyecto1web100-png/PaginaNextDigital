@@ -1,7 +1,8 @@
 "use client"
 
+import { useState } from "react"
 import { motion } from "framer-motion"
-import { Check } from "lucide-react"
+import { Check, ChevronDown } from "lucide-react"
 import { FaWhatsapp } from "react-icons/fa"
 import { asset, wa } from "@/lib/site"
 import { cn } from "@/lib/utils"
@@ -39,6 +40,7 @@ const TERMS = [
 ]
 
 export function Dentico() {
+  const [active, setActive] = useState(1)
   return (
     <section id="dentico" aria-labelledby="dentico-title" className="mx-auto w-full max-w-[1180px] px-4 py-20 md:px-8 md:py-28">
       <SectionHead
@@ -61,20 +63,34 @@ export function Dentico() {
         />
       </motion.div>
 
-      <motion.ul {...inView} className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <motion.ul {...inView} className="mt-4 grid grid-cols-2 gap-3 md:gap-4 lg:grid-cols-4">
         {FEATURES.map((f) => (
-          <li key={f.t} className="rounded-3xl border border-border bg-card p-6">
+          <li key={f.t} className="rounded-3xl border border-border bg-card p-4 md:p-6">
             <h3 className="font-sans text-[15px] font-semibold tracking-normal">{f.t}</h3>
-            <p className="mt-2 text-[15px] leading-relaxed text-ink-2">{f.d}</p>
+            <p className="mt-1.5 text-[13.5px] leading-snug text-ink-2 md:mt-2 md:text-[15px] md:leading-relaxed">{f.d}</p>
           </li>
         ))}
       </motion.ul>
 
-      <motion.div {...inView} className="mt-4 grid gap-4 md:grid-cols-2">
-        {VERSIONS.map((v) => (
+      <div role="tablist" aria-label="Versiones de Dentico" className="mt-8 grid grid-cols-2 gap-1 rounded-full border border-border bg-card p-1 md:hidden">
+        {VERSIONS.map((v, i) => (
+          <button
+            key={v.name}
+            type="button"
+            role="tab"
+            aria-selected={active === i}
+            onClick={() => setActive(i)}
+            className={cn("h-10 rounded-full text-[15px] font-semibold transition-colors", active === i ? "bg-foreground text-background" : "text-muted-foreground")}
+          >
+            {v.name}
+          </button>
+        ))}
+      </div>
+      <motion.div {...inView} className="mt-3 grid gap-4 md:mt-4 md:grid-cols-2">
+        {VERSIONS.map((v, i) => (
           <article
             key={v.name}
-            className={cn("flex flex-col rounded-3xl border p-7", v.featured ? "border-foreground bg-foreground text-background" : "border-border bg-card")}
+            className={cn("flex-col rounded-3xl border p-7 md:flex", active === i ? "flex" : "hidden", v.featured ? "border-foreground bg-foreground text-background" : "border-border bg-card")}
           >
             <h3 className={cn("flex items-center gap-2.5 font-sans text-[15px] font-semibold tracking-normal", v.featured ? "text-background/60" : "text-muted-foreground")}>
               <img src={asset("/dentico/logo.png")} alt="" width={256} height={256} className="size-7 rounded-[22%]" />
@@ -109,14 +125,30 @@ export function Dentico() {
         ))}
       </motion.div>
 
-      <motion.ul {...inView} className="mt-4 grid gap-3 rounded-3xl border border-border bg-card px-6 py-6 text-[15px] text-ink-2 md:grid-cols-2 md:px-7">
-        {TERMS.map((t) => (
-          <li key={t} className="flex gap-2.5">
-            <Check className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden />
-            {t}
-          </li>
-        ))}
-      </motion.ul>
+      <motion.div {...inView} className="mt-4 rounded-3xl border border-border bg-card">
+        <details className="group md:hidden">
+          <summary className="flex cursor-pointer list-none items-center justify-between px-6 py-5 text-[15px] font-semibold">
+            Pagos, actualizaciones y soporte
+            <ChevronDown className="size-5 transition-transform group-open:rotate-180" aria-hidden />
+          </summary>
+          <ul className="grid gap-3 px-6 pb-6 text-[15px] text-ink-2">
+            {TERMS.map((t) => (
+              <li key={t} className="flex gap-2.5">
+                <Check className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden />
+                {t}
+              </li>
+            ))}
+          </ul>
+        </details>
+        <ul className="hidden gap-3 px-7 py-6 text-[15px] text-ink-2 md:grid md:grid-cols-2">
+          {TERMS.map((t) => (
+            <li key={t} className="flex gap-2.5">
+              <Check className="mt-0.5 size-4 shrink-0 text-brand" aria-hidden />
+              {t}
+            </li>
+          ))}
+        </ul>
+      </motion.div>
     </section>
   )
 }

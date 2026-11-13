@@ -70,12 +70,16 @@ export function Plans() {
         lead="Cada plan parte de un precio base. El precio final depende de lo que necesite tu proyecto y queda fijado en un contrato antes de empezar. Pagas 50% al iniciar y 50% al entregar."
       />
 
-      <motion.div {...inView} className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <p className="mt-8 text-sm text-muted-foreground md:hidden">Desliza para ver los 4 planes →</p>
+      <motion.div
+        {...inView}
+        className="-mx-4 mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] md:mx-0 md:mt-12 md:grid md:snap-none md:grid-cols-2 md:gap-4 md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-4 [&::-webkit-scrollbar]:hidden"
+      >
         {PLANS.map((p) => (
           <article
             key={p.name}
             className={cn(
-              "relative flex flex-col rounded-3xl border p-7",
+              "relative flex w-[84%] shrink-0 snap-center flex-col rounded-3xl border p-7 md:w-auto",
               p.popular ? "border-foreground bg-foreground text-background" : p.tag ? "border-brand/50 bg-card ring-1 ring-brand/20" : "border-border bg-card"
             )}
           >
