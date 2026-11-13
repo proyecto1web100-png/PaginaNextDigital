@@ -6,6 +6,7 @@ import { FaqSection } from "@/components/site/faq"
 import { SiteFooter } from "@/components/site/footer"
 import { Hero } from "@/components/site/hero"
 import { Plans } from "@/components/site/plans"
+import { Dentico } from "@/components/site/dentico"
 import { Portfolio } from "@/components/site/portfolio"
 import { QuoteForm } from "@/components/site/quote-form"
 import { Results } from "@/components/site/results"
@@ -23,6 +24,7 @@ export default function Home() {
         <Portfolio />
         <Results />
         <Plans />
+        <Dentico />
         <QuoteForm />
         <FaqSection />
         <BlogTeaser />

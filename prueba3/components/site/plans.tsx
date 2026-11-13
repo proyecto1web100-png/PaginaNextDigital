@@ -66,8 +66,8 @@ export function Plans() {
       <SectionHead
         id="plans-title"
         eyebrow="03 · Planes"
-        title={<>Inversión clara,<br />sin sorpresas.</>}
-        lead="Cada plan tiene un precio base: el precio final depende de lo que necesite tu proyecto y te lo confirmamos por escrito antes de empezar. Pagas 50% al iniciar y 50% al entregar."
+        title={<>Elige tu plan.<br />El resto va por contrato.</>}
+        lead="Cada plan parte de un precio base. El precio final depende de lo que necesite tu proyecto y queda fijado en un contrato antes de empezar. Pagas 50% al iniciar y 50% al entregar."
       />
 
       <motion.div {...inView} className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -97,7 +97,7 @@ export function Plans() {
               <span className="mr-1 align-[0.45em] text-[0.5em] font-semibold tracking-normal">L.</span>
               {p.price}
             </p>
-            <p className={cn("mt-2 text-sm", p.popular ? "text-background/60" : "text-muted-foreground")}>{p.note ?? "Según alcance · 50% / 50%"}</p>
+            <p className={cn("mt-2 text-sm", p.popular ? "text-background/60" : "text-muted-foreground")}>{p.note ?? "Precio final por contrato · 50% / 50%"}</p>
             <p className={cn("mt-5 border-b pb-5 text-[15.5px] leading-relaxed", p.popular ? "border-white/15 text-background/80" : "border-border text-ink-2")}>
               {p.desc}
             </p>
