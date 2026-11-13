@@ -1,21 +1,16 @@
 "use client"
 
-import { useState } from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { ArrowUpRight } from "lucide-react"
-import { Chip } from "@/components/ui/chip"
 import { Pill } from "@/components/ui/pill"
 import { Tag } from "@/components/ui/tag"
-import { PROJECTS, asset, type Project } from "@/lib/site"
+import { PROJECTS, asset } from "@/lib/site"
 import { cn } from "@/lib/utils"
 import { SectionHead } from "./section-head"
-import { inView, spring } from "./motion"
-
-const FILTERS: Project["filter"][] = ["Belleza", "Moda", "Legal"]
+import { spring } from "./motion"
 
 export function Portfolio() {
-  const [filter, setFilter] = useState<Project["filter"] | null>(null)
-  const visible = filter ? PROJECTS.filter((p) => p.filter === filter) : PROJECTS
+  const visible = PROJECTS
 
   return (
     <section id="portafolio" aria-labelledby="portfolio-title" className="mx-auto w-full max-w-[1180px] px-4 pb-10 pt-8 md:px-8 md:pb-28 md:pt-12">
@@ -26,44 +21,7 @@ export function Portfolio() {
         lead="Cada proyecto resolvió un problema concreto: citas perdidas, ventas que dependían de responder a tiempo o clientes que no encontraban información."
       />
 
-      <motion.div {...inView} className="mt-10 flex flex-wrap items-center gap-2">
-        <div role="group" aria-label="Filtrar por rubro" className="flex flex-wrap gap-2">
-          {FILTERS.map((f) => (
-            <button
-              key={f}
-              type="button"
-              aria-pressed={filter === f}
-              onClick={() => setFilter(filter === f ? null : f)}
-              className={cn(
-                "press h-10 rounded-full border-[1.5px] px-5 text-sm font-semibold transition-colors",
-                filter === f
-                  ? "border-foreground bg-foreground text-background"
-                  : "border-foreground/80 text-foreground hover:bg-foreground hover:text-background"
-              )}
-            >
-              {f}
-            </button>
-          ))}
-        </div>
-        <div className="flex h-10 items-center pl-2" aria-live="polite">
-          <AnimatePresence mode="popLayout">
-            {filter && (
-              <motion.span
-                key={filter}
-                initial={{ opacity: 0, scale: 0.97 }}
-                animate={{ opacity: 1, scale: 1, transition: spring }}
-                exit={{ opacity: 0, transition: { duration: 0.12, ease: "easeIn" } }}
-              >
-                <Chip onRemove={() => setFilter(null)} removeLabel={`Quitar filtro ${filter}`}>
-                  Filtro: {filter}
-                </Chip>
-              </motion.span>
-            )}
-          </AnimatePresence>
-        </div>
-      </motion.div>
-
-      <motion.ul layout className="mt-8 grid gap-3 md:grid-cols-3 md:gap-6" transition={spring}>
+      <motion.ul layout className="mt-10 grid gap-3 md:grid-cols-3 md:gap-6" transition={spring}>
         <AnimatePresence initial={false} mode="popLayout">
           {visible.map((p, i) => (
             <motion.li
