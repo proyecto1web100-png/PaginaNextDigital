@@ -126,7 +126,7 @@ export function QuoteForm({ standalone = false, depth = 0 }: { standalone?: bool
 
   return (
     <section id="cotizar" aria-labelledby="quote-title" className={standalone ? "min-h-svh bg-paper-2 pt-16" : "bg-paper-2"}>
-      <div className="mx-auto grid w-full max-w-[1180px] gap-12 px-4 py-20 md:grid-cols-[1fr_1.1fr] md:px-8 md:py-28">
+      <div className="mx-auto grid w-full max-w-[1180px] gap-8 px-4 py-10 md:gap-12 md:grid-cols-[1fr_1.1fr] md:px-8 md:py-28">
         <div className="grid content-start gap-6">
           <SectionHead
             id="quote-title"

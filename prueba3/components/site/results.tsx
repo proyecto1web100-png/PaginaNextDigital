@@ -151,17 +151,17 @@ function DevicesVisual() {
 /* ── Section ──────────────────────────────────────────────── */
 
 const CARDS = [
-  { title: "Más reservas", description: "Kenias Studio: citas online 24/7 y +40% de reservas.", visual: <BookingsVisual />, className: "lg:col-span-1" },
-  { title: "Pedidos que llegan solos", description: "Catálogo que envía cada pedido directo a WhatsApp. Vista de ejemplo.", visual: <InboxVisual />, className: "lg:col-span-1" },
-  { title: "En línea en 48 horas", description: "De la primera conversación al sitio publicado.", visual: <DeliveryVisual />, className: "lg:col-span-1" },
-  { title: "Lo que dicen nuestros clientes", description: "Resultados medidos por el propio negocio.", visual: <TestimonialVisual />, className: "md:col-span-2 lg:col-span-2" },
-  { title: "Perfecta en cualquier pantalla", description: "Diseño responsivo en celular, tablet y computadora.", visual: <DevicesVisual />, className: "lg:col-span-1" },
+  { title: "Más reservas", description: "Kenias Studio: citas online 24/7 y +40% de reservas.", visual: <BookingsVisual />, className: "max-md:col-span-2 lg:col-span-1" },
+  { title: "Pedidos que llegan solos", description: "Catálogo que envía cada pedido directo a WhatsApp. Vista de ejemplo.", visual: <InboxVisual />, className: "max-md:min-h-0 lg:col-span-1", visualClassName: "max-md:hidden" },
+  { title: "En línea en 48 horas", description: "De la primera conversación al sitio publicado.", visual: <DeliveryVisual />, className: "max-md:min-h-0 lg:col-span-1", visualClassName: "max-md:hidden" },
+  { title: "Lo que dicen nuestros clientes", description: "Resultados medidos por el propio negocio.", visual: <TestimonialVisual />, className: "col-span-2 lg:col-span-2" },
+  { title: "Perfecta en cualquier pantalla", description: "Diseño responsivo en celular, tablet y computadora.", visual: <DevicesVisual />, className: "max-md:hidden lg:col-span-1" },
 ]
 
 export function Results() {
   return (
     <section id="resultados" aria-labelledby="results-title" className="bg-paper-2">
-      <div className="mx-auto w-full max-w-[1180px] px-4 py-20 md:px-8 md:py-28">
+      <div className="mx-auto w-full max-w-[1180px] px-4 py-10 md:px-8 md:py-28">
         <SectionHead
           id="results-title"
           eyebrow="02 · Resultados"
@@ -169,12 +169,13 @@ export function Results() {
           lead="Lo que cambia cuando tus clientes te encuentran, reservan y compran sin tener que esperar a que respondas."
         />
 
-        <motion.div {...inView} className="mt-12 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+        <motion.div {...inView} className="mt-10 grid grid-cols-2 gap-3 md:mt-12 lg:grid-cols-3">
           {CARDS.map((c) => (
             <FeatCard
               key={c.title}
               title={c.title}
               description={c.description}
+              visualClassName={"visualClassName" in c ? c.visualClassName : ""}
               className={cn("min-h-[280px] rounded-3xl border border-border shadow-none lg:h-[290px]", c.className)}
             >
               {c.visual}

@@ -7,8 +7,13 @@ export type Faq = {
 
 export const FAQS: Faq[] = [
   {
+    q: "¿Qué es Dentico y cuánto cuesta?",
+    a: "Dentico es nuestro sistema para clínicas odontológicas: agenda con recordatorios por WhatsApp, expediente, odontograma, presupuestos y consentimientos con firma digital. Funciona en Windows y Linux. La versión Estándar cuesta L. 17,500 y la Premium, que suma facturación, caja, gastos y estado de resultados, L. 21,000. Puedes pagarlo en plazos de hasta 3 meses. Incluye 5 meses de actualizaciones; después la anualidad de actualizaciones es opcional (L. 3,500 al año) y, sin ella, el sistema sigue funcionando igual. El soporte por WhatsApp siempre es gratis.",
+    keywords: ["dentico", "odontologico", "dental", "dentista", "clinica dental", "odontograma", "consultorio"],
+  },
+  {
     q: "¿Cuánto cuesta mi página web?",
-    a: "Tenemos cuatro planes: Básico L. 2,500, Intermedio L. 5,000, Avanzado L. 7,500 y Negocios desde L. 10,000 (para empresas que necesitan sistemas a la medida y asesoría personalizada). Pagas 50% al iniciar y 50% al entregar. El mantenimiento mensual es opcional y cuesta L. 500.",
+    a: "Cada plan tiene un precio base y el final depende de lo que necesite tu proyecto: Básico desde L. 2,500, Intermedio desde L. 5,000, Avanzado desde L. 8,000 y Negocios desde L. 15,000 (para empresas que necesitan sistemas a la medida y asesoría personalizada). El precio final queda fijado en un contrato antes de empezar. Pagas 50% al iniciar y 50% al entregar. El mantenimiento mensual es opcional y es desde L. 500 según lo que incluya.",
     keywords: ["precio", "precios", "cuesta", "costo", "cuanto cuesta", "cuanto vale", "cuanto sale", "plan", "planes", "negocios", "empresa", "empresas", "pagar", "pago", "lempiras", "mensualidad", "cobran"],
   },
   {
@@ -33,7 +38,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "¿Puedo actualizar el contenido yo mismo?",
-    a: "Sí. Te entregamos acceso y te enseñamos a hacer cambios básicos. Si prefieres que lo hagamos nosotros, puedes contratar el mantenimiento mensual opcional de L. 500, que incluye actualizaciones y soporte.",
+    a: "Sí. Te entregamos acceso y te enseñamos a hacer cambios básicos. Si prefieres que lo hagamos nosotros, puedes contratar el mantenimiento mensual opcional (desde L. 500), que incluye actualizaciones y soporte.",
     keywords: ["actualizar", "cambiar", "editar", "modificar", "mantenimiento", "cambios"],
   },
   {

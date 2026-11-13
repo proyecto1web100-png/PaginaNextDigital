@@ -34,7 +34,7 @@ interface FeatCardProps {
   className?: string;
 }
 
-export function FeatCard({ title, description, children, className = "" }: FeatCardProps) {
+export function FeatCard({ title, description, children, className = "", visualClassName = "" }: FeatCardProps & { visualClassName?: string }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -52,7 +52,7 @@ export function FeatCard({ title, description, children, className = "" }: FeatC
         <h3 className="font-semibold text-foreground text-sm tracking-tight">{title}</h3>
         <p className="text-muted-foreground text-xs leading-relaxed max-w-[90%]">{description}</p>
       </div>
-      <div className="relative mt-2 flex-1 w-full rounded-[14px] overflow-hidden border border-border/50 bg-background/50 dark:bg-neutral-950/50">
+      <div className={cn("relative mt-2 flex-1 w-full rounded-[14px] overflow-hidden border border-border/50 bg-background/50 dark:bg-neutral-950/50", visualClassName)}>
         {children}
       </div>
     </motion.div>
