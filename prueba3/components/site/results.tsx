@@ -151,11 +151,11 @@ function DevicesVisual() {
 /* ── Section ──────────────────────────────────────────────── */
 
 const CARDS = [
-  { title: "Más reservas", description: "Kenias Studio: citas online 24/7 y +40% de reservas.", visual: <BookingsVisual />, className: "lg:col-span-1" },
-  { title: "Pedidos que llegan solos", description: "Catálogo que envía cada pedido directo a WhatsApp. Vista de ejemplo.", visual: <InboxVisual />, className: "lg:col-span-1" },
-  { title: "En línea en 48 horas", description: "De la primera conversación al sitio publicado.", visual: <DeliveryVisual />, className: "lg:col-span-1" },
-  { title: "Lo que dicen nuestros clientes", description: "Resultados medidos por el propio negocio.", visual: <TestimonialVisual />, className: "md:col-span-2 lg:col-span-2" },
-  { title: "Perfecta en cualquier pantalla", description: "Diseño responsivo en celular, tablet y computadora.", visual: <DevicesVisual />, className: "lg:col-span-1" },
+  { title: "Más reservas", description: "Kenias Studio: citas online 24/7 y +40% de reservas.", visual: <BookingsVisual />, className: "max-md:col-span-2 lg:col-span-1" },
+  { title: "Pedidos que llegan solos", description: "Catálogo que envía cada pedido directo a WhatsApp. Vista de ejemplo.", visual: <InboxVisual />, className: "max-md:min-h-0 lg:col-span-1", visualClassName: "max-md:hidden" },
+  { title: "En línea en 48 horas", description: "De la primera conversación al sitio publicado.", visual: <DeliveryVisual />, className: "max-md:min-h-0 lg:col-span-1", visualClassName: "max-md:hidden" },
+  { title: "Lo que dicen nuestros clientes", description: "Resultados medidos por el propio negocio.", visual: <TestimonialVisual />, className: "col-span-2 lg:col-span-2" },
+  { title: "Perfecta en cualquier pantalla", description: "Diseño responsivo en celular, tablet y computadora.", visual: <DevicesVisual />, className: "max-md:hidden lg:col-span-1" },
 ]
 
 export function Results() {
@@ -169,14 +169,14 @@ export function Results() {
           lead="Lo que cambia cuando tus clientes te encuentran, reservan y compran sin tener que esperar a que respondas."
         />
 
-        <p className="mt-6 text-sm text-muted-foreground md:hidden">Desliza para ver más →</p>
-        <motion.div {...inView} className="mt-3 -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0 md:pb-0 md:snap-none md:mt-12 md:grid md:grid-cols-2 md:gap-3 lg:grid-cols-3">
+        <motion.div {...inView} className="mt-10 grid grid-cols-2 gap-3 md:mt-12 lg:grid-cols-3">
           {CARDS.map((c) => (
             <FeatCard
               key={c.title}
               title={c.title}
               description={c.description}
-              className={cn("w-[84%] shrink-0 snap-center md:w-auto min-h-[280px] rounded-3xl border border-border shadow-none lg:h-[290px]", c.className)}
+              visualClassName={"visualClassName" in c ? c.visualClassName : ""}
+              className={cn("min-h-[280px] rounded-3xl border border-border shadow-none lg:h-[290px]", c.className)}
             >
               {c.visual}
             </FeatCard>

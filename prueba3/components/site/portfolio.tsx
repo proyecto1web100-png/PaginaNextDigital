@@ -63,24 +63,22 @@ export function Portfolio() {
         </div>
       </motion.div>
 
-      <p className="mt-6 text-sm text-muted-foreground md:hidden">Desliza para ver más proyectos →</p>
-      <motion.ul layout className="mt-3 -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0 md:pb-0 md:snap-none md:mt-8 md:grid md:grid-cols-3 md:gap-6" transition={spring}>
+      <motion.ul layout className="mt-8 grid gap-3 md:grid-cols-3 md:gap-6" transition={spring}>
         <AnimatePresence initial={false} mode="popLayout">
-          {visible.map((p) => (
+          {visible.map((p, i) => (
             <motion.li
               key={p.slug}
               layout
-              className="w-[84%] shrink-0 snap-center md:w-auto"
               initial={{ opacity: 0, scale: 0.97 }}
               animate={{ opacity: 1, scale: 1, transition: spring }}
               exit={{ opacity: 0, scale: 0.97, transition: { duration: 0.12, ease: "easeIn" } }}
             >
-              <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card transition-[border-color,box-shadow] duration-200 hover:border-foreground hover:shadow-[0_24px_50px_-30px_rgba(18,18,18,0.35)]">
+              <article className={cn("group flex h-full overflow-hidden rounded-3xl border border-border bg-card transition-[border-color,box-shadow] duration-200 hover:border-foreground hover:shadow-[0_24px_50px_-30px_rgba(18,18,18,0.35)] md:flex-col", i === 0 ? "flex-col" : "flex-row items-stretch")}>
                 <a
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="relative block aspect-[16/10] overflow-hidden border-b border-border bg-paper-2 outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-brand"
+                  className={cn("relative block overflow-hidden border-border bg-paper-2 outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-brand md:aspect-[16/10] md:w-auto md:border-b md:border-r-0", i === 0 ? "aspect-[16/10] border-b" : "w-28 shrink-0 border-r")}
                   aria-label={`Abrir ${p.name} en una pestaña nueva`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -90,18 +88,18 @@ export function Portfolio() {
                     loading="lazy"
                     className="h-full w-full object-cover object-left-top transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                   />
-                  <span className="absolute bottom-3 right-3 inline-flex items-center gap-1 rounded-full bg-background px-3 py-1.5 text-[13px] font-semibold shadow-md">
+                  <span className={cn("absolute bottom-3 right-3 items-center gap-1 rounded-full bg-background px-3 py-1.5 text-[13px] font-semibold shadow-md md:inline-flex", i === 0 ? "inline-flex" : "hidden")}>
                     Visitar sitio <ArrowUpRight className="size-3.5" aria-hidden />
                   </span>
                 </a>
-                <div className="flex flex-1 flex-col gap-3 p-6">
+                <div className={cn("flex min-w-0 flex-1 flex-col md:gap-3 md:p-6", i === 0 ? "gap-3 p-6" : "gap-1.5 p-4")}>
                   <div className="flex flex-wrap items-center gap-2">
                     <Tag>{p.category}</Tag>
                     <Pill tone="success">En vivo</Pill>
                   </div>
-                  <h3 className="text-[1.9rem] font-bold leading-none">{p.name}</h3>
-                  <p className="text-[15.5px] leading-relaxed text-ink-2">{p.summary}</p>
-                  <div className="mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-2 pt-3">
+                  <h3 className={cn("font-bold leading-none md:text-[1.9rem]", i === 0 ? "text-[1.9rem]" : "text-xl")}>{p.name}</h3>
+                  <p className={cn("text-[15.5px] leading-relaxed text-ink-2 md:block", i === 0 ? "block" : "hidden")}>{p.summary}</p>
+                  <div className={cn("mt-auto flex flex-wrap items-center justify-between gap-x-3 gap-y-2 md:pt-3", i === 0 ? "pt-3" : "pt-1")}>
                     <span className="whitespace-nowrap font-display text-base font-bold tracking-tight">{p.result}</span>
                     <a
                       href={p.url}

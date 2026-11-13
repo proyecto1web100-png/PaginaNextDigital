@@ -20,10 +20,15 @@ export function BlogTeaser() {
             </>
           }
         />
-        <p className="mt-6 text-sm text-muted-foreground md:hidden">Desliza para ver más consejos →</p>
-        <div className="mt-3 -mx-4 flex snap-x snap-mandatory gap-3 overflow-x-auto px-4 pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:overflow-visible md:px-0 md:pb-0 md:snap-none md:mt-10 md:grid md:grid-cols-3 md:gap-4">
+        <div className="mt-8 grid gap-4 max-md:gap-0 max-md:border-t max-md:border-border md:mt-10 md:grid-cols-3">
           {POSTS.slice(0, 3).map((p) => (
-            <div key={p.slug} className="w-[84%] shrink-0 snap-center md:w-auto"><PostCard post={p} href={page(0, `blog/${p.slug}`)} /></div>
+            <div key={p.slug}>
+              <a href={page(0, `blog/${p.slug}`)} className="flex items-center justify-between gap-4 border-b border-border py-4 md:hidden">
+                <span className="text-[17px] font-semibold leading-snug">{p.title}</span>
+                <span aria-hidden className="text-lg">→</span>
+              </a>
+              <div className="hidden h-full md:block"><PostCard post={p} href={page(0, `blog/${p.slug}`)} /></div>
+            </div>
           ))}
         </div>
       </div>
