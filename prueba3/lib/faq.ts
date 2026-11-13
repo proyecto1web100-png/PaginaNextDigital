@@ -8,7 +8,7 @@ export type Faq = {
 export const FAQS: Faq[] = [
   {
     q: "¿Cuánto cuesta mi página web?",
-    a: "Trabajamos por rangos según lo que necesite tu proyecto: Básico de L. 2,500 a L. 5,000, Intermedio de L. 5,000 a L. 9,000, Avanzado de L. 8,000 a L. 15,000 y Negocios de L. 15,000 a L. 40,000 o más (para empresas que necesitan sistemas a la medida y asesoría personalizada). Te confirmamos el precio exacto por escrito antes de empezar. Pagas 50% al iniciar y 50% al entregar. El mantenimiento mensual es opcional y va de L. 500 a L. 1,500 según lo que incluya.",
+    a: "Cada plan tiene un precio base y el final depende de lo que necesite tu proyecto: Básico desde L. 2,500, Intermedio desde L. 5,000, Avanzado desde L. 8,000 y Negocios desde L. 15,000 (para empresas que necesitan sistemas a la medida y asesoría personalizada). Te confirmamos el precio exacto por escrito antes de empezar. Pagas 50% al iniciar y 50% al entregar. El mantenimiento mensual es opcional y es desde L. 500 según lo que incluya.",
     keywords: ["precio", "precios", "cuesta", "costo", "cuanto cuesta", "cuanto vale", "cuanto sale", "plan", "planes", "negocios", "empresa", "empresas", "pagar", "pago", "lempiras", "mensualidad", "cobran"],
   },
   {
@@ -33,7 +33,7 @@ export const FAQS: Faq[] = [
   },
   {
     q: "¿Puedo actualizar el contenido yo mismo?",
-    a: "Sí. Te entregamos acceso y te enseñamos a hacer cambios básicos. Si prefieres que lo hagamos nosotros, puedes contratar el mantenimiento mensual opcional (de L. 500 a L. 1,500), que incluye actualizaciones y soporte.",
+    a: "Sí. Te entregamos acceso y te enseñamos a hacer cambios básicos. Si prefieres que lo hagamos nosotros, puedes contratar el mantenimiento mensual opcional (desde L. 500), que incluye actualizaciones y soporte.",
     keywords: ["actualizar", "cambiar", "editar", "modificar", "mantenimiento", "cambios"],
   },
   {

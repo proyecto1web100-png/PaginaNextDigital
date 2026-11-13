@@ -10,8 +10,8 @@ import { inView } from "./motion"
 
 type Plan = {
   name: string
-  /** Price range in lempiras: [min, max]. The final quote depends on the project's scope. */
-  range: [string, string]
+  /** Base price in lempiras ("desde"). The final quote depends on the project's scope. */
+  price: string
   desc: string
   includes: string[]
   excludes?: string[]
@@ -26,14 +26,14 @@ type Plan = {
 const PLANS: Plan[] = [
   {
     name: "Básico",
-    range: ["2,500", "5,000"],
+    price: "2,500",
     desc: "Una landing page elegante para presentar tu negocio y recibir clientes por WhatsApp.",
     includes: ["Landing page de presentación", "Diseño responsivo (móvil y escritorio)", "Botones de WhatsApp y redes sociales", "Entrega en 48 horas"],
     excludes: ["Bases de datos y sistemas", "Panel de administrador"],
   },
   {
     name: "Intermedio",
-    range: ["5,000", "9,000"],
+    price: "5,000",
     desc: "Tu web con sistemas integrados para gestionar citas, catálogo y contenido.",
     includes: ["Todo lo del plan Básico", "Bases de datos integradas", "Sistemas integrados (citas, catálogo…)", "Panel de administrador"],
     excludes: ["Reportes de clientes y ventas", "Módulo de artículos y ventas"],
@@ -41,13 +41,13 @@ const PLANS: Plan[] = [
   },
   {
     name: "Avanzado",
-    range: ["8,000", "15,000"],
+    price: "8,000",
     desc: "El sistema completo: ventas, reportes, inventario y dashboard de administración.",
     includes: ["Todo lo del plan Intermedio", "Reportes de clientes y artículos", "Módulo completo de ventas", "Dashboard completo de administración"],
   },
   {
     name: "Negocios",
-    range: ["15,000", "40,000+"],
+    price: "15,000",
     from: true,
     tag: "Empresas",
     desc: "Para empresas más grandes que necesitan sistemas a la medida y una asesoría más cercana.",
@@ -58,7 +58,7 @@ const PLANS: Plan[] = [
 ]
 
 /** Optional monthly maintenance (Básico, Intermedio and Avanzado; Negocios is quoted). */
-const MAINTENANCE = { range: ["500", "1,500"], items: ["Actualizaciones de contenido", "Soporte y correcciones", "Revisión mensual de tu página"] }
+const MAINTENANCE = { price: "500", items: ["Actualizaciones de contenido", "Soporte y correcciones", "Revisión mensual de tu página"] }
 
 export function Plans() {
   return (
@@ -67,7 +67,7 @@ export function Plans() {
         id="plans-title"
         eyebrow="03 · Planes"
         title={<>Inversión clara,<br />sin sorpresas.</>}
-        lead="Cada plan tiene un rango: el precio final depende de lo que necesite tu proyecto y te lo confirmamos por escrito antes de empezar. Pagas 50% al iniciar y 50% al entregar."
+        lead="Cada plan tiene un precio base: el precio final depende de lo que necesite tu proyecto y te lo confirmamos por escrito antes de empezar. Pagas 50% al iniciar y 50% al entregar."
       />
 
       <motion.div {...inView} className="mt-12 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
@@ -92,14 +92,10 @@ export function Plans() {
             <h3 className={cn("font-sans text-[15px] font-semibold tracking-normal", p.popular ? "text-background/60" : "text-muted-foreground")}>
               {p.name}
             </h3>
-            <p className="mt-3 font-display text-[clamp(1.9rem,2.6vw,2.3rem)] font-extrabold leading-[1.05] tracking-[-0.04em]">
+            <p className="mt-3 font-display text-[clamp(2.6rem,4vw,3.2rem)] font-extrabold leading-[1.05] tracking-[-0.04em]">
+              <span className={cn("block font-sans text-[0.4em] font-semibold tracking-normal", p.popular ? "text-background/60" : "text-muted-foreground")}>Desde</span>
               <span className="mr-1 align-[0.45em] text-[0.5em] font-semibold tracking-normal">L.</span>
-              {p.range[0]}
-              <span className={cn("block text-[0.62em] font-bold tracking-[-0.02em]", p.popular ? "text-background/70" : "text-ink-2")}>
-                <span className="sr-only">a </span>
-                <span aria-hidden>– </span>
-                {p.range[1]}
-              </span>
+              {p.price}
             </p>
             <p className={cn("mt-2 text-sm", p.popular ? "text-background/60" : "text-muted-foreground")}>{p.note ?? "Según alcance · 50% / 50%"}</p>
             <p className={cn("mt-5 border-b pb-5 text-[15.5px] leading-relaxed", p.popular ? "border-white/15 text-background/80" : "border-border text-ink-2")}>
@@ -123,7 +119,7 @@ export function Plans() {
               href={wa(
                 p.from
                   ? `Hola NextDigital! Me interesa el plan ${p.name} para mi empresa y quisiera una asesoría.`
-                  : `Hola NextDigital! Me interesa el plan ${p.name} (L. ${p.range[0]} – ${p.range[1]}) para mi negocio. ¿Me ayudan a cotizarlo?`
+                  : `Hola NextDigital! Me interesa el plan ${p.name} (desde L. ${p.price}) para mi negocio. ¿Me ayudan a cotizarlo?`
               )}
               target="_blank"
               rel="noopener noreferrer"
@@ -147,7 +143,7 @@ export function Plans() {
         <div>
           <p className="text-sm font-semibold text-muted-foreground">Mantenimiento mensual · opcional</p>
           <p className="mt-1 font-display text-3xl font-extrabold tracking-[-0.03em]">
-            L. {MAINTENANCE.range[0]} – {MAINTENANCE.range[1]} <span className="font-sans text-sm font-medium tracking-normal text-muted-foreground">/mes</span>
+            Desde L. {MAINTENANCE.price} <span className="font-sans text-sm font-medium tracking-normal text-muted-foreground">/mes</span>
           </p>
           <p className="mt-1 text-sm text-muted-foreground">Según lo que incluya. En el plan Negocios se cotiza con el proyecto.</p>
         </div>

@@ -17,17 +17,17 @@ export function StructuredData() {
       ...CITIES.map((name) => ({ "@type": "City", name, containedInPlace: { "@type": "Country", name: "Honduras" } })),
     ],
     address: { "@type": "PostalAddress", addressCountry: "HN" },
-    priceRange: "L 2,500 - L 40,000+",
+    priceRange: "Desde L 2,500",
     sameAs: [INSTAGRAM],
     makesOffer: [
-      { name: "Plan Básico", min: 2500, max: 5000 },
-      { name: "Plan Intermedio", min: 5000, max: 9000 },
-      { name: "Plan Avanzado", min: 8000, max: 15000 },
-      { name: "Plan Negocios", min: 15000, max: 40000 },
+      { name: "Plan Básico", min: 2500 },
+      { name: "Plan Intermedio", min: 5000 },
+      { name: "Plan Avanzado", min: 8000 },
+      { name: "Plan Negocios", min: 15000 },
     ].map((o) => ({
       "@type": "Offer",
       name: o.name,
-      priceSpecification: { "@type": "PriceSpecification", minPrice: o.min, maxPrice: o.max, priceCurrency: "HNL" },
+      priceSpecification: { "@type": "PriceSpecification", minPrice: o.min, priceCurrency: "HNL" },
       itemOffered: { "@type": "Service", name: `Página web — ${o.name}` },
     })),
   }
