@@ -56,7 +56,7 @@ export function SignIn() {
   }
 
   return (
-    <section id="acceso" aria-labelledby="signin-title" className="mx-auto grid w-full max-w-[1180px] gap-8 px-4 py-14 md:gap-12 md:grid-cols-2 md:items-center md:px-8 md:py-28">
+    <section id="acceso" aria-labelledby="signin-title" className="mx-auto grid w-full max-w-[1180px] gap-8 px-4 py-10 md:gap-12 md:grid-cols-2 md:items-center md:px-8 md:py-28">
       <motion.div {...inView} className="max-w-md">
         <p className="flex items-center gap-2.5 text-[13px] font-semibold uppercase tracking-[0.08em] text-muted-foreground">
           <span aria-hidden className="h-[2px] w-7 rounded-full bg-orange" />

@@ -9,7 +9,7 @@ import { inView } from "./motion"
 
 export function FaqSection() {
   return (
-    <section id="preguntas" aria-labelledby="faq-title" className="mx-auto w-full max-w-[1180px] px-4 py-14 md:px-8 md:py-28">
+    <section id="preguntas" aria-labelledby="faq-title" className="mx-auto w-full max-w-[1180px] px-4 py-10 md:px-8 md:py-28">
       <SectionHead
         id="faq-title"
         eyebrow="05 · Preguntas"

@@ -18,7 +18,7 @@ export function Portfolio() {
   const visible = filter ? PROJECTS.filter((p) => p.filter === filter) : PROJECTS
 
   return (
-    <section id="portafolio" aria-labelledby="portfolio-title" className="mx-auto w-full max-w-[1180px] px-4 pb-14 pt-10 md:px-8 md:pb-28 md:pt-12">
+    <section id="portafolio" aria-labelledby="portfolio-title" className="mx-auto w-full max-w-[1180px] px-4 pb-10 pt-8 md:px-8 md:pb-28 md:pt-12">
       <SectionHead
         id="portfolio-title"
         eyebrow="01 · Portafolio"
@@ -78,7 +78,7 @@ export function Portfolio() {
                   href={p.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={cn("relative block overflow-hidden border-border bg-paper-2 outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-brand md:aspect-[16/10] md:w-auto md:border-b md:border-r-0", i === 0 ? "aspect-[16/10] border-b" : "w-28 shrink-0 border-r")}
+                  className={cn("relative block overflow-hidden border-border bg-paper-2 outline-none focus-visible:ring-4 focus-visible:ring-inset focus-visible:ring-brand md:aspect-[16/10] md:w-auto md:border-b md:border-r-0", i === 0 ? "aspect-[16/10] border-b" : "my-3 ml-3 aspect-[4/3] w-32 shrink-0 self-center rounded-xl border md:m-0 md:rounded-none md:border-0")}
                   aria-label={`Abrir ${p.name} en una pestaña nueva`}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}

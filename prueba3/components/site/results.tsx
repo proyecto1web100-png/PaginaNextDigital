@@ -161,7 +161,7 @@ const CARDS = [
 export function Results() {
   return (
     <section id="resultados" aria-labelledby="results-title" className="bg-paper-2">
-      <div className="mx-auto w-full max-w-[1180px] px-4 py-14 md:px-8 md:py-28">
+      <div className="mx-auto w-full max-w-[1180px] px-4 py-10 md:px-8 md:py-28">
         <SectionHead
           id="results-title"
           eyebrow="02 · Resultados"

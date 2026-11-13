@@ -6,7 +6,7 @@ import { SectionHead } from "./section-head"
 export function BlogTeaser() {
   return (
     <section id="consejos" aria-labelledby="blog-title" className="bg-paper-2">
-      <div className="mx-auto w-full max-w-[1180px] px-4 py-14 md:px-8 md:py-28">
+      <div className="mx-auto w-full max-w-[1180px] px-4 py-10 md:px-8 md:py-28">
         <SectionHead
           id="blog-title"
           eyebrow="06 · Consejos"
