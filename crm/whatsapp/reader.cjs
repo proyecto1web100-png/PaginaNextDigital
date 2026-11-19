@@ -2,17 +2,17 @@
 // Vincula por QR, recibe el historial que WhatsApp sincroniza y lo guarda en data/chats.json.
 // No envía mensajes: este archivo nunca llama a sendMessage.
 const fs = require('fs')
-try { require.resolve('@whiskeysockets/baileys'); require.resolve('qrcode') } catch {
+const path = require('path')
+try { require.resolve('qrcode'); require.resolve('pino') ; fs.accessSync(path.join(__dirname, '..', 'node_modules', '@whiskeysockets', 'baileys')) } catch {
   console.error('\nFaltan dependencias. Corre esto dentro de la carpeta crm:\n\n  npm install\n\nY luego: npm run whatsapp\n')
   process.exit(1)
 }
-const path = require('path')
 const QR = require('qrcode')
 const pino = require('pino')
 const { HttpsProxyAgent } = require('https-proxy-agent')
 const PROXY = process.env.HTTPS_PROXY || process.env.https_proxy
 const agent = PROXY ? new HttpsProxyAgent(PROXY) : undefined
-const { default: makeWASocket, useMultiFileAuthState, Browsers, DisconnectReason } = require('@whiskeysockets/baileys')
+let makeWASocket, useMultiFileAuthState, Browsers, DisconnectReason
 
 const OUT = path.join(__dirname, '..', 'data')
 const AUTH = path.join(OUT, 'whatsapp-auth')
@@ -66,6 +66,11 @@ function save() {
 setInterval(save, 5000)
 
 async function start() {
+  if (!makeWASocket) {
+    const B = await import('@whiskeysockets/baileys')
+    makeWASocket = B.default?.default || B.default || B.makeWASocket
+    ;({ useMultiFileAuthState, Browsers, DisconnectReason } = B)
+  }
   const { state, saveCreds } = await useMultiFileAuthState(AUTH)
   const sock = makeWASocket({
     auth: state,
