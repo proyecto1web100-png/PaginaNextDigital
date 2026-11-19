@@ -12,6 +12,7 @@
     <div class="brand"><span class="mark">N</span><span>NextDigital <b>CRM</b></span></div>
     <nav id="nav">
       <button data-view="panel" class="on">Panel</button>
+      <button data-view="chats">Chats <span class="badge" id="b-chats"></span></button>
       <button data-view="seguimiento">Seguimiento <span class="badge" id="b-follow"></span></button>
       <button data-view="contactos">Contactos</button>
       <button data-view="embudo">Embudo</button>
@@ -35,6 +36,23 @@
       <div class="grid2">
         <div class="card"><h3>Qué te preguntan</h3><p class="hint">Temas detectados en los chats</p><div id="chart-topics"></div></div>
         <div class="card"><h3>Tiempo de respuesta</h3><p class="hint">Cuánto tardas en contestar al cliente</p><div id="chart-resp"></div></div>
+      </div>
+    </section>
+
+    <!-- CHATS -->
+    <section id="v-chats" class="view" hidden>
+      <div class="wa">
+        <div class="wa-list">
+          <input id="c-q" type="search" placeholder="Buscar chat">
+          <div class="wa-tabs" role="group" aria-label="Filtrar chats"><button data-cf="" class="on" type="button">Todos</button><button data-cf="pend" type="button">Sin responder</button><button data-cf="opp" type="button">Oportunidades</button></div>
+          <div id="c-list"></div>
+        </div>
+        <div class="wa-conv">
+          <div class="wa-head" id="c-head"><p class="hint">Elige un chat</p></div>
+          <div class="wa-msgs" id="c-msgs"></div>
+          <div class="compose wa-compose" id="c-compose"><textarea id="c-text" rows="1" placeholder="Escribe un mensaje (Enter envía, Shift+Enter salto de línea)"></textarea><button class="btn" id="c-send" type="button">Enviar</button></div>
+          <p class="hint compose-note" id="c-note"></p>
+        </div>
       </div>
     </section>
 

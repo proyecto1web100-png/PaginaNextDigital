@@ -8,7 +8,7 @@ const { EventEmitter } = require('events')
 
 const MIN_GAP_MS = 8000 // pausa mínima entre dos envíos
 const MAX_LEN = 2000
-const PER_CHAT = Number(process.env.MENSAJES_POR_CHAT || 300)
+const PER_CHAT = Number(process.env.MENSAJES_POR_CHAT || 1000)
 
 function findBrowser() {
   if (process.env.CHROME_PATH && fs.existsSync(process.env.CHROME_PATH)) return process.env.CHROME_PATH
@@ -81,6 +81,7 @@ function startWhatsApp(DATA) {
   }
   let client
   let starting = false
+  let retried = false
   async function boot({ fresh = false } = {}) {
     if (starting) return
     starting = true
@@ -95,10 +96,11 @@ function startWhatsApp(DATA) {
       })
       wire(client)
       await client.initialize()
+      retried = false
     } catch (e) {
       console.log('[whatsapp] error al iniciar:', e.message)
-      if (!fresh) { starting = false; console.log('[whatsapp] reintento con sesión nueva…'); return boot({ fresh: true }) }
-      setStatus({ state: 'error', error: 'No se pudo abrir WhatsApp Web: ' + e.message })
+      if (!retried) { retried = true; starting = false; console.log('[whatsapp] reintento con la misma sesión…'); return boot({ fresh }) }
+      setStatus({ state: 'error', error: 'No se pudo abrir WhatsApp Web: ' + e.message + '. Prueba "Reconectar"; si sigue, "Vincular de nuevo".' })
     } finally {
       starting = false
     }
@@ -122,7 +124,8 @@ function startWhatsApp(DATA) {
   async function dumpAll() {
     setStatus({ state: 'sincronizando' })
     const chats = (await client.getChats()).filter((c) => !c.isGroup && c.id.server === 'c.us')
-    for (const c of chats) {
+    for (const [i, c] of chats.entries()) {
+      if (i && i % 10 === 0) { console.log(`[whatsapp] leyendo chats ${i}/${chats.length}…`); setStatus({ state: 'sincronizando', progress: `${i}/${chats.length}` }) }
       try {
         const msgs = await c.fetchMessages({ limit: PER_CHAT })
         const contact = await c.getContact().catch(() => null)
@@ -167,9 +170,10 @@ function startWhatsApp(DATA) {
       if (ev) bus.emit('message', ev)
     })
     c.on('disconnected', (r) => {
-      console.log('[whatsapp] desconectado:', r, '→ pidiendo un QR nuevo')
-      setStatus({ state: 'desconectado', error: 'WhatsApp se desconectó (' + r + '). Generando un QR nuevo…' })
-      setTimeout(() => boot({ fresh: true }), 1500)
+      const logout = String(r).toUpperCase().includes('LOGOUT')
+      console.log('[whatsapp] desconectado:', r, logout ? '→ se desvinculó desde el teléfono, pido un QR nuevo' : '→ reconectando con la misma sesión')
+      setStatus({ state: 'desconectado', error: logout ? 'Se desvinculó desde el teléfono. Generando un QR nuevo…' : 'Conexión perdida. Reconectando…' })
+      setTimeout(() => boot({ fresh: logout }), 2000)
     })
   }
 

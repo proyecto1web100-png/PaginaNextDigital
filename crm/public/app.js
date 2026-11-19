@@ -145,7 +145,8 @@ function render() {
   $('#b-follow').textContent = fu.length || ''
   $('#demo-banner').hidden = !DEMO
   $('#sync').innerHTML = waBadge()
-  ;({ panel: renderPanel, seguimiento: () => renderFollow(fu), contactos: renderTable, embudo: renderBoard, prospectos: renderProspects, conectar: () => {} })[view]()
+  $('#b-chats').textContent = LIST.filter((c) => c.unanswered && c.age < 30).length || ''
+  ;({ panel: renderPanel, chats: renderChats, seguimiento: () => renderFollow(fu), contactos: renderTable, embudo: renderBoard, prospectos: renderProspects, conectar: () => {} })[view]()
 }
 
 function renderPanel() {
@@ -359,10 +360,50 @@ drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.ad
 drop.addEventListener('dragleave', () => drop.classList.remove('over'))
 drop.addEventListener('drop', (e) => { e.preventDefault(); drop.classList.remove('over'); importFiles([...e.dataTransfer.files]) })
 
+/* ── Chats (estilo WhatsApp) ───────────────────────── */
+let CHAT = null, CF = ''
+const hhmm = (ts) => {
+  const d = new Date(ts * 1000), t = (now() - ts) / DAY
+  if (t < 1 && d.getDate() === new Date().getDate()) return d.toLocaleTimeString('es-HN', { hour: '2-digit', minute: '2-digit' })
+  return t < 7 ? d.toLocaleDateString('es-HN', { weekday: 'short' }) : d.toLocaleDateString('es-HN', { day: 'numeric', month: 'short' })
+}
+const initial = (n) => (String(n || '#').replace(/^.*·\s*/, '').trim()[0] || '#').toUpperCase()
+function renderChats() {
+  const q = norm($('#c-q').value)
+  const rows = LIST.filter((c) => (!q || norm(c.name + ' ' + c.phone).includes(q)) && (!CF || (CF === 'pend' ? c.unanswered : ['interesado', 'cotizado', 'negociacion'].includes(c.stage))))
+  if (!CHAT && rows[0]) CHAT = rows[0].jid
+  $('#c-list').innerHTML = rows.map((c) => `<button class="wa-item ${c.jid === CHAT ? 'on' : ''}" data-chat="${esc(c.jid)}" type="button">
+      <span class="av">${esc(initial(c.name))}</span>
+      <span class="wi"><span class="wt"><b>${esc(c.name)}</b><small>${c.last ? hhmm(c.last.ts) : ''}</small></span>
+      <span class="wt"><span class="wl">${c.lastFromMe ? 'Tú: ' : ''}${esc(c.last?.text || '')}</span>${c.unanswered ? '<i class="dot" title="Sin responder"></i>' : ''}</span></span></button>`).join('') || '<p class="hint" style="padding:16px">Sin chats.</p>'
+  $$('[data-chat]').forEach((b) => (b.onclick = () => { CHAT = b.dataset.chat; renderChats(); $('#c-text').focus() }))
+  const c = LIST.find((x) => x.jid === CHAT)
+  if (!c) { $('#c-head').innerHTML = '<p class="hint">Elige un chat</p>'; $('#c-msgs').innerHTML = ''; $('#c-compose').hidden = true; $('#c-note').textContent = ''; return }
+  $('#c-head').innerHTML = `<div><b>${esc(c.name)}</b><span class="hint"> +${esc(c.phone)}</span></div><div class="wh-r"><span class="pill s-${c.stage}">${stageLabel(c.stage)}</span><button class="btn ghost" type="button" data-open="${esc(c.jid)}">Ficha</button></div>`
+  const box = $('#c-msgs')
+  const stick = box.dataset.jid !== c.jid || box.scrollHeight - box.scrollTop - box.clientHeight < 80
+  let lastDay = ''
+  box.innerHTML = c.messages.map((m) => {
+    const d = new Date(m.ts * 1000), day = d.toLocaleDateString('es-HN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+    const sep = day !== lastDay ? `<div class="day">${day}</div>` : ''
+    lastDay = day
+    return sep + `<div class="msg ${m.fromMe ? 'me' : ''}">${esc(m.text)}<small>${d.toLocaleTimeString('es-HN', { hour: '2-digit', minute: '2-digit' })}</small></div>`
+  }).join('')
+  box.dataset.jid = c.jid
+  if (stick) box.scrollTop = box.scrollHeight
+  const ok = canSend(c)
+  $('#c-compose').hidden = !ok
+  $('#c-note').textContent = ok ? '' : WA.state === 'conectado' ? 'Este contacto aún no te ha escrito. Por seguridad, el primer mensaje envíalo desde tu teléfono.' : 'Conecta WhatsApp para responder desde aquí.'
+  $('#c-send').onclick = async () => { if (await sendText(c.jid, $('#c-text').value, $('#c-send'))) { $('#c-text').value = ''; $('#c-text').focus() } }
+}
+$('#c-text').addEventListener('keydown', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('#c-send').click() } })
+$('#c-q').addEventListener('input', () => view === 'chats' && renderChats())
+$$('[data-cf]').forEach((b) => (b.onclick = () => { CF = b.dataset.cf; $$('[data-cf]').forEach((x) => x.classList.toggle('on', x === b)); renderChats() }))
+
 /* ── WhatsApp en vivo ───────────────────────────────── */
 let OPEN = null
 function waBadge() {
-  const m = { apagado: 'WhatsApp apagado', iniciando: 'Abriendo WhatsApp Web…', qr: 'Escanea el QR para conectar', autenticado: 'Conectando…', sincronizando: 'Sincronizando chats…', conectado: '● En vivo', desconectado: 'WhatsApp desconectado', error: 'Error de WhatsApp' }
+  const m = { apagado: 'WhatsApp apagado', iniciando: 'Abriendo WhatsApp Web…', qr: 'Escanea el QR para conectar', autenticado: 'Conectando…', sincronizando: 'Leyendo chats' + (WA.progress ? ' ' + WA.progress : '') + '…', conectado: '● En vivo', desconectado: 'WhatsApp desconectado', error: 'Error de WhatsApp' }
   const t = DEMO ? 'Datos de ejemplo' : (m[WA.state] || WA.state)
   return `<span class="${WA.state === 'conectado' ? 'live' : ''}">${t}</span>`
 }
