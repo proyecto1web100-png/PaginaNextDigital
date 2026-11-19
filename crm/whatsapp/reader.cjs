@@ -2,6 +2,10 @@
 // Vincula por QR, recibe el historial que WhatsApp sincroniza y lo guarda en data/chats.json.
 // No envía mensajes: este archivo nunca llama a sendMessage.
 const fs = require('fs')
+try { require.resolve('@whiskeysockets/baileys'); require.resolve('qrcode') } catch {
+  console.error('\nFaltan dependencias. Corre esto dentro de la carpeta crm:\n\n  npm install\n\nY luego: npm run whatsapp\n')
+  process.exit(1)
+}
 const path = require('path')
 const QR = require('qrcode')
 const pino = require('pino')
@@ -76,6 +80,7 @@ async function start() {
   sock.ev.on('connection.update', async ({ connection, lastDisconnect, qr }) => {
     if (qr) {
       await QR.toFile(path.join(OUT, 'qr.png'), qr, { width: 640, margin: 2 })
+      console.log(await QR.toString(qr, { type: 'terminal', small: true }))
       console.log('[qr] Escanea el código: ábrelo en el CRM (http://localhost:4100) o en data/qr.png')
     }
     if (connection === 'open') { fs.rmSync(path.join(OUT, 'qr.png'), { force: true }); console.log('[conectado] Leyendo historial… deja esta ventana abierta unos minutos.') }
