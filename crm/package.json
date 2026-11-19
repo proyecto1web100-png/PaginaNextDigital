@@ -1,0 +1,15 @@
+{
+  "name": "nextdigital-crm",
+  "private": true,
+  "description": "CRM local de WhatsApp Business para NextDigital",
+  "scripts": {
+    "start": "node server.cjs",
+    "whatsapp": "node whatsapp/reader.cjs"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "6.7.24",
+    "https-proxy-agent": "7.0.6",
+    "pino": "9.6.0",
+    "qrcode": "1.5.4"
+  }
+}
