@@ -20,13 +20,15 @@ npm start            # abre http://localhost:4100
 npm run whatsapp
 ```
 
-Abre la sección *Conectar WhatsApp* del CRM y escanea el código desde
-WhatsApp Business → Dispositivos vinculados. El lector **solo lee**: nunca envía mensajes.
-El historial tarda unos minutos en llegar. Para desconectarlo, quita el dispositivo en tu teléfono
-y borra `crm/data/whatsapp-auth`.
+Abre WhatsApp Web real en tu Chrome o Edge (sin ventana) y muestra el QR en la terminal y en la
+sección *Conectar WhatsApp* del CRM. Escanéalo desde WhatsApp Business → Dispositivos vinculados.
+El lector **solo lee**: nunca envía mensajes. Lee tus chats individuales (hasta 300 mensajes por chat)
+y vuelve a leer cada 10 minutos mientras la ventana esté abierta. Para desconectarlo, quita el
+dispositivo en tu teléfono y borra `crm/data/whatsapp-web-auth`.
 
-Usa una conexión no oficial de WhatsApp Web. WhatsApp puede limitar números que la usan,
-sobre todo si se envían mensajes automáticos; por eso este CRM nunca envía nada por sí solo.
+Si no encuentra tu navegador: `$env:CHROME_PATH="C:\ruta\chrome.exe"; npm run whatsapp`.
+
+Automatizar WhatsApp Web no es una vía oficial; por eso este CRM nunca envía nada por sí solo.
 
 **Opción 2 · Chats exportados**: en cada chat, Exportar chat → Sin archivos, y arrastra los `.txt`
 a la sección *Conectar WhatsApp*.
