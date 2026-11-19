@@ -12,7 +12,8 @@ const pino = require('pino')
 const { HttpsProxyAgent } = require('https-proxy-agent')
 const PROXY = process.env.HTTPS_PROXY || process.env.https_proxy
 const agent = PROXY ? new HttpsProxyAgent(PROXY) : undefined
-let makeWASocket, useMultiFileAuthState, Browsers, DisconnectReason
+let makeWASocket, useMultiFileAuthState, Browsers, DisconnectReason, fetchLatestWaWebVersion, fetchLatestBaileysVersion
+let fails = 0
 
 const OUT = path.join(__dirname, '..', 'data')
 const AUTH = path.join(OUT, 'whatsapp-auth')
@@ -69,10 +70,19 @@ async function start() {
   if (!makeWASocket) {
     const B = await import('@whiskeysockets/baileys')
     makeWASocket = B.default?.default || B.default || B.makeWASocket
-    ;({ useMultiFileAuthState, Browsers, DisconnectReason } = B)
+    ;({ useMultiFileAuthState, Browsers, DisconnectReason, fetchLatestWaWebVersion, fetchLatestBaileysVersion } = B)
   }
   const { state, saveCreds } = await useMultiFileAuthState(AUTH)
+  let version
+  try {
+    const v = await (fetchLatestWaWebVersion || fetchLatestBaileysVersion)({})
+    version = v.version
+    console.log('[info] versión de WhatsApp Web:', version.join('.'))
+  } catch (e) {
+    console.log('[info] no se pudo consultar la versión de WhatsApp Web, uso la predeterminada')
+  }
   const sock = makeWASocket({
+    ...(version ? { version } : {}),
     auth: state,
     browser: Browsers.macOS('Desktop'),
     syncFullHistory: true,
@@ -88,11 +98,15 @@ async function start() {
       console.log(await QR.toString(qr, { type: 'terminal', small: true }))
       console.log('[qr] Escanea el código: ábrelo en el CRM (http://localhost:4100) o en data/qr.png')
     }
-    if (connection === 'open') { fs.rmSync(path.join(OUT, 'qr.png'), { force: true }); console.log('[conectado] Leyendo historial… deja esta ventana abierta unos minutos.') }
+    if (connection === 'open') { fails = 0; fs.rmSync(path.join(OUT, 'qr.png'), { force: true }); console.log('[conectado] Leyendo historial… deja esta ventana abierta unos minutos.') }
     if (connection === 'close') {
       const code = lastDisconnect?.error?.output?.statusCode
+      fails++
       console.log('[cerrado]', code, lastDisconnect?.error?.message)
-      if (code !== DisconnectReason.loggedOut) setTimeout(start, 4000)
+      if (fails === 3) console.log('[detalle]', lastDisconnect?.error?.data || lastDisconnect?.error?.stack || lastDisconnect?.error)
+      if (code === DisconnectReason.loggedOut) { console.log('Sesión cerrada desde el teléfono. Borra data/whatsapp-auth y vuelve a correr npm run whatsapp.'); return }
+      if (fails >= 6) { console.log('\nWhatsApp sigue cortando la conexión. Copia lo de arriba (sobre todo la línea [detalle]) y envíalo.\n'); process.exit(1) }
+      setTimeout(start, 4000)
     }
   })
   sock.ev.on('messaging-history.set', ({ chats: cs, contacts: ct, messages: ms, isLatest, progress }) => {
