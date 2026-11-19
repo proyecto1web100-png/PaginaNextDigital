@@ -57,19 +57,52 @@ function startWhatsApp(DATA) {
     QR = require('qrcode')
   } catch {
     setStatus({ state: 'error', error: 'Faltan dependencias: corre "npm install" dentro de la carpeta crm.' })
-    return { bus, status, getStore: () => store, send: async () => { throw new Error(status.error) } }
+    return { bus, status, reconnect: (fresh) => boot({ fresh }), getStore: () => store, send: async () => { throw new Error(status.error) } }
   }
   const browser = findBrowser()
   if (!browser) {
     setStatus({ state: 'error', error: 'No encontré Chrome ni Edge. Instala Google Chrome o define CHROME_PATH con la ruta del navegador.' })
-    return { bus, status, getStore: () => store, send: async () => { throw new Error(status.error) } }
+    return { bus, status, reconnect: (fresh) => boot({ fresh }), getStore: () => store, send: async () => { throw new Error(status.error) } }
   }
   console.log('[whatsapp] navegador:', browser)
 
-  const client = new Client({
-    authStrategy: new LocalAuth({ dataPath: path.join(DATA, 'whatsapp-web-auth') }),
-    puppeteer: { executablePath: browser, headless: true, args: ['--no-sandbox'] },
-  })
+  const AUTH = path.join(DATA, 'whatsapp-web-auth')
+  // Quita los archivos de bloqueo que deja Chrome si se cerró de golpe.
+  function clearLocks() {
+    const walk = (d) => {
+      if (!fs.existsSync(d)) return
+      for (const f of fs.readdirSync(d, { withFileTypes: true })) {
+        const p = path.join(d, f.name)
+        if (/^Singleton(Lock|Cookie|Socket)$|^lockfile$/i.test(f.name)) fs.rmSync(p, { force: true })
+        else if (f.isDirectory() && !/Cache|Code Cache|IndexedDB|Service Worker/.test(f.name)) walk(p)
+      }
+    }
+    try { walk(AUTH) } catch {}
+  }
+  let client
+  let starting = false
+  async function boot({ fresh = false } = {}) {
+    if (starting) return
+    starting = true
+    try {
+      if (client) { await client.destroy().catch(() => {}); client = null }
+      if (fresh) fs.rmSync(AUTH, { recursive: true, force: true })
+      clearLocks()
+      setStatus({ state: 'iniciando', qr: null, error: null })
+      client = new Client({
+        authStrategy: new LocalAuth({ dataPath: AUTH }),
+        puppeteer: { executablePath: browser, headless: true, args: ['--no-sandbox'] },
+      })
+      wire(client)
+      await client.initialize()
+    } catch (e) {
+      console.log('[whatsapp] error al iniciar:', e.message)
+      if (!fresh) { starting = false; console.log('[whatsapp] reintento con sesión nueva…'); return boot({ fresh: true }) }
+      setStatus({ state: 'error', error: 'No se pudo abrir WhatsApp Web: ' + e.message })
+    } finally {
+      starting = false
+    }
+  }
 
   function addMessage(m) {
     const jid = m.fromMe ? m.to : m.from
@@ -114,27 +147,33 @@ function startWhatsApp(DATA) {
     console.log(`[whatsapp] ${byJid.size} chats sincronizados`)
   }
 
-  client.on('qr', async (qr) => {
-    const png = await QR.toDataURL(qr, { width: 520, margin: 2 })
-    setStatus({ state: 'qr', qr: png })
-    console.log(await QR.toString(qr, { type: 'terminal', small: true }))
-    console.log('Escanea con WhatsApp Business → Dispositivos vinculados (o desde el CRM: http://localhost:4100/#conectar)')
-  })
-  client.on('authenticated', () => setStatus({ state: 'autenticado', qr: null }))
-  client.on('auth_failure', (m) => setStatus({ state: 'error', error: 'No se pudo iniciar sesión: ' + m }))
-  client.on('ready', async () => {
-    setStatus({ me: client.info?.wid?.user || null })
-    console.log('[whatsapp] conectado como', status.me)
-    await dumpAll().catch((e) => setStatus({ state: 'conectado', error: e.message }))
-  })
-  // message_create incluye los que recibes y los que envías (desde el teléfono o desde el CRM)
-  client.on('message_create', (m) => {
-    const ev = addMessage(m)
-    if (ev) bus.emit('message', ev)
-  })
-  client.on('disconnected', (r) => setStatus({ state: 'desconectado', error: 'WhatsApp se desconectó: ' + r }))
+  function wire(c) {
+    c.on('qr', async (qr) => {
+      const png = await QR.toDataURL(qr, { width: 520, margin: 2 })
+      setStatus({ state: 'qr', qr: png })
+      console.log(await QR.toString(qr, { type: 'terminal', small: true }))
+      console.log('Escanea con WhatsApp Business → Dispositivos vinculados (o desde el CRM: http://localhost:4100/#conectar)')
+    })
+    c.on('authenticated', () => setStatus({ state: 'autenticado', qr: null }))
+    c.on('auth_failure', (m) => setStatus({ state: 'error', error: 'No se pudo iniciar sesión: ' + m }))
+    c.on('ready', async () => {
+      setStatus({ me: c.info?.wid?.user || null })
+      console.log('[whatsapp] conectado como', status.me)
+      await dumpAll().catch((e) => setStatus({ state: 'conectado', error: e.message }))
+    })
+    // message_create incluye los que recibes y los que envías (desde el teléfono o desde el CRM)
+    c.on('message_create', (m) => {
+      const ev = addMessage(m)
+      if (ev) bus.emit('message', ev)
+    })
+    c.on('disconnected', (r) => {
+      console.log('[whatsapp] desconectado:', r, '→ pidiendo un QR nuevo')
+      setStatus({ state: 'desconectado', error: 'WhatsApp se desconectó (' + r + '). Generando un QR nuevo…' })
+      setTimeout(() => boot({ fresh: true }), 1500)
+    })
+  }
 
-  client.initialize().catch((e) => setStatus({ state: 'error', error: 'No se pudo abrir WhatsApp Web: ' + e.message }))
+  boot()
 
   async function send(jid, text) {
     if (status.state !== 'conectado') throw new Error('WhatsApp no está conectado.')
@@ -151,11 +190,11 @@ function startWhatsApp(DATA) {
     return { id: m.id?._serialized }
   }
 
-  const shutdown = () => client.destroy().catch(() => {}).finally(() => process.exit(0))
+  const shutdown = () => (client ? client.destroy() : Promise.resolve()).catch(() => {}).finally(() => process.exit(0))
   process.on('SIGINT', shutdown)
   process.on('SIGTERM', shutdown)
 
-  return { bus, status, getStore: () => ({ updatedAt: store.updatedAt || Date.now(), chats: [...byJid.values()] }), send }
+  return { bus, status, reconnect: (fresh) => boot({ fresh }), getStore: () => ({ updatedAt: store.updatedAt || Date.now(), chats: [...byJid.values()] }), send }
 }
 
 module.exports = { startWhatsApp }

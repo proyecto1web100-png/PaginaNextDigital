@@ -153,3 +153,4 @@ tbody tr:hover { background: var(--raise); }
 .toast { position: fixed; right: 20px; bottom: 20px; z-index: 50; max-width: 360px; background: var(--fg); color: var(--bg); padding: 10px 14px; border-radius: 12px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,.5); }
 .toast.bad { background: var(--bad); }
 .btn:disabled { opacity: .6; cursor: default; }
+.row-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 8px; }

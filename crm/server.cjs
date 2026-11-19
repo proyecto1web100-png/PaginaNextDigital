@@ -45,6 +45,11 @@ http.createServer(async (req, res) => {
     req.on('close', () => { clearInterval(ping); clients.delete(res) })
     return
   }
+  if (url.pathname === '/api/reconnect' && req.method === 'POST') {
+    if (!wa) return json(res, 400, { error: 'WhatsApp no está activo en este CRM.' })
+    wa.reconnect(url.searchParams.get('nueva') === '1')
+    return json(res, 200, { ok: true })
+  }
   if (url.pathname === '/api/send' && req.method === 'POST') {
     if (!wa) return json(res, 400, { error: 'WhatsApp no está activo en este CRM.' })
     try {

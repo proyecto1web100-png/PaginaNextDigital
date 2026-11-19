@@ -391,6 +391,11 @@ function toast(t, bad) {
   const el = document.createElement('div'); el.className = 'toast' + (bad ? ' bad' : ''); el.textContent = t
   document.body.append(el); setTimeout(() => el.remove(), 3800)
 }
+async function reconnect(fresh) {
+  try { await fetch('/api/reconnect' + (fresh ? '?nueva=1' : ''), { method: 'POST' }); toast(fresh ? 'Generando un QR nuevo…' : 'Reconectando…') } catch { toast('No se pudo reconectar', true) }
+}
+$('#wa-retry').onclick = () => reconnect(false)
+$('#wa-fresh').onclick = () => reconnect(true)
 async function reload() {
   try { const j = await (await fetch('/api/data')).json(); if (j.wa?.chats?.length) { DEMO = false; DATA = j.wa } if (j.status) WA = j.status; render(); if (OPEN) openContact(OPEN) } catch {}
 }
