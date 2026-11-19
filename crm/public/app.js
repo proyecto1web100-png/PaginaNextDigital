@@ -33,7 +33,7 @@ let DATA = { chats: [], updatedAt: null }
 let S = { contacts: {}, prospects: [], done: {}, imported: [], me: '' }
 let DEMO = false
 let WA = { state: 'apagado' }
-const canSend = (c) => WA.state === 'conectado' && /@c\.us$/.test(c.jid) && c.messages.some((m) => !m.fromMe)
+const canSend = (c) => WA.state === 'conectado' && /@(c\.us|lid)$/.test(c.jid) && c.messages.some((m) => !m.fromMe)
 let view = 'panel'
 
 /* ── Persistencia ───────────────────────────────────── */
@@ -81,7 +81,7 @@ function analyze(c) {
   if (stage === 'ganado') score = Math.max(score, 60)
   return {
     ...c,
-    name: c.name || ('+' + c.phone),
+    name: c.name || (c.phone ? '+' + c.phone : 'Contacto sin nombre'),
     last, age, topics, asked, quoted, paid, stage, auto,
     lastFromMe: !!last?.fromMe,
     unanswered: last && !last.fromMe,
@@ -224,7 +224,7 @@ function renderTable() {
     (!lw || (lw === 'cliente' ? c.unanswered : c.lastFromMe)) &&
     (!ag || (ag === '90' ? c.age > 90 : c.age <= +ag)))
   $('#tbl tbody').innerHTML = rows.length ? rows.map((c) => `<tr data-open="${esc(c.jid)}">
-      <td class="who"><b>${esc(c.name)}</b><span>+${esc(c.phone)}</span></td>
+      <td class="who"><b>${esc(c.name)}</b><span>${c.phone ? '+' + esc(c.phone) : 'sin número'}</span></td>
       <td><span class="pill s-${c.stage}">${stageLabel(c.stage)}</span></td>
       <td><span class="score"><i><b style="width:${c.score}%"></b></i>${c.score}</span></td>
       <td>${c.topics.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</td>
@@ -287,7 +287,7 @@ function openContact(jid) {
   const c = LIST.find((x) => x.jid === jid); if (!c) return
   $('#drawer').hidden = false
   $('#d-name').textContent = c.name
-  $('#d-phone').textContent = `+${c.phone} · interés ${c.score}/100 · etapa detectada: ${stageLabel(c.auto)}`
+  $('#d-phone').textContent = `${c.phone ? '+' + c.phone : 'sin número'} · interés ${c.score}/100 · etapa detectada: ${stageLabel(c.auto)}`
   $('#d-stage').innerHTML = STAGES.map((s) => `<option value="${s.id}" ${s.id === c.stage ? 'selected' : ''}>${s.label}</option>`).join('')
   $('#d-stage').onchange = (e) => { setStage(jid, e.target.value); render(); openContact(jid) }
   $('#d-tags').value = c.tags.join(', ')
@@ -379,7 +379,7 @@ function renderChats() {
   $$('[data-chat]').forEach((b) => (b.onclick = () => { CHAT = b.dataset.chat; renderChats(); $('#c-text').focus() }))
   const c = LIST.find((x) => x.jid === CHAT)
   if (!c) { $('#c-head').innerHTML = '<p class="hint">Elige un chat</p>'; $('#c-msgs').innerHTML = ''; $('#c-compose').hidden = true; $('#c-note').textContent = ''; return }
-  $('#c-head').innerHTML = `<div><b>${esc(c.name)}</b><span class="hint"> +${esc(c.phone)}</span></div><div class="wh-r"><span class="pill s-${c.stage}">${stageLabel(c.stage)}</span><button class="btn ghost" type="button" data-open="${esc(c.jid)}">Ficha</button></div>`
+  $('#c-head').innerHTML = `<div><b>${esc(c.name)}</b><span class="hint"> ${c.phone ? '+' + esc(c.phone) : ''}</span></div><div class="wh-r"><span class="pill s-${c.stage}">${stageLabel(c.stage)}</span><button class="btn ghost" type="button" data-open="${esc(c.jid)}">Ficha</button></div>`
   const box = $('#c-msgs')
   const stick = box.dataset.jid !== c.jid || box.scrollHeight - box.scrollTop - box.clientHeight < 80
   let lastDay = ''
@@ -450,7 +450,7 @@ function live() {
     let c = DATA.chats.find((x) => x.jid === ev.jid)
     if (!c) { c = { jid: ev.jid, phone: ev.phone, name: ev.name, messages: [] }; DATA.chats.push(c) }
     if (!c.messages.some((m) => m.id && m.id === ev.message.id)) c.messages.push(ev.message)
-    if (!ev.message.fromMe && OPEN !== ev.jid) toast(`${ev.name || '+' + ev.phone}: ${ev.message.text.slice(0, 60)}`)
+    if (!ev.message.fromMe && OPEN !== ev.jid) toast(`${ev.name || (ev.phone ? '+' + ev.phone : 'Nuevo mensaje')}: ${ev.message.text.slice(0, 60)}`)
     render()
     if (OPEN === ev.jid) openContact(ev.jid)
   })

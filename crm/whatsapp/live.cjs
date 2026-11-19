@@ -6,6 +6,7 @@ const fs = require('fs')
 const path = require('path')
 const { EventEmitter } = require('events')
 
+const DIRECT = /@(c\.us|lid)$/
 const MIN_GAP_MS = 8000 // pausa mínima entre dos envíos
 const MAX_LEN = 2000
 const PER_CHAT = Number(process.env.MENSAJES_POR_CHAT || 1000)
@@ -82,6 +83,7 @@ function startWhatsApp(DATA) {
   let client
   let starting = false
   let retried = false
+  let resync1, resync2, resyncI
   async function boot({ fresh = false } = {}) {
     if (starting) return
     starting = true
@@ -108,10 +110,10 @@ function startWhatsApp(DATA) {
 
   function addMessage(m) {
     const jid = m.fromMe ? m.to : m.from
-    if (!jid || !jid.endsWith('@c.us')) return null
+    if (!jid || !DIRECT.test(jid)) return null
     const text = label(m)
     if (!text) return null
-    const c = byJid.get(jid) || { jid, phone: jid.split('@')[0], name: null, messages: [] }
+    const c = byJid.get(jid) || { jid, phone: jid.endsWith('@lid') ? '' : jid.split('@')[0], name: null, messages: [] }
     if (!m.fromMe && m._data?.notifyName && !c.name) c.name = m._data.notifyName
     const msg = { id: m.id?._serialized, fromMe: m.fromMe, ts: m.timestamp, text }
     if (msg.id && c.messages.some((x) => x.id === msg.id)) return null
@@ -123,7 +125,8 @@ function startWhatsApp(DATA) {
 
   async function dumpAll() {
     setStatus({ state: 'sincronizando' })
-    const chats = (await client.getChats()).filter((c) => !c.isGroup && c.id.server === 'c.us')
+    const chats = (await client.getChats()).filter((c) => !c.isGroup && DIRECT.test(c.id._serialized))
+    console.log(`[whatsapp] ${chats.length} chats individuales encontrados`)
     for (const [i, c] of chats.entries()) {
       if (i && i % 10 === 0) { console.log(`[whatsapp] leyendo chats ${i}/${chats.length}…`); setStatus({ state: 'sincronizando', progress: `${i}/${chats.length}` }) }
       try {
@@ -136,7 +139,7 @@ function startWhatsApp(DATA) {
         const extra = (prev?.messages || []).filter((m) => m.id && !seen.has(m.id))
         byJid.set(c.id._serialized, {
           jid: c.id._serialized,
-          phone: c.id.user,
+          phone: contact?.number || (c.id.server === 'c.us' ? c.id.user : prev?.phone || ''),
           name: contact?.name || contact?.pushname || c.name || prev?.name || null,
           messages: [...messages, ...extra].sort((a, b) => a.ts - b.ts),
         })
@@ -163,6 +166,11 @@ function startWhatsApp(DATA) {
       setStatus({ me: c.info?.wid?.user || null })
       console.log('[whatsapp] conectado como', status.me)
       await dumpAll().catch((e) => setStatus({ state: 'conectado', error: e.message }))
+    clearTimeout(resync1); clearTimeout(resync2); clearInterval(resyncI)
+    const again = () => dumpAll().catch((e) => console.log('[whatsapp] relectura:', e.message))
+    resync1 = setTimeout(again, 2 * 60 * 1000)
+    resync2 = setTimeout(again, 6 * 60 * 1000)
+    resyncI = setInterval(again, 30 * 60 * 1000)
     })
     // message_create incluye los que recibes y los que envías (desde el teléfono o desde el CRM)
     c.on('message_create', (m) => {
@@ -184,7 +192,7 @@ function startWhatsApp(DATA) {
     text = String(text || '').trim()
     if (!text) throw new Error('El mensaje está vacío.')
     if (text.length > MAX_LEN) throw new Error(`El mensaje es muy largo (máximo ${MAX_LEN} caracteres).`)
-    if (!/^\d+@c\.us$/.test(jid)) throw new Error('Solo se puede escribir a chats individuales.')
+    if (!DIRECT.test(jid)) throw new Error('Solo se puede escribir a chats individuales.')
     const c = byJid.get(jid)
     if (!c || !c.messages.some((m) => !m.fromMe)) throw new Error('Por seguridad solo puedes responder desde el CRM a contactos que ya te escribieron. A los demás escríbeles desde tu teléfono.')
     const wait = lastSend + MIN_GAP_MS - Date.now()
