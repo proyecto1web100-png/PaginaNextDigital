@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NextDigital CRM</title>
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><span class="mark">N</span><span>NextDigital <b>CRM</b></span></div>
+    <nav id="nav">
+      <button data-view="panel" class="on">Panel</button>
+      <button data-view="chats">Chats <span class="badge" id="b-chats"></span></button>
+      <button data-view="seguimiento">Seguimiento <span class="badge" id="b-follow"></span></button>
+      <button data-view="contactos">Contactos</button>
+      <button data-view="embudo">Embudo</button>
+      <button data-view="prospectos">Prospectos</button>
+      <button data-view="conectar">Conectar WhatsApp</button>
+    </nav>
+    <div class="side-foot" id="sync">Sin datos</div>
+  </aside>
+
+  <main>
+    <div id="demo-banner" class="banner" hidden>Estás viendo <b>datos de ejemplo</b>. Conecta WhatsApp o importa chats exportados para ver tus clientes reales.</div>
+
+    <!-- PANEL -->
+    <section id="v-panel" class="view">
+      <header class="vh"><h1>Panel</h1><p class="sub">Cómo va tu WhatsApp de ventas.</p></header>
+      <div class="kpis" id="kpis"></div>
+      <div class="grid2">
+        <div class="card"><h3>Mensajes por semana</h3><p class="hint">Recibidos vs. enviados, últimas 12 semanas</p><div id="chart-weeks"></div></div>
+        <div class="card"><h3>Embudo de ventas</h3><p class="hint">Contactos por etapa</p><div id="chart-funnel"></div></div>
+      </div>
+      <div class="grid2">
+        <div class="card"><h3>Qué te preguntan</h3><p class="hint">Temas detectados en los chats</p><div id="chart-topics"></div></div>
+        <div class="card"><h3>Tiempo de respuesta</h3><p class="hint">Cuánto tardas en contestar al cliente</p><div id="chart-resp"></div></div>
+      </div>
+    </section>
+
+    <!-- CHATS -->
+    <section id="v-chats" class="view" hidden>
+      <div class="wa">
+        <div class="wa-list">
+          <input id="c-q" type="search" placeholder="Buscar chat">
+          <div class="wa-tabs" role="group" aria-label="Filtrar chats"><button data-cf="" class="on" type="button">Todos</button><button data-cf="pend" type="button">Sin responder</button><button data-cf="opp" type="button">Oportunidades</button></div>
+          <div id="c-list"></div>
+        </div>
+        <div class="wa-conv">
+          <div class="wa-head" id="c-head"><p class="hint">Elige un chat</p></div>
+          <div class="wa-msgs" id="c-msgs"></div>
+          <div class="compose wa-compose" id="c-compose"><textarea id="c-text" rows="1" placeholder="Escribe un mensaje (Enter envía, Shift+Enter salto de línea)"></textarea><button class="btn" id="c-send" type="button">Enviar</button></div>
+          <p class="hint compose-note" id="c-note"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEGUIMIENTO -->
+    <section id="v-seguimiento" class="view" hidden>
+      <header class="vh"><h1>Seguimiento</h1><p class="sub">A quién escribirle hoy y qué decirle. Revisa cada mensaje antes de enviarlo.</p></header>
+      <div id="follow"></div>
+    </section>
+
+    <!-- CONTACTOS -->
+    <section id="v-contactos" class="view" hidden>
+      <header class="vh"><h1>Contactos</h1></header>
+      <div class="filters">
+        <input id="f-q" type="search" placeholder="Buscar nombre, número o mensaje">
+        <select id="f-stage"><option value="">Todas las etapas</option></select>
+        <select id="f-topic"><option value="">Todos los temas</option></select>
+        <select id="f-last"><option value="">Último mensaje: cualquiera</option><option value="cliente">Último: el cliente (sin responder)</option><option value="yo">Último: yo</option></select>
+        <select id="f-age"><option value="">Cualquier fecha</option><option value="7">Activos 7 días</option><option value="30">Activos 30 días</option><option value="90">Inactivos +90 días</option></select>
+      </div>
+      <div class="table-wrap"><table id="tbl"><thead><tr><th>Contacto</th><th>Etapa</th><th>Interés</th><th>Temas</th><th>Último mensaje</th><th class="num">Hace</th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <!-- EMBUDO -->
+    <section id="v-embudo" class="view" hidden>
+      <header class="vh"><h1>Embudo</h1><p class="sub">Arrastra un contacto para cambiar su etapa.</p></header>
+      <div class="board" id="board"></div>
+    </section>
+
+    <!-- PROSPECTOS -->
+    <section id="v-prospectos" class="view" hidden>
+      <header class="vh"><h1>Prospectos</h1><p class="sub">Negocios nuevos que todavía no te conocen. Agrégalos a mano o pega una lista.</p></header>
+      <div class="card">
+        <form id="lead-form" class="lead-form">
+          <input id="l-name" placeholder="Negocio" required>
+          <select id="l-cat"><option>Salón / barbería</option><option>Tienda / ropa</option><option>Restaurante</option><option>Clínica dental</option><option>Clínica médica</option><option>Legal / profesional</option><option>Otro</option></select>
+          <input id="l-phone" placeholder="WhatsApp (504…)">
+          <select id="l-web"><option value="sin web">Sin web</option><option value="solo redes">Solo redes</option><option value="web vieja">Web vieja</option><option value="tiene web">Tiene web</option></select>
+          <input id="l-zone" placeholder="Zona / ciudad">
+          <button class="btn">Agregar</button>
+        </form>
+        <details class="paste"><summary>Pegar lista (CSV: negocio, rubro, whatsapp, web, zona)</summary><textarea id="l-csv" rows="4" placeholder="Barbería El Corte, Salón / barbería, 50499998888, solo redes, Tegucigalpa"></textarea><button class="btn ghost" id="l-import" type="button">Importar lista</button></details>
+      </div>
+      <div class="filters"><select id="p-cat"><option value="">Todos los rubros</option></select><select id="p-status"><option value="">Todos</option><option value="pendiente">Por contactar</option><option value="contactado">Contactado</option><option value="respondió">Respondió</option><option value="descartado">Descartado</option></select></div>
+      <div class="table-wrap"><table id="ptbl"><thead><tr><th>Puntaje</th><th>Negocio</th><th>Rubro</th><th>Web</th><th>Zona</th><th>Estado</th><th></th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <!-- CONECTAR -->
+    <section id="v-conectar" class="view" hidden>
+      <header class="vh"><h1>Conectar WhatsApp</h1><p class="sub">Conecta tu WhatsApp Business en vivo o importa chats exportados.</p></header>
+      <div class="grid2">
+        <div class="card">
+          <h3>Opción 1 · Código QR (en vivo)</h3>
+          <ol class="steps"><li>Inicia el CRM con <code>npm start</code> (abre WhatsApp Web en tu Chrome o Edge, sin ventana).</li><li>En tu teléfono: WhatsApp Business → Dispositivos vinculados → Vincular dispositivo.</li><li>Escanea el código. Tus chats se cargan y los mensajes nuevos aparecen en vivo.</li></ol>
+          <div id="qr-box" class="qr"><p class="hint">Esperando código…</p></div>
+          <div class="row-btns"><button class="btn ghost" id="wa-retry" type="button">Reconectar</button><button class="btn ghost" id="wa-fresh" type="button">Vincular de nuevo (QR nuevo)</button></div>
+          <p class="hint">Desde el CRM solo puedes responder a contactos que ya te escribieron, un mensaje a la vez. Puedes desvincular el CRM cuando quieras desde tu teléfono.</p>
+        </div>
+        <div class="card">
+          <h3>Opción 2 · Chats exportados</h3>
+          <ol class="steps"><li>En cada chat: ⋮ → Más → Exportar chat → Sin archivos.</li><li>Sube aquí los archivos <code>.txt</code>.</li></ol>
+          <label class="drop" id="drop"><input type="file" id="files" accept=".txt" multiple hidden><span>Arrastra o elige archivos .txt</span></label>
+          <label class="me">Tu nombre en esos chats <input id="me-name" placeholder="Se detecta solo"></label>
+          <p class="hint" id="import-msg"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- DETALLE -->
+  <aside class="drawer" id="drawer" hidden>
+    <div class="dh"><div><h2 id="d-name"></h2><p class="sub" id="d-phone"></p></div><button class="x" id="d-close" aria-label="Cerrar">×</button></div>
+    <div class="dmeta">
+      <label>Etapa <select id="d-stage"></select></label>
+      <label>Etiquetas <input id="d-tags" placeholder="vip, dentico…"></label>
+    </div>
+    <label class="dnote">Notas <textarea id="d-notes" rows="3"></textarea></label>
+    <div class="suggest" id="d-suggest"></div>
+    <div class="chat" id="d-chat"></div>
+    <div class="compose" id="d-compose" hidden><textarea id="d-text" rows="2" placeholder="Escribe un mensaje… (Enter envía, Shift+Enter salto de línea)"></textarea><button class="btn" id="d-send-btn" type="button">Enviar</button></div>
+    <p class="hint compose-note" id="d-compose-note"></p>
+  </aside>
+</div>
+<script src="/app.js"></script>
+</body>
+</html>
