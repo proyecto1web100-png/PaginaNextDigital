@@ -144,3 +144,12 @@ tbody tr:hover { background: var(--raise); }
   .grid2, .kpis { grid-template-columns: 1fr 1fr; } .fu { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+.live { color: var(--good); }
+.compose { display: flex; gap: 8px; padding: 12px 20px 6px; border-top: 1px solid var(--line); }
+.compose textarea { flex: 1; resize: none; }
+.compose-note { padding: 0 20px 14px; margin: 0; }
+.compose-note:empty { display: none; }
+.toast { position: fixed; right: 20px; bottom: 20px; z-index: 50; max-width: 360px; background: var(--fg); color: var(--bg); padding: 10px 14px; border-radius: 12px; font-weight: 500; box-shadow: 0 10px 30px rgba(0,0,0,.5); }
+.toast.bad { background: var(--bad); }
+.btn:disabled { opacity: .6; cursor: default; }

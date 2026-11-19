@@ -1,8 +1,10 @@
-# NextDigital CRM (local)
+# NextDigital CRM (local, en vivo)
 
 CRM de WhatsApp Business que corre en tu computadora: panel de análisis, contactos con filtros,
-embudo de ventas, seguimientos sugeridos con el mensaje listo y generación de prospectos.
-Tus chats y tus notas se guardan solo en `crm/data/` (no se suben al repositorio).
+embudo de ventas, seguimientos sugeridos, generación de prospectos y chat en vivo para responder
+desde el CRM. Tus chats y tus notas se guardan solo en `crm/data/` (no se suben al repositorio).
+
+Requisitos: Node.js 18 o más nuevo y Google Chrome o Microsoft Edge instalados.
 
 ## Uso
 
@@ -12,28 +14,25 @@ npm install
 npm start            # abre http://localhost:4100
 ```
 
-### Traer tus chats
+`npm start` abre WhatsApp Web en tu Chrome o Edge (sin ventana) y muestra un QR en la terminal y en
+*Conectar WhatsApp*. Escanéalo desde WhatsApp Business → Dispositivos vinculados. La primera vez lee
+tus chats individuales (hasta 300 mensajes por chat) y después cada mensaje nuevo aparece en vivo.
 
-**Opción 1 · Código QR** (en otra terminal, dentro de `crm`):
+Si no encuentra tu navegador (PowerShell): `$env:CHROME_PATH="C:\ruta\chrome.exe"; npm start`.
+Para usar el CRM sin conectar WhatsApp: `npm run sin-whatsapp`.
 
-```bash
-npm run whatsapp
-```
+## Responder desde el CRM
 
-Abre WhatsApp Web real en tu Chrome o Edge (sin ventana) y muestra el QR en la terminal y en la
-sección *Conectar WhatsApp* del CRM. Escanéalo desde WhatsApp Business → Dispositivos vinculados.
-El lector **solo lee**: nunca envía mensajes. Lee tus chats individuales (hasta 300 mensajes por chat)
-y vuelve a leer cada 10 minutos mientras la ventana esté abierta. Para desconectarlo, quita el
-dispositivo en tu teléfono y borra `crm/data/whatsapp-web-auth`.
+Abre un contacto y escribe abajo (Enter envía). Para proteger tu número:
 
-Si no encuentra tu navegador: `$env:CHROME_PATH="C:\ruta\chrome.exe"; npm run whatsapp`.
+- Solo puedes responder a contactos que ya te escribieron antes. El primer mensaje a un prospecto
+  nuevo envíalo desde tu teléfono con el botón *Abrir en WhatsApp*.
+- Se envía un mensaje a la vez, solo cuando presionas *Enviar*, con al menos 8 segundos entre envíos.
+- No hay envíos masivos ni automáticos.
 
-Automatizar WhatsApp Web no es una vía oficial; por eso este CRM nunca envía nada por sí solo.
+Automatizar WhatsApp Web no es una vía oficial de WhatsApp; úsalo como lo harías en tu teléfono.
+Para desconectar el CRM, quítalo en Dispositivos vinculados y borra `crm/data/whatsapp-web-auth`.
 
-**Opción 2 · Chats exportados**: en cada chat, Exportar chat → Sin archivos, y arrastra los `.txt`
-a la sección *Conectar WhatsApp*.
+### Importar chats exportados (opcional)
 
-### Enviar seguimientos
-
-En *Seguimiento* cada contacto trae un mensaje sugerido que puedes editar. *Abrir en WhatsApp*
-abre el chat con el texto escrito; tú lo revisas y lo envías desde tu teléfono o WhatsApp Web.
+En cada chat: Exportar chat → Sin archivos, y arrastra los `.txt` a *Conectar WhatsApp*.

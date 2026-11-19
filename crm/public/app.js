@@ -32,6 +32,8 @@ const RE_NO = /no gracias|no me interesa|muy caro|ya tengo|despues|mas adelante|
 let DATA = { chats: [], updatedAt: null }
 let S = { contacts: {}, prospects: [], done: {}, imported: [], me: '' }
 let DEMO = false
+let WA = { state: 'apagado' }
+const canSend = (c) => WA.state === 'conectado' && /@c\.us$/.test(c.jid) && c.messages.some((m) => !m.fromMe)
 let view = 'panel'
 
 /* ── Persistencia ───────────────────────────────────── */
@@ -142,7 +144,7 @@ function render() {
   const fu = followUps(LIST)
   $('#b-follow').textContent = fu.length || ''
   $('#demo-banner').hidden = !DEMO
-  $('#sync').textContent = DEMO ? 'Datos de ejemplo' : DATA.updatedAt ? 'Sincronizado ' + new Date(DATA.updatedAt).toLocaleString('es-HN') : `${LIST.length} chats importados`
+  $('#sync').innerHTML = waBadge()
   ;({ panel: renderPanel, seguimiento: () => renderFollow(fu), contactos: renderTable, embudo: renderBoard, prospectos: renderProspects, conectar: () => {} })[view]()
 }
 
@@ -198,13 +200,15 @@ function renderFollow(fu) {
         <div class="why">${esc(f.why)}</div><div style="margin-top:8px"><span class="pill s-${f.c.stage}">${stageLabel(f.c.stage)}</span> ${f.c.topics.map((t) => `<span class="tag">${esc(t)}</span>`).join('')}</div>
         <div class="why" style="margin-top:8px">Último: “${esc((f.c.last?.text || '').slice(0, 120))}”</div></div>
       <textarea aria-label="Mensaje sugerido">${esc(f.msg)}</textarea>
-      <div class="acts"><a class="btn" target="_blank" rel="noopener" data-send>Abrir en WhatsApp</a><button class="btn ghost" data-done type="button">Marcar enviado</button></div>
+      <div class="acts">${canSend(f.c) ? '<button class="btn" type="button" data-crm>Enviar desde el CRM</button><a class="btn ghost" target="_blank" rel="noopener" data-send>Abrir en WhatsApp</a>' : '<a class="btn" target="_blank" rel="noopener" data-send>Abrir en WhatsApp</a>'}<button class="btn ghost" data-done type="button">Marcar enviado</button></div>
     </div>`).join('')
   $$('#follow .fu').forEach((el) => {
     const f = fu[+el.dataset.i], ta = $('textarea', el), a = $('[data-send]', el)
     const upd = () => (a.href = waLink(f.c.phone, ta.value))
     upd(); ta.addEventListener('input', upd)
     $('[data-done]', el).onclick = () => { S.done[f.c.jid] = now(); if (f.c.stage === 'nuevo') setStage(f.c.jid, 'interesado'); save(); render() }
+    const b = $('[data-crm]', el)
+    if (b) b.onclick = async () => { if (await sendText(f.c.jid, ta.value, b)) { S.done[f.c.jid] = now(); save(); render() } }
   })
 }
 
@@ -292,6 +296,11 @@ function openContact(jid) {
   const f = followUps([c])[0]
   $('#d-suggest').innerHTML = f ? `<div class="card"><span class="prio ${f.prio}">Seguimiento sugerido</span><div class="why">${esc(f.why)}</div><textarea id="d-msg" rows="3">${esc(f.msg)}</textarea><a class="btn" id="d-send" target="_blank" rel="noopener">Abrir en WhatsApp</a></div>` : ''
   if (f) { const u = () => ($('#d-send').href = waLink(c.phone, $('#d-msg').value)); u(); $('#d-msg').oninput = u }
+  $('#d-compose').hidden = !canSend(c)
+  $('#d-compose-note').textContent = WA.state === 'conectado' ? (canSend(c) ? '' : 'Este contacto aún no te ha escrito. Por seguridad, el primer mensaje envíalo desde tu teléfono.') : 'Conecta WhatsApp para responder desde aquí.'
+  $('#d-send-btn').onclick = async () => { if (await sendText(jid, $('#d-text').value, $('#d-send-btn'))) $('#d-text').value = '' }
+  $('#d-text').onkeydown = (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); $('#d-send-btn').click() } }
+  OPEN = jid
   let lastDay = ''
   $('#d-chat').innerHTML = c.messages.map((m) => {
     const d = new Date(m.ts * 1000), day = d.toLocaleDateString('es-HN', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' })
@@ -300,7 +309,7 @@ function openContact(jid) {
   }).join('')
   $('#d-chat').scrollTop = 1e9
 }
-$('#d-close').onclick = () => ($('#drawer').hidden = true)
+$('#d-close').onclick = () => { $('#drawer').hidden = true; OPEN = null }
 document.addEventListener('keydown', (e) => e.key === 'Escape' && ($('#drawer').hidden = true))
 document.addEventListener('click', (e) => { const t = e.target.closest('[data-open]'); if (t) { e.preventDefault(); openContact(t.dataset.open) } })
 
@@ -350,15 +359,56 @@ drop.addEventListener('dragover', (e) => { e.preventDefault(); drop.classList.ad
 drop.addEventListener('dragleave', () => drop.classList.remove('over'))
 drop.addEventListener('drop', (e) => { e.preventDefault(); drop.classList.remove('over'); importFiles([...e.dataTransfer.files]) })
 
-/* ── QR ─────────────────────────────────────────────── */
-async function pollQR() {
-  if (view !== 'conectar') return
-  try {
-    const r = await fetch('/api/qr', { cache: 'no-store' })
-    $('#qr-box').innerHTML = r.ok ? `<img alt="Código QR de WhatsApp" src="${URL.createObjectURL(await r.blob())}">` : DATA.updatedAt ? '<p class="hint">WhatsApp conectado. El historial se actualiza solo.</p>' : '<p class="hint">Esperando código… (corre <code>npm run whatsapp</code>)</p>'
-  } catch {}
+/* ── WhatsApp en vivo ───────────────────────────────── */
+let OPEN = null
+function waBadge() {
+  const m = { apagado: 'WhatsApp apagado', iniciando: 'Abriendo WhatsApp Web…', qr: 'Escanea el QR para conectar', autenticado: 'Conectando…', sincronizando: 'Sincronizando chats…', conectado: '● En vivo', desconectado: 'WhatsApp desconectado', error: 'Error de WhatsApp' }
+  const t = DEMO ? 'Datos de ejemplo' : (m[WA.state] || WA.state)
+  return `<span class="${WA.state === 'conectado' ? 'live' : ''}">${t}</span>`
 }
-setInterval(pollQR, 4000)
+function renderConnect() {
+  const box = $('#qr-box')
+  if (WA.state === 'qr' && WA.qr) box.innerHTML = `<img alt="Código QR de WhatsApp" src="${WA.qr}">`
+  else if (WA.state === 'conectado') box.innerHTML = `<p class="hint"><b class="live">● En vivo</b>${WA.me ? ' como +' + esc(WA.me) : ''}. Los mensajes nuevos aparecen solos.</p>`
+  else if (WA.state === 'error' || WA.state === 'desconectado') box.innerHTML = `<p class="hint" style="color:var(--bad)">${esc(WA.error || 'Error')}</p>`
+  else if (WA.state === 'apagado') box.innerHTML = '<p class="hint">WhatsApp no está activo. Inicia el CRM con <code>npm start</code>.</p>'
+  else box.innerHTML = `<p class="hint">${esc(waBadge().replace(/<[^>]+>/g, ''))}</p>`
+}
+async function sendText(jid, text, btn) {
+  text = String(text || '').trim()
+  if (!text) return false
+  const old = btn.textContent
+  btn.disabled = true; btn.textContent = 'Enviando…'
+  try {
+    const r = await fetch('/api/send', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ jid, text }) })
+    const j = await r.json().catch(() => ({}))
+    if (!r.ok) throw new Error(j.error || 'No se pudo enviar.')
+    toast('Mensaje enviado')
+    return true
+  } catch (e) { toast(e.message, true); return false } finally { btn.disabled = false; btn.textContent = old }
+}
+function toast(t, bad) {
+  const el = document.createElement('div'); el.className = 'toast' + (bad ? ' bad' : ''); el.textContent = t
+  document.body.append(el); setTimeout(() => el.remove(), 3800)
+}
+async function reload() {
+  try { const j = await (await fetch('/api/data')).json(); if (j.wa?.chats?.length) { DEMO = false; DATA = j.wa } if (j.status) WA = j.status; render(); if (OPEN) openContact(OPEN) } catch {}
+}
+function live() {
+  const es = new EventSource('/api/events')
+  es.addEventListener('status', (e) => { const prev = WA.state; WA = JSON.parse(e.data); $('#sync').innerHTML = waBadge(); if (view === 'conectar') renderConnect(); if (prev !== WA.state && (WA.state === 'conectado' || prev === 'conectado')) { render(); if (OPEN) openContact(OPEN) } })
+  es.addEventListener('reload', reload)
+  es.addEventListener('message', (e) => {
+    const ev = JSON.parse(e.data)
+    if (DEMO) { DEMO = false; DATA = { chats: [], updatedAt: Date.now() } }
+    let c = DATA.chats.find((x) => x.jid === ev.jid)
+    if (!c) { c = { jid: ev.jid, phone: ev.phone, name: ev.name, messages: [] }; DATA.chats.push(c) }
+    if (!c.messages.some((m) => m.id && m.id === ev.message.id)) c.messages.push(ev.message)
+    if (!ev.message.fromMe && OPEN !== ev.jid) toast(`${ev.name || '+' + ev.phone}: ${ev.message.text.slice(0, 60)}`)
+    render()
+    if (OPEN === ev.jid) openContact(ev.jid)
+  })
+}
 
 /* ── Navegación y arranque ──────────────────────────── */
 function go(v) {
@@ -366,7 +416,7 @@ function go(v) {
   $$('#nav button').forEach((b) => b.classList.toggle('on', b.dataset.view === v))
   $$('.view').forEach((s) => (s.hidden = s.id !== 'v-' + v))
   location.hash = v
-  render(); pollQR()
+  render(); if (v === 'conectar') renderConnect()
 }
 $$('#nav button').forEach((b) => (b.onclick = () => go(b.dataset.view)))
 ;['#f-q', '#f-stage', '#f-topic', '#f-last', '#f-age', '#p-cat', '#p-status'].forEach((s) => $(s).addEventListener('input', render))
@@ -389,14 +439,11 @@ async function boot() {
     const r = await fetch('/api/data'); const j = await r.json()
     DATA = j.wa || DATA
     S = { contacts: {}, prospects: [], done: {}, imported: [], me: '', ...(j.state || {}) }
+    if (j.status) WA = j.status
   } catch {}
   if (!(DATA.chats || []).length && !(S.imported || []).length) { DEMO = true; DATA = { chats: demoData(), updatedAt: null } }
   go((location.hash || '#panel').slice(1) || 'panel')
-  // refresca cada 30 s si el lector de WhatsApp está corriendo
-  setInterval(async () => {
-    if (DEMO && !(S.imported || []).length) { try { const j = await (await fetch('/api/data')).json(); if (j.wa?.chats?.length) { DEMO = false; DATA = j.wa; render() } } catch {} ; return }
-    try { const j = await (await fetch('/api/data')).json(); if (j.wa?.updatedAt && j.wa.updatedAt !== DATA.updatedAt) { DATA = j.wa; render() } } catch {}
-  }, 30000)
+  live()
 }
 boot()
 window.addEventListener('hashchange', () => { const v = location.hash.slice(1); if (v && v !== view && $('#v-' + v)) go(v) })
